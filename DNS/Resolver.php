@@ -481,7 +481,7 @@ class Net_DNS_Resolver
         /*
          * If the name contains at least one dot then try it as is first.
          */
-        if (strlen(strchr($name, "."))) {
+        if (strchr($name, ".")) {
             if ($this->debug) {
                 echo ";; search($name, $type, $class)\n";
             }
@@ -927,7 +927,7 @@ class Net_DNS_Resolver
                         if ($ans->header->qr != "1") {
                             continue;
                         }
-                        if ($ans->header->id == $packet->header->id) {
+                        if ($ans->header->id != $packet->header->id) {
                             continue;
                         }
                         $this->errorstring = $ans->header->rcode;
@@ -965,12 +965,12 @@ class Net_DNS_Resolver
     {
         if (extension_loaded("sockets") && $this->useEnhancedSockets) {
             if ($this->debug) {
-                echo ";; using extended PHP sockets\n";
+                echo "\n;; using extended PHP sockets\n";
             }
             return($this->send_udp_with_sock_lib($packet, $packet_data));
         } else {
             if ($this->debug) {
-                echo ";; using simple sockets\n";
+                echo "\n;; using simple sockets\n";
             }
             return($this->send_udp_no_sock_lib($packet, $packet_data));
         }
