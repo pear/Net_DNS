@@ -59,42 +59,42 @@
       </dir>
     </filelist>
   </release> 
-  <release>
-    <version>1.00b1</version>
-    <date>2003-02-24</date>
-    <license>LGPL 2.1</license>
-    <state>beta</state>
-    <notes>
+  <changelog>
+    <release>
+      <version>1.00b1</version>
+      <date>2003-02-24</date>
+      <license>LGPL 2.1</license>
+      <state>beta</state>
+      <notes>
 - Tested with PHP 4.3.0
 - Should have no warnings under with maximum error_reporting setting 
 - Fixed bug: did not understand name server responses using the one-answer zone transfer format
 - Fixed more problems with PHP warning about uninitialized variables
 
 Note that the interface to the axfr function has changed.  Software relying on the old (buggy) style of axfr queries will need to be updated to call axfr_old() instead of axfr().  The new axfr() function will not return a DNS packet, but an array of RRs ONLY.
-    </notes>
-    <filelist>
-      <dir name="/" baseinstalldir="Net">
-        <file role="php">DNS.php</file>
-        <dir name="DNS">
-          <file role="php">Packet.php</file>
-          <file role="php">Header.php</file>
-          <file role="php">Question.php</file>
-          <file role="php">Resolver.php</file>
-          <file role="php">RR.php</file>
-          <dir name="RR">
-            <file role="php">A.php</file>
-            <file role="php">NS.php</file>
-            <file role="php">CNAME.php</file>
-            <file role="php">MX.php</file>
-            <file role="php">SOA.php</file>
-            <file role="php">PTR.php</file>
-            <file role="php">TSIG.php</file>
-          </dir>
-        </dir>
-      </dir>
-    </filelist>
-  </release> 
-  <changelog>
+      </notes>
+      <filelist>
+	<dir name="/" baseinstalldir="Net">
+	  <file role="php">DNS.php</file>
+	  <dir name="DNS">
+	    <file role="php">Packet.php</file>
+	    <file role="php">Header.php</file>
+	    <file role="php">Question.php</file>
+	    <file role="php">Resolver.php</file>
+	    <file role="php">RR.php</file>
+	    <dir name="RR">
+	      <file role="php">A.php</file>
+	      <file role="php">NS.php</file>
+	      <file role="php">CNAME.php</file>
+	      <file role="php">MX.php</file>
+	      <file role="php">SOA.php</file>
+	      <file role="php">PTR.php</file>
+	      <file role="php">TSIG.php</file>
+	    </dir>
+	  </dir>
+	</dir>
+      </filelist>
+    </release> 
     <release>
       <version>0.03</version>
       <date>2002-08-15</date>
