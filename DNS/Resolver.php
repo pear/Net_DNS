@@ -912,7 +912,9 @@ class Net_DNS_Resolver
                 }
 
                 $set = array($s);
-                echo ";; timeout set to $timeout seconds\n";
+                if ($this->debug) {
+                    echo ";; timeout set to $timeout seconds\n";
+                }
                 $changed = socket_select($set, $w = null, $e = null, $timeout);
                 if ($changed) {
                     $buf = socket_read($set[0], 512);
