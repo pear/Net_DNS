@@ -1038,7 +1038,7 @@ class Net_DNS_Resolver
      */
     function make_query_packet($packetORname, $type = '', $class = '')
     {
-        if (is_object($packetORname) && get_class($packetORname) == 'net_dns_packet') {
+        if (is_object($packetORname) && strcasecmp(get_class($packetORname), 'net_dns_packet') == 0) {
             $packet = $packetORname;
         } else {
             $name = $packetORname;
