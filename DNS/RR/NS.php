@@ -64,7 +64,7 @@ class Net_DNS_RR_NS extends Net_DNS_RR
     function rdatastr()
     {
         if (strlen($this->nsdname)) {
-            return($this->nsdname);
+            return($this->nsdname . '.');
         }
         return("; no data");
     }
