@@ -38,8 +38,8 @@ class Net_DNS_RR_NS extends Net_DNS_RR
     var $nsdname;
 
     /* }}} */
-    /* class constructor - RR(&$rro, $data, $offset = "") {{{ */
-    function Net_DNS_RR_NS(&$rro, $data, $offset = "")
+    /* class constructor - RR(&$rro, $data, $offset = '') {{{ */
+    function Net_DNS_RR_NS(&$rro, $data, $offset = '')
     {
         $this->name = $rro->name;
         $this->type = $rro->type;
@@ -55,7 +55,7 @@ class Net_DNS_RR_NS extends Net_DNS_RR
                 $this->nsdname = $nsdname;
             }
         } else {
-            $this->nsdname = ereg_replace("[ \t]+(.+)[ \t]*$", "\\1", $string);
+            $this->nsdname = ereg_replace("[ \t]+(.+)[ \t]*$", '\\1', $string);
         }
     }
 
@@ -66,7 +66,7 @@ class Net_DNS_RR_NS extends Net_DNS_RR
         if (strlen($this->nsdname)) {
             return($this->nsdname . '.');
         }
-        return("; no data");
+        return('; no data');
     }
 
     /* }}} */

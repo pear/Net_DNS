@@ -175,7 +175,7 @@ class Net_DNS_Resolver
      * 
      * @var string $resolv_conf
      */
-    var $resolv_conf = "/etc/resolv.conf";
+    var $resolv_conf = '/etc/resolv.conf';
     /**
      * The name of the user defined resolv.conf
      *
@@ -186,7 +186,7 @@ class Net_DNS_Resolver
      * @var string $dotfile
      * @see Net_DNS_Resolver::$confpath
      */
-    var $dotfile = ".resolv.conf";
+    var $dotfile = '.resolv.conf';
     /**
      * A array of directories to search for the user's resolver config
      *
@@ -225,29 +225,29 @@ class Net_DNS_Resolver
     function Net_DNS_Resolver()
     {
         $default = array(
-                "nameservers" => array(),
-                "port"    => "53",
-                "domain"  => "",
-                "searchlist"  => array(),
-                "retrans" => 5,
-                "retry"   => 4,
-                "usevc"   => 0,
-                "stayopen"  => 0,
-                "igntc"   => 0,
-                "recurse" => 1,
-                "defnames"  => 1,
-                "dnsrch"  => 1,
-                "debug"   => 0,
-                "errorstring" => "unknown error or no error",
-                "answerfrom"    => "",
-                "answersize"    => 0,
-                "tcp_timeout"   => 120
+                'nameservers' => array(),
+                'port'    => '53',
+                'domain'  => '',
+                'searchlist'  => array(),
+                'retrans' => 5,
+                'retry'   => 4,
+                'usevc'   => 0,
+                'stayopen'  => 0,
+                'igntc'   => 0,
+                'recurse' => 1,
+                'defnames'  => 1,
+                'dnsrch'  => 1,
+                'debug'   => 0,
+                'errorstring' => 'unknown error or no error',
+                'answerfrom'    => '',
+                'answersize'    => 0,
+                'tcp_timeout'   => 120
                 );
         foreach ($default as $k => $v) {
             $this->{$k} = $v;
         }
-        $this->confpath[0] = getenv("HOME");
-        $this->confpath[1] = ".";
+        $this->confpath[0] = getenv('HOME');
+        $this->confpath[1] = '.';
         $this->res_init();
     }
 
@@ -281,7 +281,7 @@ class Net_DNS_Resolver
         $this->read_env();
 
         if (!strlen($this->domain) && strlen($this->searchlist)) {
-            $this->default{"domain"} = $this->default{"searchlist"}[0];
+            $this->default{'domain'} = $this->default{'searchlist'}[0];
         } else if (! strlen($this->searchlist) && strlen($this->domain)) {
             $this->searchlist = array($this->domain);
         }
@@ -297,14 +297,13 @@ class Net_DNS_Resolver
      */
     function read_config($file)
     {
-        if (! ($f = fopen($file, "r"))) {
+        if (! ($f = fopen($file, 'r'))) {
             $this->error = "can't open $file";
-            return(FALSE);
         }
 
         while (! feof($f)) {
             $line = chop(fgets($f, 10240));
-            $line = ereg_replace("(.*)[;#].*", "\\1", $line);
+            $line = ereg_replace('(.*)[;#].*', '\\1', $line);
             if (ereg("^[ \t]*$", $line, $regs)) {
                 continue;
             }
@@ -320,7 +319,7 @@ class Net_DNS_Resolver
                     $this->searchlist[count($this->searchlist)] = $regs[2];
                     break;
                 case 'nameserver':
-                    foreach (split(" ", $regs[2]) as $ns)
+                    foreach (split(' ', $regs[2]) as $ns)
                         $this->nameservers[count($this->nameservers)] = $ns;
                     break;
             }
@@ -335,23 +334,23 @@ class Net_DNS_Resolver
      */
     function read_env()
     {
-        if (getenv("RES_NAMESERVERS")) {
-            $this->nameservers = split(" ", getenv("RES_NAMESERVERS"));
+        if (getenv('RES_NAMESERVERS')) {
+            $this->nameservers = split(' ', getenv('RES_NAMESERVERS'));
         }
 
-        if (getenv("RES_SEARCHLIST")) {
-            $this->searchlist = split(" ", getenv("RES_SEARCHLIST"));
+        if (getenv('RES_SEARCHLIST')) {
+            $this->searchlist = split(' ', getenv('RES_SEARCHLIST'));
         }
 
-        if (getenv("LOCALDOMAIN")) {
-            $this->domain = getenv("LOCALDOMAIN");
+        if (getenv('LOCALDOMAIN')) {
+            $this->domain = getenv('LOCALDOMAIN');
         }
 
-        if (getenv("RES_OPTIONS")) {
-            $env = split(" ", getenv("RES_OPTIONS"));
+        if (getenv('RES_OPTIONS')) {
+            $env = split(' ', getenv('RES_OPTIONS'));
             foreach ($env as $opt) {
-                list($name, $val) = split(":", $opt);
-                if ($val == "") {
+                list($name, $val) = split(':', $opt);
+                if ($val == '') {
                     $val = 1;
                 }
                 $this->{$name} = $val;
@@ -372,21 +371,21 @@ class Net_DNS_Resolver
     function string()
     {
         $state = ";; Net_DNS_Resolver state:\n";
-        $state .= ";;  domain       = " . $this->domain . "\n";
-        $state .= ";;  searchlist   = " . implode(" ", $this->searchlist) . "\n";
-        $state .= ";;  nameservers  = " . implode(" ", $this->nameservers) . "\n";
-        $state .= ";;  port         = " . $this->port . "\n";
-        $state .= ";;  tcp_timeout  = ";
-        $state .= ($this->tcp_timeout ? $this->tcp_timeout : "indefinite") . "\n";
-        $state .= ";;  retrans  = " . $this->retrans . "  ";
-        $state .= "retry    = " . $this->retry . "\n";
-        $state .= ";;  usevc    = " . $this->usevc . "  ";
-        $state .= "stayopen = " . $this->stayopen . "    ";
-        $state .= "igntc = " . $this->igntc . "\n";
-        $state .= ";;  defnames = " . $this->defnames . "  ";
-        $state .= "dnsrch   = " . $this->dnsrch . "\n";
-        $state .= ";;  recurse  = " . $this->recurse . "  ";
-        $state .= "debug    = " . $this->debug . "\n";
+        $state .= ';;  domain       = ' . $this->domain . "\n";
+        $state .= ';;  searchlist   = ' . implode(' ', $this->searchlist) . "\n";
+        $state .= ';;  nameservers  = ' . implode(' ', $this->nameservers) . "\n";
+        $state .= ';;  port         = ' . $this->port . "\n";
+        $state .= ';;  tcp_timeout  = ';
+        $state .= ($this->tcp_timeout ? $this->tcp_timeout : 'indefinite') . "\n";
+        $state .= ';;  retrans  = ' . $this->retrans . '  ';
+        $state .= 'retry    = ' . $this->retry . "\n";
+        $state .= ';;  usevc    = ' . $this->usevc . '  ';
+        $state .= 'stayopen = ' . $this->stayopen . '    ';
+        $state .= 'igntc = ' . $this->igntc . "\n";
+        $state .= ';;  defnames = ' . $this->defnames . '  ';
+        $state .= 'dnsrch   = ' . $this->dnsrch . "\n";
+        $state .= ';;  recurse  = ' . $this->recurse . '  ';
+        $state .= 'debug    = ' . $this->debug . "\n";
         return($state);
     }
 
@@ -412,7 +411,7 @@ class Net_DNS_Resolver
 
         if (is_array($ns)) {
             foreach ($nsa as $ns) {
-                if (ereg("^[0-9]+(\.[0-9]+){0,3}$", $ns, $regs)) {
+                if (ereg('^[0-9]+(\.[0-9]+){0,3}$', $ns, $regs)) {
                     $newns[count($newns)] = $ns;
                 } else {
                     /* 
@@ -468,21 +467,21 @@ class Net_DNS_Resolver
      * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
      * @access public
      */
-    function search($name, $type = "A", $class = "IN")
+    function search($name, $type = 'A', $class = 'IN')
     {
         /*
          * If the name looks like an IP address then do an appropriate
          * PTR query.
          */
-        if (preg_match("/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $name, $regs)) {
+        if (preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/', $name, $regs)) {
             $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
-            $type = "PTR";
+            $type = 'PTR';
         }
 
         /*
          * If the name contains at least one dot then try it as is first.
          */
-        if (strchr($name, ".")) {
+        if (strchr($name, '.')) {
             if ($this->debug) {
                 echo ";; search($name, $type, $class)\n";
             }
@@ -495,8 +494,8 @@ class Net_DNS_Resolver
         /*
          * If the name doesn't end in a dot then apply the search list.
          */
-        $domain = "";
-        if ((! preg_match("/\.$/", $name)) && $this->dnsrch) {
+        $domain = '';
+        if ((! preg_match('/\.$/', $name)) && $this->dnsrch) {
             foreach ($this->searchlist as $domain) {
                 $newname = "$name.$domain";
                 if ($this->debug) {
@@ -512,7 +511,7 @@ class Net_DNS_Resolver
         /*
          * Finally, if the name has no dots then try it as is.
          */
-        if (! strlen(strchr($name, "."))) {
+        if (! strlen(strchr($name, '.'))) {
             if ($this->debug) {
                 echo ";; search($name, $type, $class)\n";
             }
@@ -545,22 +544,22 @@ class Net_DNS_Resolver
      * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
      * @access public
      */
-    function query($name, $type = "A", $class = "IN")
+    function query($name, $type = 'A', $class = 'IN')
     {
         /*
          * If the name doesn't contain any dots then append the default domain.
          */
-        if ((strchr($name, ".") < 0) && $this->defnames) {
-            $name .= "." . $this->domain;
+        if ((strchr($name, '.') < 0) && $this->defnames) {
+            $name .= '.' . $this->domain;
         }
 
         /*
          * If the name looks like an IP address then do an appropriate
          * PTR query.
          */
-        if (preg_match("/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $name, $regs)) {
+        if (preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/', $name, $regs)) {
             $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
-            $type = "PTR";
+            $type = 'PTR';
         }
 
         if ($this->debug) {
@@ -577,7 +576,7 @@ class Net_DNS_Resolver
     }
 
     /* }}} */
-    /* Net_DNS_Resolver::send($packetORname, $qtype = "", $qclass = "") {{{ */
+    /* Net_DNS_Resolver::send($packetORname, $qtype = '', $qclass = '') {{{ */
     /**
      * Sends a packet to a nameserver
      *
@@ -593,7 +592,7 @@ class Net_DNS_Resolver
      * @param string $qclass    This should not be used
      * @return object Net_DNS_Packet    An answer packet object
      */
-    function send($packetORname, $qtype = "", $qclass = "")
+    function send($packetORname, $qtype = '', $qclass = '')
     {
         $packet = $this->make_query_packet($packetORname, $qtype, $qclass);
         $packet_data = $packet->data();
@@ -620,20 +619,20 @@ class Net_DNS_Resolver
      */
     function printhex($data)
     {
-        $data = "  " . $data;
+        $data = '  ' . $data;
         $start = 0;
         while ($start < strlen($data)) {
-            printf(";; %03d: ", $start);
+            printf(';; %03d: ', $start);
             for ($ctr = $start; $ctr < $start+16; $ctr++) {
                 if ($ctr < strlen($data))
-                    printf("%02x ", ord($data[$ctr]));
+                    printf('%02x ', ord($data[$ctr]));
                 else
-                    echo "   ";
+                    echo '   ';
             }
-            echo "   ";
+            echo '   ';
             for ($ctr = $start; $ctr < $start+16; $ctr++) {
                 if (ord($data[$ctr]) < 32 || ord($data[$ctr]) > 127) {
-                    echo ".";
+                    echo '.';
                 } else {
                     echo $data[$ctr];
                 }
@@ -656,7 +655,7 @@ class Net_DNS_Resolver
     function send_tcp($packet, $packet_data)
     {
         if (! count($this->nameservers)) {
-            $this->errorstring = "no nameservers";
+            $this->errorstring = 'no nameservers';
             if ($this->debug) {
                 echo ";; ERROR: send_tcp: no nameservers\n";
             }
@@ -665,20 +664,17 @@ class Net_DNS_Resolver
         $timeout = $this->tcp_timeout;
 
         foreach ($this->nameservers as $ns) {
-            $srcport = $this->srcport;
-            $srcaddr = $this->srcaddr;
             $dstport = $this->port;
             if ($this->debug) {
                 echo ";; send_tcp($ns:$dstport) (src port = $srcport)\n";
             }
             $sock_key = "$ns:$dstport";
-            if ($this->persistent_tcp &&
-                    is_resource($this->sockets[$sock_key])) {
+            if (isset($this->sockets[$sock_key]) && is_resource($this->sockets[$sock_key])) {
                 $sock = &$this->sockets[$sock_key];
             } else {
                 if (! ($sock = fsockopen($ns, $dstport, $errno,
                                 $errstr, $timeout))) {
-                    $this->errorstring = "connection failed";
+                    $this->errorstring = 'connection failed';
                     if ($this->debug) {
                         echo ";; ERROR: send_tcp: connection failed: $errstr\n";
                     }
@@ -688,13 +684,13 @@ class Net_DNS_Resolver
                 unset($sock);
                 $sock = &$this->sockets[$sock_key];
             }
-            $lenmsg = pack("n", strlen($packet_data));
+            $lenmsg = pack('n', strlen($packet_data));
             if ($this->debug) {
-                echo ";; sending " . strlen($packet_data) . " bytes\n";
+                echo ';; sending ' . strlen($packet_data) . " bytes\n";
             }
 
             if (($sent = fwrite($sock, $lenmsg)) == -1) {
-                $this->errorstring = "length send failed";
+                $this->errorstring = 'length send failed';
                 if ($this->debug) {
                     echo ";; ERROR: send_tcp: length send failed\n";
                 }
@@ -702,7 +698,7 @@ class Net_DNS_Resolver
             }
 
             if (($sent = fwrite($sock, $packet_data)) == -1) {
-                $this->errorstring = "packet send failed";
+                $this->errorstring = 'packet send failed';
                 if ($this->debug) {
                     echo ";; ERROR: send_tcp: packet data send failed\n";
                 }
@@ -711,8 +707,8 @@ class Net_DNS_Resolver
             socket_set_timeout($sock, $timeout);
             $buf = fread($sock, 2);
             $e = socket_get_status($sock);
-            $len = unpack("nint", $buf);
-            $len = $len["int"];
+            $len = unpack('nint', $buf);
+            $len = $len['int'];
             if (!$len) {
                 continue;
             }
@@ -726,7 +722,7 @@ class Net_DNS_Resolver
             if ($actual != $len) {
                 $this->errorstring = "expected $len bytes, received $buf";
                 if ($this->debug) {
-                    echo ";; send_tcp: " . $this->errorstring;
+                    echo ';; send_tcp: ' . $this->errorstring;
                 }
                 continue;
             }
@@ -784,7 +780,7 @@ class Net_DNS_Resolver
         error_reporting($w);
 
         if ($ctr == 0) {
-            $this->errorstring = "no nameservers";
+            $this->errorstring = 'no nameservers';
             return(NULL);
         }
 
@@ -796,7 +792,7 @@ class Net_DNS_Resolver
 
             foreach ($sock as $k => $s) {
                 if ($this->debug) {
-                    echo ";; send_udp(" . $peerhost[$k] . ":" . $peerport[$k] . "): sending " . strlen($packet_data) . " bytes\n";
+                    echo ';; send_udp(' . $peerhost[$k] . ':' . $peerport[$k] . '): sending ' . strlen($packet_data) . " bytes\n";
                 }
 
                 if (! fwrite($s, $packet_data)) {
@@ -817,7 +813,7 @@ class Net_DNS_Resolver
                  * data come in from the network...
                  */
                 usleep(500);
-                $buf = "";
+                $buf = '';
                 while (! strlen($buf) && $timetoTO > (time() +
                             (double)microtime())) {
                     socket_set_blocking($s, FALSE);
@@ -825,12 +821,12 @@ class Net_DNS_Resolver
                         $this->answerfrom = $peerhost[$k];
                         $this->answersize = strlen($buf);
                         if ($this->debug) {
-                            echo ";; answer from " . $peerhost[$k] . ":" .
-                                $peerport[$k] .  ": " . strlen($buf) . " bytes\n";
+                            echo ';; answer from ' . $peerhost[$k] . ':' .
+                                $peerport[$k] .  ': ' . strlen($buf) . " bytes\n";
                         }
                         $ans = new Net_DNS_Packet($this->debug);
                         if ($ans->parse($buf)) {
-                            if ($ans->header->qr != "1") {
+                            if ($ans->header->qr != '1') {
                                 continue;
                             }
                             if ($ans->header->id != $packet->header->id) {
@@ -846,7 +842,7 @@ class Net_DNS_Resolver
                     usleep(1000);
                 }
 
-                $this->errorstring = "query timed out";
+                $this->errorstring = 'query timed out';
                 return(NULL);
             }
         }
@@ -888,7 +884,7 @@ class Net_DNS_Resolver
         //error_reporting($w);
 
         if ($ctr == 0) {
-            $this->errorstring = "no nameservers";
+            $this->errorstring = 'no nameservers';
             return(NULL);
         }
 
@@ -900,7 +896,7 @@ class Net_DNS_Resolver
 
             foreach ($sock as $k => $s) {
                 if ($this->debug) {
-                    echo ";; send_udp(" . $peerhost[$k] . ":" . $peerport[$k] . "): sending " . strlen($packet_data) . " bytes\n";
+                    echo ';; send_udp(' . $peerhost[$k] . ':' . $peerport[$k] . '): sending ' . strlen($packet_data) . " bytes\n";
                 }
 
                 if (! socket_write($s, $packet_data)) {
@@ -919,12 +915,12 @@ class Net_DNS_Resolver
                     $this->answerfrom = $peerhost[$k];
                     $this->answersize = strlen($buf);
                     if ($this->debug) {
-                        echo ";; answer from " . $peerhost[$k] . ":" .
-                            $peerport[$k] .  ": " . strlen($buf) . " bytes\n";
+                        echo ';; answer from ' . $peerhost[$k] . ':' .
+                            $peerport[$k] .  ': ' . strlen($buf) . " bytes\n";
                     }
                     $ans = new Net_DNS_Packet($this->debug);
                     if ($ans->parse($buf)) {
-                        if ($ans->header->qr != "1") {
+                        if ($ans->header->qr != '1') {
                             continue;
                         }
                         if ($ans->header->id != $packet->header->id) {
@@ -937,7 +933,7 @@ class Net_DNS_Resolver
                     }
                 }
 
-                $this->errorstring = "query timed out";
+                $this->errorstring = 'query timed out';
                 return(NULL);
             }
         }
@@ -963,7 +959,7 @@ class Net_DNS_Resolver
      */
     function send_udp($packet, $packet_data)
     {
-        if (extension_loaded("sockets") && $this->useEnhancedSockets) {
+        if (extension_loaded('sockets') && $this->useEnhancedSockets) {
             if ($this->debug) {
                 echo "\n;; using extended PHP sockets\n";
             }
@@ -1002,30 +998,30 @@ class Net_DNS_Resolver
     {
     }
     /* }}} */
-    /* Net_DNS_Resolver::make_query_packet($packetORname, $type = "", $class = "") {{{ */
+    /* Net_DNS_Resolver::make_query_packet($packetORname, $type = '', $class = '') {{{ */
     /**
      * Unknown
      */
-    function make_query_packet($packetORname, $type = "", $class = "")
+    function make_query_packet($packetORname, $type = '', $class = '')
     {
-        if (is_object($packetORname) && get_class($packetORname) == "net_dns_packet") {
+        if (is_object($packetORname) && get_class($packetORname) == 'net_dns_packet') {
             $packet = $packetORname;
         } else {
             $name = $packetORname;
-            if ($type == "") {
-                $type = "A";
+            if ($type == '') {
+                $type = 'A';
             }
-            if ($class == "") {
-                $class = "IN";
+            if ($class == '') {
+                $class = 'IN';
             }
 
             /*
              * If the name looks like an IP address then do an appropriate
              * PTR query.
              */
-            if (preg_match("/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $name, $regs)) {
+            if (preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/', $name, $regs)) {
                 $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
-                $type = "PTR";
+                $type = 'PTR';
             }
 
             if ($this->debug) {
@@ -1054,19 +1050,19 @@ class Net_DNS_Resolver
      * @return object Net_DNS_Packet
      * @access public
      */
-    function axfr($dname, $class = "IN")
+    function axfr($dname, $class = 'IN')
     {
         if ($this->debug) {
             echo ";; axfr_start($dname, $class)\n";
         }
         if (! count($this->nameservers)) {
-            $this->errorstring = "no nameservers";
+            $this->errorstring = 'no nameservers';
             if ($this->debug) {
                 echo ";; ERROR: no nameservers\n";
             }
             return(NULL);
         }
-        $packet = $this->make_query_packet($dname, "AXFR", $class);
+        $packet = $this->make_query_packet($dname, 'AXFR', $class);
         $packet_data = $packet->data();
         $ans = $this->send_tcp($packet, $packet_data);
         return($ans);

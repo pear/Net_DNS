@@ -39,8 +39,8 @@ class Net_DNS_RR_MX extends Net_DNS_RR
     var $exchange;
 
     /* }}} */
-    /* class constructor - RR(&$rro, $data, $offset = "") {{{ */
-    function Net_DNS_RR_MX(&$rro, $data, $offset = "")
+    /* class constructor - RR(&$rro, $data, $offset = '') {{{ */
+    function Net_DNS_RR_MX(&$rro, $data, $offset = '')
     {
         $this->name = $rro->name;
         $this->type = $rro->type;
@@ -54,13 +54,13 @@ class Net_DNS_RR_MX extends Net_DNS_RR
                 $a = unpack("@$offset/npreference", $data);
                 $offset += 2;
                 list($exchange, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
-                $this->preference = $a["preference"];
+                $this->preference = $a['preference'];
                 $this->exchange = $exchange;
             }
         } else {
             ereg("([0-9]+)[ \t]+(.+)[ \t]*$", $data, $regs);
             $this->preference = $regs[1];
-            $this->exchange = ereg_replace("(.*)\.$", "\\1", $regs[2]);
+            $this->exchange = ereg_replace('(.*)\.$', '\\1', $regs[2]);
         }
     }
 
@@ -69,9 +69,9 @@ class Net_DNS_RR_MX extends Net_DNS_RR
     function rdatastr()
     {
         if ($this->preference) {
-            return($this->preference . " " . $this->exchange . ".");
+            return($this->preference . ' ' . $this->exchange . '.');
         }
-        return("; no data");
+        return('; no data');
     }
 
     /* }}} */
@@ -79,7 +79,7 @@ class Net_DNS_RR_MX extends Net_DNS_RR
     function rr_rdata($packet, $offset)
     {
         if ($this->preference) {
-            $rdata = pack("n", $this->preference);
+            $rdata = pack('n', $this->preference);
             $rdata .= $packet->dn_comp($this->exchange, $offset + strlen($rdata));
             return($rdata);
         }

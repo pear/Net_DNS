@@ -20,8 +20,8 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-define("NET_DNS_DEFAULT_ALGORITHM", "hmac-md5.sig-alg.reg.int");
-define("NET_DNS_DEFAULT_FUDGE", 300);
+define('NET_DNS_DEFAULT_ALGORITHM', 'hmac-md5.sig-alg.reg.int');
+define('NET_DNS_DEFAULT_FUDGE', 300);
 
 /* Net_DNS_RR_TSIG definition {{{ */
 /**
@@ -49,8 +49,8 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
     var $key;
 
     /* }}} */
-    /* class constructor - RR(&$rro, $data, $offset = "") {{{ */
-    function Net_DNS_RR_TSIG(&$rro, $data, $offset = "")
+    /* class constructor - RR(&$rro, $data, $offset = '') {{{ */
+    function Net_DNS_RR_TSIG(&$rro, $data, $offset = '')
     {
         $this->name = $rro->name;
         $this->type = $rro->type;
@@ -65,28 +65,28 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
                 $this->algorithm = $alg;
 
                 $d = unpack("\@$offset/nth/Ntl/nfudge/nmac_size", $data);
-                $time_high = $d["th"];
-                $time_low = $d["tl"];
+                $time_high = $d['th'];
+                $time_low = $d['tl'];
                 $this->time_signed = $time_low;
-                $this->fudge = $d["fudge"];
-                $this->mac_size = $d["mac_size"];
+                $this->fudge = $d['fudge'];
+                $this->mac_size = $d['mac_size'];
                 $offset += 10;
 
                 $this->mac = substr($data, $offset, $this->mac_size);
                 $offset += $this->mac_size;
 
                 $d = unpack("@$offset/noid/nerror/nolen", $data);
-                $this->original_id = $d["oid"];
-                $this->error = $d["error"];
-                $this->other_len = $d["olen"];
+                $this->original_id = $d['oid'];
+                $this->error = $d['error'];
+                $this->other_len = $d['olen'];
                 $offset += 6;
 
                 $odata = substr($data, $offset, $this->other_len);
-                $d = unpack("nodata_high/Nodata_low", $odata);
-                $this->other_data = $d["odata_low"];
+                $d = unpack('nodata_high/Nodata_low', $odata);
+                $this->other_data = $d['odata_low'];
             }
         } else {
-            if (strlen($data) && preg_match("/^(.*)$/", $data, $regs)) {
+            if (strlen($data) && preg_match('/^(.*)$/', $data, $regs)) {
                 $this->key = $regs[1];
             }
 
@@ -95,14 +95,14 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
 
             $this->fudge       = NET_DNS_DEFAULT_FUDGE;
             $this->mac_size    = 0;
-            $this->mac         = "";
+            $this->mac         = '';
             $this->original_id = 0;
             $this->error       = 0;
             $this->other_len   = 0;
-            $this->other_data  = "";
+            $this->other_data  = '';
 
             // RFC 2845 Section 2.3
-            $this->class = "ANY";
+            $this->class = 'ANY';
         }
     }
 
@@ -112,25 +112,25 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
     {
         $error = $this->error;
         if (! $error) {
-            $error = "UNDEFINED";
+            $error = 'UNDEFINED';
         }
 
         if (strlen($this->algorithm)) {
-            $rdatastr = $this->algorithm . ". " . $this->time_signed . " " .
-                $this->fudge . " ";
+            $rdatastr = $this->algorithm . '. ' . $this->time_signed . ' ' .
+                $this->fudge . ' ';
             if ($this->mac_size && strlen($this->mac)) {
-                $rdatastr .= " " . $this->mac_size . " " . base64_encode($this->mac);
+                $rdatastr .= ' ' . $this->mac_size . ' ' . base64_encode($this->mac);
             } else {
-                $rdatastr .= " 0 ";
+                $rdatastr .= ' 0 ';
             }
-            $rdatastr .= " " . $this->original_id . " " . $error;
+            $rdatastr .= ' ' . $this->original_id . ' ' . $error;
             if ($this->other_len && strlen($this->other_data)) {
-                $rdatastr .= " " . $this->other_data;
+                $rdatastr .= ' ' . $this->other_data;
             } else {
-                $rdatastr .= " 0 ";
+                $rdatastr .= ' 0 ';
             }
         } else {
-            $rdatastr = "; no data";
+            $rdatastr = '; no data';
         }
 
         return($rdatastr);
@@ -140,11 +140,12 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
     /* Net_DNS_RR_TSIG::rr_rdata($packet, $offset) {{{ */
     function rr_rdata($packet, $offset)
     {
-        $rdata = "";
+        $rdata = '';
+        $sigdata = '';
 
         if (strlen($this->key)) {
             $key = $this->key;
-            $key = ereg_replace(" ", "", $key);
+            $key = ereg_replace(' ', '', $key);
             $key = base64_decode($key);
 
             $newpacket = $packet;
@@ -156,8 +157,8 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
             /*
              * Add the request MAC if present (used to validate responses).
              */
-            if (strlen($this->request_mac)) {
-                $sigdata .= pack("H*", $this->request_mac);
+            if (isset($this->request_mac)) {
+                $sigdata .= pack('H*', $this->request_mac);
             }
             $sigdata .= $newpacket->data();
 
@@ -167,8 +168,8 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
             $tmppacket = new Net_DNS_Packet;
             $sigdata .= $tmppacket->dn_comp(strtolower($this->name), 0);
 
-            $sigdata .= pack("n", Net_DNS::classesbyname(strtoupper($this->class)));
-            $sigdata .= pack("N", $this->ttl);
+            $sigdata .= pack('n', Net_DNS::classesbyname(strtoupper($this->class)));
+            $sigdata .= pack('N', $this->ttl);
 
             /*
              * Don't compress the algorithm name.
@@ -176,12 +177,12 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
             $tmppacket->compnames = array();
             $sigdata .= $tmppacket->dn_comp(strtolower($this->algorithm), 0);
 
-            $sigdata .= pack("nN", 0, $this->time_signed);
-            $sigdata .= pack("n", $this->fudge);
-            $sigdata .= pack("nn", $this->error, $this->other_len);
+            $sigdata .= pack('nN', 0, $this->time_signed);
+            $sigdata .= pack('n', $this->fudge);
+            $sigdata .= pack('nn', $this->error, $this->other_len);
 
             if (strlen($this->other_data)) {
-                $sigdata .= pack("nN", 0, $this->other_data);
+                $sigdata .= pack('nN', 0, $this->other_data);
             }
 
             $this->mac = mhash(MHASH_MD5, $sigdata, $key);
@@ -194,16 +195,16 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
             $tmppacket = new Net_DNS_Packet;
             $rdata .= $tmppacket->dn_comp(strtolower($this->algorithm), 0);
 
-            $rdata .= pack("nN", 0, $this->time_signed);
-            $rdata .= pack("nn", $this->fudge, $this->mac_size);
+            $rdata .= pack('nN', 0, $this->time_signed);
+            $rdata .= pack('nn', $this->fudge, $this->mac_size);
             $rdata .= $this->mac;
 
-            $rdata .= pack("nnn",$packet->header->id,
+            $rdata .= pack('nnn',$packet->header->id,
                     $this->error,
                     $this->other_len);
 
             if ($this->other_data) {
-                $rdata .= pack("nN", 0, $this->other_data);
+                $rdata .= pack('nN', 0, $this->other_data);
             }
         }
         return($rdata);

@@ -73,8 +73,8 @@ class Net_DNS_Question
     function data($packet, $offset)
     {
         $data = $packet->dn_comp($this->qname, $offset);
-        $data .= pack("n", Net_DNS::typesbyname(strtoupper($this->qtype)));
-        $data .= pack("n", Net_DNS::classesbyname(strtoupper($this->qclass)));
+        $data .= pack('n', Net_DNS::typesbyname(strtoupper($this->qtype)));
+        $data .= pack('n', Net_DNS::classesbyname(strtoupper($this->qclass)));
         return($data);
     }
 

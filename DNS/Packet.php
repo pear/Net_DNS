@@ -94,6 +94,36 @@ class Net_DNS_Packet
      * @access  public
      */
     var $question;
+    /**
+     * An array of Net_DNS_RR ANSWER objects
+     *
+     * Contains all of the answer RRs within the packet.  Each answer is
+     * stored as an object of type Net_DNS_RR.
+     *
+     * @var array   $answer
+     * @access  public
+     */
+    var $answer;
+    /**
+     * An array of Net_DNS_RR AUTHORITY objects
+     *
+     * Contains all of the authority RRs within the packet.  Each authority is
+     * stored as an object of type Net_DNS_RR.
+     *
+     * @var array   $authority
+     * @access  public
+     */
+    var $authority;
+    /**
+     * An array of Net_DNS_RR ADDITIONAL objects
+     *
+     * Contains all of the additional RRs within the packet.  Each additional is
+     * stored as an object of type Net_DNS_RR.
+     *
+     * @var array   $additional
+     * @access  public
+     */
+    var $additional;
 
     /* }}} */
     /* class constructor - Net_DNS_Packet($debug = FALSE) {{{ */
@@ -126,7 +156,7 @@ class Net_DNS_Packet
      * @param   string $class   The class of record to query
      * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
      */
-    function buildQuestion($name, $type = "A", $class = "IN")
+    function buildQuestion($name, $type = 'A', $class = 'IN')
     {
         $this->header = new Net_DNS_Header();
         $this->header->qdcount = 1;
@@ -160,7 +190,7 @@ class Net_DNS_Packet
     function parse($data)
     {
         if ($this->debug) {
-            echo ";; HEADER SECTION\n";
+            echo ';; HEADER SECTION' . "\n";
         }
 
         $this->header = new Net_DNS_Header($data);
@@ -174,9 +204,9 @@ class Net_DNS_Packet
          */
         if ($this->debug) {
             echo "\n";
-            $section = ($this->header->opcode  == "UPDATE") ? "ZONE" : "QUESTION";
-            echo ";; $section SECTION (" . $this->header->qdcount . " record" .
-                ($this->header->qdcount == 1 ? "" : "s") . ")\n";
+            $section = ($this->header->opcode  == 'UPDATE') ? 'ZONE' : 'QUESTION';
+            echo ";; $section SECTION (" . $this->header->qdcount . ' record' .
+                ($this->header->qdcount == 1 ? '' : 's') . ")\n";
         }
 
         $offset = 12;
@@ -200,10 +230,10 @@ class Net_DNS_Packet
          */
         if ($this->debug) {
             echo "\n";
-            $section = ($this->header->opcode == "UPDATE") ? "PREREQUISITE" :"ANSWER";
+            $section = ($this->header->opcode == 'UPDATE') ? 'PREREQUISITE' :'ANSWER';
             echo ";; $section SECTION (" .
-                $this->header->ancount . " record" .
-                (($this->header->ancount == 1) ? "" : "s") .
+                $this->header->ancount . ' record' .
+                (($this->header->ancount == 1) ? '' : 's') .
                 ")\n";
         }
 
@@ -225,10 +255,10 @@ class Net_DNS_Packet
          */
         if ($this->debug) {
             echo "\n";
-            $section = ($this->header->opcode == "UPDATE") ? "UPDATE" : "AUTHORITY";
+            $section = ($this->header->opcode == 'UPDATE') ? 'UPDATE' : 'AUTHORITY';
             echo ";; $section SECTION (" .
-                $this->header->nscount . " record" .
-                (($this->header->nscount == 1) ? "" : "s") .
+                $this->header->nscount . ' record' .
+                (($this->header->nscount == 1) ? '' : 's') .
                 ")\n";
         }
 
@@ -250,9 +280,9 @@ class Net_DNS_Packet
          */
         if ($this->debug) {
             echo "\n";
-            echo ";; ADDITIONAL SECTION (" .
-                $this->header->arcount . " record" .
-                (($this->header->arcount == 1) ? "" : "s") .
+            echo ';; ADDITIONAL SECTION (' .
+                $this->header->arcount . ' record' .
+                (($this->header->arcount == 1) ? '' : 's') .
                 ")\n";
         }
 
@@ -324,23 +354,23 @@ class Net_DNS_Packet
      */
     function dn_comp($name, $offset)
     {
-        $names = explode(".", $name);
-        $compname = "";
+        $names = explode('.', $name);
+        $compname = '';
         while (count($names)) {
-            $dname = join(".", $names);
+            $dname = join('.', $names);
             if (isset($this->compnames[$dname])) {
-                $compname .= pack("n", 0xc000 | $this->compnames[$dname]);
+                $compname .= pack('n', 0xc000 | $this->compnames[$dname]);
                 break;
             }
 
             $this->compnames[$dname] = $offset;
             $first = array_shift($names);
             $length = strlen($first);
-            $compname .= pack("Ca*", $length, $first);
+            $compname .= pack('Ca*', $length, $first);
             $offset += $length + 1;
         }
         if (! count($names)) {
-            $compname .= pack("C", 0);
+            $compname .= pack('C', 0);
         }
         return($compname);
     }
@@ -367,14 +397,14 @@ class Net_DNS_Packet
     {
         $packetlen = strlen($packet);
         $int16sz = 2;
-        $name = "";
+        $name = '';
         while (1) {
             if ($packetlen < ($offset + 1)) {
                 return(array(NULL, NULL));
             }
 
             $a = unpack("@$offset/Cchar", $packet);
-            $len = $a["char"];
+            $len = $a['char'];
 
             if ($len == 0) {
                 $offset++;
@@ -384,7 +414,7 @@ class Net_DNS_Packet
                     return(array(NULL, NULL));
                 }
                 $ptr = unpack("@$offset/ni", $packet);
-                $ptr = $ptr["i"];
+                $ptr = $ptr['i'];
                 $ptr = $ptr & 0x3fff;
                 $name2 = Net_DNS_Packet::dn_expand($packet, $ptr);
 
@@ -402,11 +432,11 @@ class Net_DNS_Packet
                 }
 
                 $elem = substr($packet, $offset, $len);
-                $name .= $elem . ".";
+                $name .= $elem . '.';
                 $offset += $len;
             }
         }
-        $name = ereg_replace("\.$", "", $name);
+        $name = ereg_replace('\.$', '', $name);
         return(array($name, $offset));
     }
 
@@ -438,8 +468,8 @@ class Net_DNS_Packet
         }
 
         $q = unpack("@$offset/n2int", $data);
-        $qtype = $q["int1"];
-        $qclass = $q["int2"];
+        $qtype = $q['int1'];
+        $qclass = $q['int2'];
         $offset += 2 * 2;
 
         $qtype = Net_DNS::typesbyval($qtype);
@@ -477,10 +507,10 @@ class Net_DNS_Packet
         }
 
         $a = unpack("@$offset/n2tc/Nttl/nrdlength", $data);
-        $type = $a["tc1"];
-        $class = $a["tc2"];
-        $ttl = $a["ttl"];
-        $rdlength = $a["rdlength"];
+        $type = $a['tc1'];
+        $class = $a['tc2'];
+        $ttl = $a['ttl'];
+        $rdlength = $a['rdlength'];
 
         $type = Net_DNS::typesbyval($type);
         $class = Net_DNS::classesbyval($class);
@@ -524,9 +554,9 @@ class Net_DNS_Packet
      */ 
     function string()
     {
-        $retval = "";
+        $retval = '';
         if ($this->answerfrom) {
-            $retval .= ";; Answer received from " . $this->answerfrom . "(" .
+            $retval .= ';; Answer received from ' . $this->answerfrom . '(' .
                 $this->answersize . " bytes)\n;;\n";
         }
 
@@ -534,44 +564,44 @@ class Net_DNS_Packet
         $retval .= $this->header->string();
         $retval .= "\n";
 
-        $section = ($this->header->opcode == "UPDATE") ? "ZONE" : "QUESTION";
+        $section = ($this->header->opcode == 'UPDATE') ? 'ZONE' : 'QUESTION';
         $retval .= ";; $section SECTION (" . $this->header->qdcount     .
-            " record" . ($this->header->qdcount == 1 ? "" : "s") .
+            ' record' . ($this->header->qdcount == 1 ? '' : 's') .
             ")\n";
 
         foreach ($this->question as $qr) {
-            $retval .= ";; " . $qr->string() . "\n";
+            $retval .= ';; ' . $qr->string() . "\n";
         }
 
-        $section = ($this->header->opcode == "UPDATE") ? "PREREQUISITE" : "ANSWER";
+        $section = ($this->header->opcode == 'UPDATE') ? 'PREREQUISITE' : 'ANSWER';
         $retval .= "\n;; $section SECTION (" . $this->header->ancount     .
-            " record" . ($this->header->ancount == 1 ? "" : "s") .
+            ' record' . ($this->header->ancount == 1 ? '' : 's') .
             ")\n";
 
         if (is_array($this->answer)) {
             foreach ($this->answer as $ans) {
-                $retval .= ";; " . $ans->string() . "\n";
+                $retval .= ';; ' . $ans->string() . "\n";
             }
         }
 
-        $section = ($this->header->opcode == "UPDATE") ? "UPDATE" : "AUTHORITY";
+        $section = ($this->header->opcode == 'UPDATE') ? 'UPDATE' : 'AUTHORITY';
         $retval .= "\n;; $section SECTION (" . $this->header->nscount     .
-            " record" . ($this->header->nscount == 1 ? "" : "s") .
+            ' record' . ($this->header->nscount == 1 ? '' : 's') .
             ")\n";
 
         if (is_array($this->authority)) {
             foreach ($this->authority as $auth) {
-                $retval .= ";; " . $auth->string() . "\n";
+                $retval .= ';; ' . $auth->string() . "\n";
             }
         }
 
         $retval .= "\n;; ADDITIONAL SECTION (" . $this->header->arcount     .
-            " record" . ($this->header->arcount == 1 ? "" : "s") .
+            ' record' . ($this->header->arcount == 1 ? '' : 's') .
             ")\n";
 
         if (is_array($this->additional)) {
             foreach ($this->additional as $addl) {
-                $retval .= ";; " . $addl->string() . "\n";
+                $retval .= ';; ' . $addl->string() . "\n";
             }
         }
 

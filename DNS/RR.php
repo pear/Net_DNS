@@ -76,8 +76,8 @@ class Net_DNS_RR
         $this->ttl = $ttl;
         $this->rdlength = $rdlength;
         $this->rdata = substr($data, $offset, $rdlength);
-        if (class_exists("Net_DNS_RR_" . $rrtype)) {
-            $scn = "Net_DNS_RR_" . $rrtype;
+        if (class_exists('Net_DNS_RR_' . $rrtype)) {
+            $scn = 'Net_DNS_RR_' . $rrtype;
             $subclass = new $scn($this, $data, $offset);
             return($subclass);
         } else {
@@ -86,22 +86,22 @@ class Net_DNS_RR
     }
 
     /* }}} */
-    /* Net_DNS_RR::new_from_string($rrstring, $update_type = "") {{{ */
-    function new_from_string($rrstring, $update_type = "")
+    /* Net_DNS_RR::new_from_string($rrstring, $update_type = '') {{{ */
+    function new_from_string($rrstring, $update_type = '')
     {
         $ttl = 0;
-        $parts = preg_split("/[\s]+/", $rrstring);
+        $parts = preg_split('/[\s]+/', $rrstring);
         while ($s = array_shift($parts)) {
-            if (!strlen($name)) {
-                $name = ereg_replace("\.+$", "", $s);
-            } else if (preg_match("/^\d+$/", $s)) {
+            if (!isset($name)) {
+                $name = ereg_replace('\.+$', '', $s);
+            } else if (preg_match('/^\d+$/', $s)) {
                 $ttl = $s;
-            } else if (!strlen($rrclass) && ! is_null(Net_DNS::classesbyname(strtoupper($s)))) {
+            } else if (!isset($rrclass) && ! is_null(Net_DNS::classesbyname(strtoupper($s)))) {
                 $rrclass = strtoupper($s);
-                $rdata = join(" ", $parts);
+                $rdata = join(' ', $parts);
             } else if (! is_null(Net_DNS::typesbyname(strtoupper($s)))) {
                 $rrtype = strtoupper($s);
-                $rdata = join(" ", $parts);
+                $rdata = join(' ', $parts);
                 break;
             } else {
                 break;
@@ -113,47 +113,47 @@ class Net_DNS_RR
          */
         $rdata = trim(chop($rdata));
 
-        if (! strlen($rrtype) && strlen($rrclass) && $rrclass == "ANY") {
+        if (! strlen($rrtype) && strlen($rrclass) && $rrclass == 'ANY') {
             $rrtype = $rrclass;
-            $rrclass = "IN";
-        } else if (! strlen($rrclass)) {
-            $rrclass = "IN";
+            $rrclass = 'IN';
+        } else if (! isset($rrclass)) {
+            $rrclass = 'IN';
         }
 
         if (! strlen($rrtype)) {
-            $rrtype = "ANY";
+            $rrtype = 'ANY';
         }
 
         if (strlen($update_type)) {
             $update_type = strtolower($update_type);
-            if ($update_type == "yxrrset") {
+            if ($update_type == 'yxrrset') {
                 $ttl = 0;
                 if (! strlen($rdata)) {
-                    $rrclass = "ANY";
+                    $rrclass = 'ANY';
                 }
-            } else if ($update_type == "nxrrset") {
+            } else if ($update_type == 'nxrrset') {
                 $ttl = 0;
-                $rrclass = "NONE";
-                $rdata = "";
-            } else if ($update_type == "yxdomain") {
+                $rrclass = 'NONE';
+                $rdata = '';
+            } else if ($update_type == 'yxdomain') {
                 $ttl = 0;
-                $rrclass = "ANY";
-                $rrtype = "ANY";
-                $rdata = "";
-            } else if ($update_type == "nxdomain") {
+                $rrclass = 'ANY';
+                $rrtype = 'ANY';
+                $rdata = '';
+            } else if ($update_type == 'nxdomain') {
                 $ttl = 0;
-                $rrclass = "NONE";
-                $rrtype = "ANY";
-                $rdata = "";
-            } else if (preg_match("/^(rr_)?add$/", $update_type)) {
-                $update_type = "add";
+                $rrclass = 'NONE';
+                $rrtype = 'ANY';
+                $rdata = '';
+            } else if (preg_match('/^(rr_)?add$/', $update_type)) {
+                $update_type = 'add';
                 if (! $ttl) {
                     $ttl = 86400;
                 }
-            } else if (preg_match("/^(rr_)?del(ete)?$/", $update_type)) {
-                $update_type = "del";
+            } else if (preg_match('/^(rr_)?del(ete)?$/', $update_type)) {
+                $update_type = 'del';
                 $ttl = 0;
-                $rrclass = $rdata ? "NONE" : "ANY";
+                $rrclass = $rdata ? 'NONE' : 'ANY';
             }
         }
 
@@ -163,10 +163,10 @@ class Net_DNS_RR
             $this->class = $rrclass;
             $this->ttl = $ttl;
             $this->rdlength = 0;
-            $this->rdata = "";
+            $this->rdata = '';
 
-            if (class_exists("Net_DNS_RR_" . $rrtype)) {
-                $scn = "Net_DNS_RR_" . $rrtype;
+            if (class_exists('Net_DNS_RR_' . $rrtype)) {
+                $scn = 'Net_DNS_RR_' . $rrtype;
                 $rc = new $scn($this, $rdata);
                 return($rc);
             } else {
@@ -195,13 +195,13 @@ class Net_DNS_RR
             $this->ttl = 0;
         }
         if (! strlen($this->class)) {
-            $this->class = "IN";
+            $this->class = 'IN';
         }
         if (strlen($this->rdata)) {
             $this->rdlength = strlen($rdata);
         }
-        if (class_exists("Net_DNS_RR_" . $rrtype)) {
-            $scn = "Net_DNS_RR_" . $rrtype;
+        if (class_exists('Net_DNS_RR_' . $rrtype)) {
+            $scn = 'Net_DNS_RR_' . $rrtype;
             $rc = new $scn($this, $rdata);
             return($rc);
         } else
@@ -219,7 +219,7 @@ class Net_DNS_RR
     /* Net_DNS_RR::string() {{{ */
     function string()
     {
-        return($this->name . ".\t" . (strlen($this->name) < 16 ? "\t" : "") .
+        return($this->name . ".\t" . (strlen($this->name) < 16 ? "\t" : '') .
                 $this->ttl  . "\t"  .
                 $this->class. "\t"  .
                 $this->type . "\t"  .
@@ -232,14 +232,14 @@ class Net_DNS_RR
     function rdatastr()
     {
         if ($this->rdlength) {
-            return("; rdlength = " . $this->rdlength);
+            return('; rdlength = ' . $this->rdlength);
         }
-        return("; no data");
+        return('; no data');
     }
 
     /* }}} */
     /* Net_DNS_RR::rdata() {{{ */
-    function rdata(&$packetORrdata, $offset = "")
+    function rdata(&$packetORrdata, $offset = '')
     {
         if ($offset) {
             return($this->rr_rdata($packetORrdata, $offset));
@@ -254,21 +254,21 @@ class Net_DNS_RR
     /* Net_DNS_RR::rr_rdata($packet, $offset) {{{ */
     function rr_rdata(&$packet, $offset)
     {
-        return((strlen($this->rdata) ? $this->rdata : ""));
+        return((strlen($this->rdata) ? $this->rdata : ''));
     }
     /* }}} */
     /* Net_DNS_RR::data() {{{ */
     function data(&$packet, $offset)
     {
         $data = $packet->dn_comp($this->name, $offset);
-        $data .= pack("n", Net_DNS::typesbyname(strtoupper($this->type)));
-        $data .= pack("n", Net_DNS::classesbyname(strtoupper($this->class)));
-        $data .= pack("N", $this->ttl);
+        $data .= pack('n', Net_DNS::typesbyname(strtoupper($this->type)));
+        $data .= pack('n', Net_DNS::classesbyname(strtoupper($this->class)));
+        $data .= pack('N', $this->ttl);
 
         $offset += strlen($data) + 2;  // The 2 extra bytes are for rdlength
 
         $rdata = $this->rdata($packet, $offset);
-        $data .= pack("n", strlen($rdata));
+        $data .= pack('n', strlen($rdata));
         $data .= $rdata;
 
         return($data);

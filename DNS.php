@@ -43,7 +43,7 @@
 
 /* Include information {{{ */
 
-    $phpdns_basedir = "Net";
+    $phpdns_basedir = 'Net';
     require_once("$phpdns_basedir/DNS/Header.php");
     require_once("$phpdns_basedir/DNS/Question.php");
     require_once("$phpdns_basedir/DNS/Packet.php");
@@ -79,7 +79,7 @@ class Net_DNS
      * @var object Net_DNS_Resolver
      */
     var $resolver;
-    var $VERSION = "0.01";
+    var $VERSION = '0.01';
     var $PACKETSZ = 512;
     var $HFIXEDSZ = 12;
     var $QFIXEDSZ = 4;
@@ -119,11 +119,11 @@ class Net_DNS
     function opcodesbyname($opcode)
     {
         $op = array(
-                "QUERY"        => 0,   // RFC 1035
-                "IQUERY"       => 1,   // RFC 1035
-                "STATUS"       => 2,   // RFC 1035
-                "NS_NOTIFY_OP" => 4,   // RFC 1996
-                "UPDATE"       => 5,   // RFC 2136
+                'QUERY'        => 0,   // RFC 1035
+                'IQUERY'       => 1,   // RFC 1035
+                'STATUS'       => 2,   // RFC 1035
+                'NS_NOTIFY_OP' => 4,   // RFC 1996
+                'UPDATE'       => 5,   // RFC 2136
                 );
         if (! strlen($op[$opcode])) {
             $op[$opcode] = NULL;
@@ -145,11 +145,11 @@ class Net_DNS
     function opcodesbyval($opcodeval)
     {
         $opval = array(
-                0 => "QUERY",
-                1 => "IQUERY",
-                2 => "STATUS",
-                4 => "NS_NOTIFY_OP",
-                5 => "UPDATE",
+                0 => 'QUERY',
+                1 => 'IQUERY',
+                2 => 'STATUS',
+                4 => 'NS_NOTIFY_OP',
+                5 => 'UPDATE',
                 );
         if (! strlen($opval[$opcodeval])) {
             $opval[$opcodeval] = NULL;
@@ -184,17 +184,17 @@ class Net_DNS
     function rcodesbyname($rcode)
     {
         $rc = array(
-                "NOERROR"   => 0,   // RFC 1035
-                "FORMERR"   => 1,   // RFC 1035
-                "SERVFAIL"  => 2,   // RFC 1035
-                "NXDOMAIN"  => 3,   // RFC 1035
-                "NOTIMP"    => 4,   // RFC 1035
-                "REFUSED"   => 5,   // RFC 1035
-                "YXDOMAIN"  => 6,   // RFC 2136
-                "YXRRSET"   => 7,   // RFC 2136
-                "NXRRSET"   => 8,   // RFC 2136
-                "NOTAUTH"   => 9,   // RFC 2136
-                "NOTZONE"   => 10,    // RFC 2136
+                'NOERROR'   => 0,   // RFC 1035
+                'FORMERR'   => 1,   // RFC 1035
+                'SERVFAIL'  => 2,   // RFC 1035
+                'NXDOMAIN'  => 3,   // RFC 1035
+                'NOTIMP'    => 4,   // RFC 1035
+                'REFUSED'   => 5,   // RFC 1035
+                'YXDOMAIN'  => 6,   // RFC 2136
+                'YXRRSET'   => 7,   // RFC 2136
+                'NXRRSET'   => 8,   // RFC 2136
+                'NOTAUTH'   => 9,   // RFC 2136
+                'NOTZONE'   => 10,    // RFC 2136
                 );
         if (! strlen($rc[$rcode])) {
             $rc[$rcode] = NULL;
@@ -216,17 +216,17 @@ class Net_DNS
     function rcodesbyval($rcodeval)
     {
         $rc = array(
-                0 => "NOERROR",
-                1 => "FORMERR",
-                2 => "SERVFAIL",
-                3 => "NXDOMAIN",
-                4 => "NOTIMP",
-                5 => "REFUSED",
-                6 => "YXDOMAIN",
-                7 => "YXRRSET",
-                8 => "NXRRSET",
-                9 => "NOTAUTH",
-                10 => "NOTZONE",
+                0 => 'NOERROR',
+                1 => 'FORMERR',
+                2 => 'SERVFAIL',
+                3 => 'NXDOMAIN',
+                4 => 'NOTIMP',
+                5 => 'REFUSED',
+                6 => 'YXDOMAIN',
+                7 => 'YXRRSET',
+                8 => 'NXRRSET',
+                9 => 'NOTAUTH',
+                10 => 'NOTZONE',
                 );
         if (! strlen($rc[$rcodeval])) {
             $rc[$rcodeval] = NULL;
@@ -297,51 +297,51 @@ class Net_DNS
     function typesbyname($rrtype)
     {
         $rc = array(
-                "A"             => 1,
-                "NS"            => 2,
-                "MD"            => 3,
-                "MF"            => 4,
-                "CNAME"         => 5,
-                "SOA"           => 6,
-                "MB"            => 7,
-                "MG"            => 8,
-                "MR"            => 9,
-                "NULL"          => 10,
-                "WKS"           => 11,
-                "PTR"           => 12,
-                "HINFO"         => 13,
-                "MINFO"         => 14,
-                "MX"            => 15,
-                "TXT"           => 16,
-                "RP"            => 17,
-                "AFSDB"         => 18,
-                "X25"           => 19,
-                "ISDN"          => 20,
-                "RT"            => 21,
-                "NSAP"          => 22,
-                "NSAP_PTR"      => 23,
-                "SIG"           => 24,
-                "KEY"           => 25,
-                "PX"            => 26,
-                "GPOS"          => 27,
-                "AAAA"          => 28,
-                "LOC"           => 29,
-                "NXT"           => 30,
-                "EID"           => 31,
-                "NIMLOC"        => 32,
-                "SRV"           => 33,
-                "ATMA"          => 34,
-                "NAPTR"         => 35,
-                "UINFO"         => 100,
-                "UID"           => 101,
-                "GID"           => 102,
-                "UNSPEC"        => 103,
-                "TSIG"          => 250,
-                "IXFR"          => 251,
-                "AXFR"          => 252,
-                "MAILB"         => 253,
-                "MAILA"         => 254,
-                "ANY"           => 255,
+                'A'             => 1,
+                'NS'            => 2,
+                'MD'            => 3,
+                'MF'            => 4,
+                'CNAME'         => 5,
+                'SOA'           => 6,
+                'MB'            => 7,
+                'MG'            => 8,
+                'MR'            => 9,
+                'NULL'          => 10,
+                'WKS'           => 11,
+                'PTR'           => 12,
+                'HINFO'         => 13,
+                'MINFO'         => 14,
+                'MX'            => 15,
+                'TXT'           => 16,
+                'RP'            => 17,
+                'AFSDB'         => 18,
+                'X25'           => 19,
+                'ISDN'          => 20,
+                'RT'            => 21,
+                'NSAP'          => 22,
+                'NSAP_PTR'      => 23,
+                'SIG'           => 24,
+                'KEY'           => 25,
+                'PX'            => 26,
+                'GPOS'          => 27,
+                'AAAA'          => 28,
+                'LOC'           => 29,
+                'NXT'           => 30,
+                'EID'           => 31,
+                'NIMLOC'        => 32,
+                'SRV'           => 33,
+                'ATMA'          => 34,
+                'NAPTR'         => 35,
+                'UINFO'         => 100,
+                'UID'           => 101,
+                'GID'           => 102,
+                'UNSPEC'        => 103,
+                'TSIG'          => 250,
+                'IXFR'          => 251,
+                'AXFR'          => 252,
+                'MAILB'         => 253,
+                'MAILA'         => 254,
+                'ANY'           => 255,
                 );
                 if (! strlen($rc[$rrtype])) {
                     $rc[$rrtype] = NULL;
@@ -363,51 +363,51 @@ class Net_DNS
     function typesbyval($rrtypeval)
     {
         $rc = array(
-                1 => "A",
-                2 => "NS",
-                3 => "MD",
-                4 => "MF",
-                5 => "CNAME",
-                6 => "SOA",
-                7 => "MB",
-                8 => "MG",
-                9 => "MR",
-                10 => "NULL",
-                11 => "WKS",
-                12 => "PTR",
-                13 => "HINFO",
-                14 => "MINFO",
-                15 => "MX",
-                16 => "TXT",
-                17 => "RP",
-                18 => "AFSDB",
-                19 => "X25",
-                20 => "ISDN",
-                21 => "RT",
-                22 => "NSAP",
-                23 => "NSAP_PTR",
-                24 => "SIG",
-                25 => "KEY",
-                26 => "PX",
-                27 => "GPOS",
-                28 => "AAAA",
-                29 => "LOC",
-                30 => "NXT",
-                31 => "EID",
-                32 => "NIMLOC",
-                33 => "SRV",
-                34 => "ATMA",
-                35 => "NAPTR",
-                100 => "UINFO",
-                101 => "UID",
-                102 => "GID",
-                103 => "UNSPEC",
-                250 => "TSIG",
-                251 => "IXFR",
-                252 => "AXFR",
-                253 => "MAILB",
-                254 => "MAILA",
-                255 => "ANY",
+                1 => 'A',
+                2 => 'NS',
+                3 => 'MD',
+                4 => 'MF',
+                5 => 'CNAME',
+                6 => 'SOA',
+                7 => 'MB',
+                8 => 'MG',
+                9 => 'MR',
+                10 => 'NULL',
+                11 => 'WKS',
+                12 => 'PTR',
+                13 => 'HINFO',
+                14 => 'MINFO',
+                15 => 'MX',
+                16 => 'TXT',
+                17 => 'RP',
+                18 => 'AFSDB',
+                19 => 'X25',
+                20 => 'ISDN',
+                21 => 'RT',
+                22 => 'NSAP',
+                23 => 'NSAP_PTR',
+                24 => 'SIG',
+                25 => 'KEY',
+                26 => 'PX',
+                27 => 'GPOS',
+                28 => 'AAAA',
+                29 => 'LOC',
+                30 => 'NXT',
+                31 => 'EID',
+                32 => 'NIMLOC',
+                33 => 'SRV',
+                34 => 'ATMA',
+                35 => 'NAPTR',
+                100 => 'UINFO',
+                101 => 'UID',
+                102 => 'GID',
+                103 => 'UNSPEC',
+                250 => 'TSIG',
+                251 => 'IXFR',
+                252 => 'AXFR',
+                253 => 'MAILB',
+                254 => 'MAILA',
+                255 => 'ANY',
                 );
                 if (! strlen($rc[$rrtypeval])) {
                     $rc[$rrtypeval] = NULL;
@@ -435,13 +435,13 @@ class Net_DNS
     function classesbyname($class)
     {
         $rc = array(
-                "IN"            => 1,
-                "CH"            => 3,
-                "HS"            => 4,
-                "NONE"          => 254,
-                "ANY"           => 255
+                'IN'            => 1,
+                'CH'            => 3,
+                'HS'            => 4,
+                'NONE'          => 254,
+                'ANY'           => 255
                 );
-        if (! strlen($rc[$class])) {
+        if (! isset($rc[$class])) {
             $rc[$class] = NULL;
         }
         return($rc[$class]);
@@ -461,11 +461,11 @@ class Net_DNS
     function classesbyval($classval)
     {
         $rc = array(
-                1 => "IN",
-                3 => "CH",
-                4 => "HS",
-                254 => "NONE",
-                255 => "ANY"
+                1 => 'IN',
+                3 => 'CH',
+                4 => 'HS',
+                254 => 'NONE',
+                255 => 'ANY'
                 );
         if (! strlen($rc[$classval])) {
             $rc[$classval] = NULL;
