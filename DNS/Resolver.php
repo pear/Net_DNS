@@ -216,6 +216,41 @@ class Net_DNS_Resolver
      * @access public
      */
     var $useEnhancedSockets = 1;
+    /**
+     * An array of sockets connected to a name servers
+     *
+     * @var array $sockets
+     * @access private
+     */
+    var $sockets;
+    /**
+     * axfr tcp socket
+     *
+     * Used to store a PHP socket resource for a connection to a server
+     *
+     * @var resource $_axfr_sock;
+     * @access private
+     */
+    var $_axfr_sock;
+    /**
+     * axfr resource record lsit
+     *
+     * Used to store a resource record list from a zone transfer
+     *
+     * @var resource $_axfr_rr;
+     * @access private
+     */
+    var $_axfr_rr;
+    /**
+     * axfr soa count
+     *
+     * Used to store the number of soa records received from a zone transfer
+     *
+     * @var resource $_axfr_soa_count;
+     * @access private
+     */
+    var $_axfr_soa_count;
+
 
     /* }}} */
     /* class constructor - Net_DNS_Resolver() {{{ */
@@ -1037,46 +1072,237 @@ class Net_DNS_Resolver
     }
 
     /* }}} */
-    /* Net_DNS_Resolver::axfr() {{{ */
+    /* Net_DNS_Resolver::axfr($dname, $class = 'IN', $old = FALSE) {{{ */
     /**
      * Performs an AXFR query (zone transfer)
      *
      * Requests a zone transfer from the nameservers. Note that zone
      * transfers will ALWAYS use TCP regardless of the setting of the
-     * Net_DNS_Resolver::$usevc flag
+     * Net_DNS_Resolver::$usevc flag.  If $old is set to TRUE, Net_DNS requires
+     * a nameserver that supports the many-answers style transfer format.  Large
+     * zone transfers will not function properly.  Setting $old to TRUE is _NOT_
+     * recommended and should only be used for backwards compatibility.
      *
      * @param string $dname The domain (zone) to transfer
      * @param string $class The class in which to look for the zone.
+     * @param boolean $old Requires 'old' style many-answer format to function.  Used for backwards compatibility only.
      * @return object Net_DNS_Packet
      * @access public
      */
-    function axfr($dname, $class = 'IN')
+    function axfr($dname, $class = 'IN', $old = FALSE)
+    {
+        if ($old) {
+            if ($this->debug) {
+                echo ";; axfr_start($dname, $class)\n";
+            }
+            if (! count($this->nameservers)) {
+                $this->errorstring = 'no nameservers';
+                if ($this->debug) {
+                    echo ";; ERROR: no nameservers\n";
+                }
+                return(NULL);
+            }
+            $packet = $this->make_query_packet($dname, 'AXFR', $class);
+            $packet_data = $packet->data();
+            $ans = $this->send_tcp($packet, $packet_data);
+            return($ans);
+        } else {
+            if ($this->axfr_start($dname, $class) === NULL) {
+                return(NULL);
+            }
+            $ret = array();
+            while (($ans = $this->axfr_next()) !== NULL) {
+                if ($ans === NULL) {
+                    return(NULL);
+                }
+                array_push($ret, $ans);
+            }
+            return($ret);
+        }
+    }
+
+    /* }}} */
+    /* Net_DNS_Resolver::axfr_start($dname, $class = 'IN') {{{ */
+    /**
+     * Sends a packet via TCP to the list of name servers.
+     *
+     * @param string $packet    A packet object to send to the NS list
+     * @param string $packet_data   The data in the packet as returned by
+     *                              the Net_DNS_Packet::data() method
+     * @return object Net_DNS_Packet Returns an answer packet object
+     * @see Net_DNS_Resolver::send_tcp()
+     */
+    function axfr_start($dname, $class = 'IN')
     {
         if ($this->debug) {
             echo ";; axfr_start($dname, $class)\n";
         }
+
         if (! count($this->nameservers)) {
-            $this->errorstring = 'no nameservers';
+            $this->errorstring = "no nameservers";
             if ($this->debug) {
-                echo ";; ERROR: no nameservers\n";
+                echo ";; ERROR: axfr_start: no nameservers\n";
             }
             return(NULL);
         }
-        $packet = $this->make_query_packet($dname, 'AXFR', $class);
+        $packet = $this->make_query_packet($dname, "AXFR", $class);
         $packet_data = $packet->data();
-        $ans = $this->send_tcp($packet, $packet_data);
-        return($ans);
+
+        $timeout = $this->tcp_timeout;
+
+        foreach ($this->nameservers as $ns) {
+            $dstport = $this->port;
+            if ($this->debug) {
+                echo ";; axfr_start($ns:$dstport)\n";
+            }
+            $sock_key = "$ns:$dstport";
+            if (is_resource($this->sockets[$sock_key])) {
+                $sock = &$this->sockets[$sock_key];
+            } else {
+                if (! ($sock = fsockopen($ns, $dstport, $errno,
+                                $errstr, $timeout))) {
+                    $this->errorstring = "connection failed";
+                    if ($this->debug) {
+                        echo ";; ERROR: axfr_start: connection failed: $errstr\n";
+                    }
+                    continue;
+                }
+                $this->sockets[$sock_key] = $sock;
+                unset($sock);
+                $sock = &$this->sockets[$sock_key];
+            }
+            $lenmsg = pack("n", strlen($packet_data));
+            if ($this->debug) {
+                echo ";; sending " . strlen($packet_data) . " bytes\n";
+            }
+
+            if (($sent = fwrite($sock, $lenmsg)) == -1) {
+                $this->errorstring = "length send failed";
+                if ($this->debug) {
+                    echo ";; ERROR: axfr_start: length send failed\n";
+                }
+                continue;
+            }
+
+            if (($sent = fwrite($sock, $packet_data)) == -1) {
+                $this->errorstring = "packet send failed";
+                if ($this->debug) {
+                    echo ";; ERROR: axfr_start: packet data send failed\n";
+                }
+            }
+
+            socket_set_timeout($sock, $timeout);
+
+            $this->_axfr_sock = $sock;
+            $this->_axfr_rr = array();
+            $this->_axfr_soa_count = 0;
+            return($sock);
+        }
     }
 
     /* }}} */
-    /* not completed - Net_DNS_Resolver::read_tcp() {{{ */
+    /* Net_DNS_Resolver::axfr_next() {{{ */
+    /**
+     * Requests the next RR from a existing transfer started with axfr_start
+     *
+     * @return object Net_DNS_RR Returns a Net_DNS_RR object of the next RR
+     *                           from a zone transfer.
+     * @see Net_DNS_Resolver::send_tcp()
+     */
+    function axfr_next()
+    {
+        if (! count($this->_axfr_rr)) {
+            if (! isset($this->_axfr_sock) || ! is_resource($this->_axfr_sock)) {
+                $this->errorstring = 'no zone transfer in progress';
+                return(NULL);
+            }
+            $timeout = $this->tcp_timeout;
+            $buf = $this->read_tcp($this->_axfr_sock, 2, $this->debug);
+            if (! strlen($buf)) {
+                $this->errorstring = 'truncated zone transfer';
+                return(NULL);
+            }
+            $len = unpack('n1len', $buf);
+            $len = $len['len'];
+            if (! $len) {
+                $this->errorstring = 'truncated zone transfer';
+                return(NULL);
+            }
+            $buf = $this->read_tcp($this->_axfr_sock, $len, $this->debug);
+            if ($this->debug) {
+                echo ';; received ' . strlen($buf) . "bytes\n";
+            }
+            if (strlen($buf) != $len) {
+                $this->errorstring = 'expected ' . $len . ' bytes, received ' . strlen($buf);
+                if ($this->debug) {
+                    echo ';; ' . $err . "\n";
+                }
+                return(NULL);
+            }
+            $ans = new Net_DNS_Packet($this->debug);
+            if (! $ans->parse($buf)) {
+                if (! $this->errorstring) {
+                    $this->errorstring = 'unknown error during packet parsing';
+                }
+                return(NULL);
+            }
+            if ($ans->header->ancount < 1) {
+                $this->errorstring = 'truncated zone transfer';
+                return(NULL);
+            }
+            if ($ans->header->rcode != 'NOERROR') {
+                $this->errorstring = 'errorcode ' . $ans->header->rcode . ' returned';
+                return(NULL);
+            }
+            foreach ($ans->answer as $rr) {
+                if ($rr->type == 'SOA') {
+                    if (++$this->_axfr_soa_count < 2) {
+                        array_push($this->_axfr_rr, $rr);
+                    }
+                } else {
+                    array_push($this->_axfr_rr, $rr);
+                }
+            }
+            if ($this->_axfr_soa_count >= 2) {
+                unset($this->_axfr_sock);
+            }
+        }
+        $rr = array_shift($this->_axfr_rr);
+        return($rr);
+    }
+
+    /* }}} */
+    /* Net_DNS_Resolver::read_tcp() {{{ */
     /**
      * Unknown - not ported yet
      */
-    function read_tcp()
+    function read_tcp($sock, $nbytes, $debug = 0)
     {
-    }
+        $buf = '';
+        while (strlen($buf) < $nbytes) {
+            $nread = $nbytes - strlen($buf);
+            $read_buf = '';
+            if ($debug) {
+                echo ";; read_tcp: expecting $nread bytes\n";
+            }
+            $read_buf = fread($sock, $nread);
+            if (! strlen($read_buf)) {
+                if ($debug) {
+                    echo ";; ERROR: read_tcp: fread failed\n";
+                }
+                break;
+            }
+            if ($debug) {
+                echo ';; read_tcp: received ' . strlen($read_buf) . " bytes\n";
+            }
+            if (!strlen($read_buf)) {
+                break;
+            }
 
+            $buf .= $read_buf;
+        }
+        return($buf);
+    }
     /* }}} */
 }
 /* }}} */
