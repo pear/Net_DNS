@@ -212,7 +212,7 @@ class Net_DNS_Header
      */
     function string()
     {
-        $retval = ';; id = ' . $this->id . '\n';
+        $retval = ';; id = ' . $this->id . "\n";
         if ($this->opcode == 'UPDATE') {
             $retval .= ';; qr = ' . $this->qr . '    ' .
                 'opcode = ' . $this->opcode . '    '   .

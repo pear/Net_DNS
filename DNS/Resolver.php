@@ -666,7 +666,7 @@ class Net_DNS_Resolver
         foreach ($this->nameservers as $ns) {
             $dstport = $this->port;
             if ($this->debug) {
-                echo ";; send_tcp($ns:$dstport) (src port = $srcport)\n";
+                echo ";; send_tcp($ns:$dstport)\n";
             }
             $sock_key = "$ns:$dstport";
             if (isset($this->sockets[$sock_key]) && is_resource($this->sockets[$sock_key])) {
