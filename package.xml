@@ -17,12 +17,17 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.02</version>
-    <date>2002-08-15</date>
+    <version>1.00b</version>
+    <date>2002-02-24</date>
     <license>LGPL 2.1</license>
     <state>beta</state>
     <notes>
-        Supports TSIG signed DNS packets for generating DNS update packets (re: rfc2485)
+- Tested with PHP 4.3.0
+- Should have no warnings under with maximum error_reporting setting 
+- Fixed bug: did not understand name server responses using the one-answer zone transfer format
+- Fixed more problems with PHP warning about uninitialized variables
+
+Note that the interface to the axfr function has changed.  Software relying on the old (buggy) style of axfr queries will need to be updated to call axfr_old() instead of axfr().  The new axfr() function will not return a DNS packet, but an array of RRs ONLY.
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="Net">
@@ -47,6 +52,66 @@
     </filelist>
   </release> 
   <changelog>
+    <release>
+      <version>0.03</version>
+      <date>2002-08-15</date>
+      <license>LGPL 2.1</license>
+      <state>beta</state>
+      <notes>
+Now has stable support of DNS queries, socket handling, and packet parsing/generating. Any problems at this point should be considered bugs and should be reported ASAP. Running this code with E_ALL should be acceptable -- any warnings generated should be submitted to eric@ypass.net.
+      </notes>
+      <filelist>
+	<dir name="/" baseinstalldir="Net">
+	  <file role="php">DNS.php</file>
+	  <dir name="DNS">
+	    <file role="php">Packet.php</file>
+	    <file role="php">Header.php</file>
+	    <file role="php">Question.php</file>
+	    <file role="php">Resolver.php</file>
+	    <file role="php">RR.php</file>
+	    <dir name="RR">
+	      <file role="php">A.php</file>
+	      <file role="php">NS.php</file>
+	      <file role="php">CNAME.php</file>
+	      <file role="php">MX.php</file>
+	      <file role="php">SOA.php</file>
+	      <file role="php">PTR.php</file>
+	      <file role="php">TSIG.php</file>
+	    </dir>
+	  </dir>
+	</dir>
+      </filelist>
+    </release> 
+    <release>
+      <version>0.02</version>
+      <date>2002-08-15</date>
+      <license>LGPL 2.1</license>
+      <state>beta</state>
+      <notes>
+	  Supports TSIG signed DNS packets for generating DNS update packets (re: rfc2485)
+      </notes>
+      <filelist>
+	<dir name="/" baseinstalldir="Net">
+	  <file role="php">DNS.php</file>
+	  <dir name="DNS">
+	    <file role="php">Packet.php</file>
+	    <file role="php">Header.php</file>
+	    <file role="php">Question.php</file>
+	    <file role="php">Resolver.php</file>
+	    <file role="php">RR.php</file>
+	    <dir name="RR">
+	      <file role="php">A.php</file>
+	      <file role="php">NS.php</file>
+	      <file role="php">CNAME.php</file>
+	      <file role="php">MX.php</file>
+	      <file role="php">SOA.php</file>
+	      <file role="php">PTR.php</file>
+	      <file role="php">TSIG.php</file>
+	    </dir>
+	  </dir>
+	</dir>
+      </filelist>
+    </release> 
     <release>
       <version>0.01</version>
       <date>2002-05-14</date>
