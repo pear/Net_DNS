@@ -23,6 +23,43 @@
     </maintainer>
   </maintainers>
   <release>
+    <version>1.00b2</version>
+    <date>2003-06-10</date>
+    <license>LGPL 2.1</license>
+    <state>beta</state>
+    <notes>
+	- More RR types supported: AAAA, HINFO, NAPTR, SRV, and TXT (Sara Goleman).
+	- Fixed bug 23812 (as well as other unreported bugs)
+	- Added capability for extracting arbritrary lables from a packet (Sara Goleman).
+    </notes>
+    <filelist>
+      <dir name="/" baseinstalldir="Net">
+        <file role="php">DNS.php</file>
+        <dir name="DNS">
+          <file role="php">Packet.php</file>
+          <file role="php">Header.php</file>
+          <file role="php">Question.php</file>
+          <file role="php">Resolver.php</file>
+          <file role="php">RR.php</file>
+          <dir name="RR">
+            <file role="php">A.php</file>
+            <file role="php">NS.php</file>
+            <file role="php">CNAME.php</file>
+            <file role="php">MX.php</file>
+            <file role="php">SOA.php</file>
+            <file role="php">PTR.php</file>
+            <file role="php">TSIG.php</file>
+            <file role="php">AAAA.php</file>
+            <file role="php">HINFO.php</file>
+            <file role="php">NAPTR.php</file>
+            <file role="php">SRV.php</file>
+            <file role="php">TXT.php</file>
+          </dir>
+        </dir>
+      </dir>
+    </filelist>
+  </release> 
+  <release>
     <version>1.00b1</version>
     <date>2003-02-24</date>
     <license>LGPL 2.1</license>
