@@ -177,13 +177,13 @@ class Net_DNS_Packet
      * Parses a complete DNS packet and builds an object hierarchy
      * containing all of the parts of the packet:
      * <ul>
-     *   <li>HEADER   
-     *   <li>QUESTION   
-     *   <li>ANSWER || PREREQUISITE   
-     *   <li>ADDITIONAL || UPDATE   
+     *   <li>HEADER
+     *   <li>QUESTION
+     *   <li>ANSWER || PREREQUISITE
+     *   <li>ADDITIONAL || UPDATE
      *   <li>AUTHORITY
      * </ul>
-     * 
+     *
      * @param string $data  A binary string containing a DNS packet
      * @return boolean TRUE on success, NULL on parser error
      */
@@ -344,7 +344,7 @@ class Net_DNS_Packet
      * be stored beginning at the given offset within the packet data.  The
      * name will be added to a running list of compressed domain names for
      * future use.
-     * 
+     *
      * @param string    $name       The name of the label to compress
      * @param integer   $offset     The location offset in the packet to where
      *                              the label will be stored.
@@ -384,7 +384,7 @@ class Net_DNS_Packet
      * packet.  The first argument is a variable containing  the packet
      * data.  The second argument is the offset within the  packet where
      * the (possibly) compressed domain name is stored.
-     * 
+     *
      * @param   string  $packet The packet data
      * @param   integer $offset The location offset in the packet of the
      *                          label to decompress.
@@ -449,7 +449,7 @@ class Net_DNS_Packet
      * packet.  The first argument is a variable containing  the packet
      * data.  The second argument is the offset within the  packet where
      * the (possibly) compressed domain name is stored.
-     * 
+     *
      * @param   string  $packet The packet data
      * @param   integer $offset The location offset in the packet of the
      *                          label to extract.
@@ -591,7 +591,7 @@ class Net_DNS_Packet
     /* Net_DNS_Packet::string() {{{ */
     /**
      * Builds a human readable formatted string representing a packet
-     */ 
+     */
     function string()
     {
         $retval = '';
