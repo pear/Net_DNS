@@ -28,9 +28,9 @@
     <license>LGPL 2.1</license>
     <state>beta</state>
     <notes>
-	- More RR types supported: AAAA, HINFO, NAPTR, SRV, and TXT (Sara Goleman).
-	- Fixed bug 23812 (as well as other unreported bugs)
-	- Added capability for extracting arbritrary lables from a packet (Sara Goleman).
+- More RR types supported: AAAA, HINFO, NAPTR, SRV, and TXT (Sara Goleman).
+- Fixed bug 23812 (as well as other unreported bugs)
+- Added capability for extracting arbritrary lables from a packet (Sara Goleman).
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="Net">
