@@ -564,7 +564,7 @@ class Net_DNS_Resolver
     }
 
     /* }}} */
-    /* Net_DNS_Resolver::query() {{{ */
+    /* Net_DNS_Resolver::rawQuery() {{{ */
     /**
      * Queries nameservers for an answer
      *
@@ -574,12 +574,12 @@ class Net_DNS_Resolver
      * @param string $name The name (LHS) of a resource record to query.
      * @param string $type The type of record to query.
      * @param string $class The class of record to query.
-     * @return mixed    an object of type Net_DNS_Packet on success,
-     *                  or FALSE on failure.
+     * @return mixed an object of type Net_DNS_Packet, regarless of whether the packet
+     *               has an answer or not
      * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
      * @access public
      */
-    function query($name, $type = 'A', $class = 'IN')
+    function rawQuery($name, $type = 'A', $class = 'IN')
     {
         /*
          * If the name doesn't contain any dots then append the default domain.
@@ -604,6 +604,28 @@ class Net_DNS_Resolver
         $packet->buildQuestion($name, $type, $class);
         $packet->header->rd = $this->recurse;
         $ans = $this->send($packet);
+        return($ans);
+    }
+
+    /* }}} */
+    /* Net_DNS_Resolver::query() {{{ */
+    /**
+     * Queries nameservers for an answer
+     *
+     * Queries the nameservers listed in the resolver configuration for  an
+     * answer to a question packet.
+     *
+     * @param string $name The name (LHS) of a resource record to query.
+     * @param string $type The type of record to query.
+     * @param string $class The class of record to query.
+     * @return mixed    an object of type Net_DNS_Packet on success,
+     *                  or FALSE on failure.
+     * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
+     * @access public
+     */
+    function query($name, $type = 'A', $class = 'IN')
+    {
+        $ans = $this->rawQuery($name,$type,$class);
         if (is_object($ans) && $ans->header->ancount > 0) {
             return($ans);
         }
