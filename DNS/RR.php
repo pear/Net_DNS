@@ -22,6 +22,7 @@
 
 /* Include files {{{ */
 require_once("$phpdns_basedir/DNS/RR/A.php");
+require_once("$phpdns_basedir/DNS/RR/AAAA.php");
 require_once("$phpdns_basedir/DNS/RR/NS.php");
 require_once("$phpdns_basedir/DNS/RR/CNAME.php");
 require_once("$phpdns_basedir/DNS/RR/PTR.php");
