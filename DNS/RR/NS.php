@@ -28,58 +28,58 @@
  */
 class Net_DNS_RR_NS extends Net_DNS_RR
 {
-	/* class variable defintiions {{{ */
-	var $name;
-	var $type;
-	var $class;
-	var $ttl;
-	var $rdlength;
-	var $rdata;
-	var $nsdname;
+    /* class variable defintiions {{{ */
+    var $name;
+    var $type;
+    var $class;
+    var $ttl;
+    var $rdlength;
+    var $rdata;
+    var $nsdname;
 
-	/* }}} */
-	/* class constructor - RR($rro, $data, $offset = "") {{{ */
-	function Net_DNS_RR_NS($rro, $data, $offset = "")
-	{
-		$this->name = $rro->name;
-		$this->type = $rro->type;
-		$this->class = $rro->class;
-		$this->ttl = $rro->ttl;
-		$this->rdlength = $rro->rdlength;
-		$this->rdata = $rro->rdata;
+    /* }}} */
+    /* class constructor - RR($rro, $data, $offset = "") {{{ */
+    function Net_DNS_RR_NS($rro, $data, $offset = "")
+    {
+        $this->name = $rro->name;
+        $this->type = $rro->type;
+        $this->class = $rro->class;
+        $this->ttl = $rro->ttl;
+        $this->rdlength = $rro->rdlength;
+        $this->rdata = $rro->rdata;
 
 
-		if ($offset) {
-			if ($this->rdlength > 0) {
-				list($nsdname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
-				$this->nsdname = $nsdname;
-			}
-		} else {
-			$this->nsdname = ereg_replace("[ \t]+(.+)[ \t]*$", "\\1", $string);
-		}
-	}
+        if ($offset) {
+            if ($this->rdlength > 0) {
+                list($nsdname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
+                $this->nsdname = $nsdname;
+            }
+        } else {
+            $this->nsdname = ereg_replace("[ \t]+(.+)[ \t]*$", "\\1", $string);
+        }
+    }
 
-	/* }}} */
-	/* Net_DNS_RR_NS::rdatastr() {{{ */
-	function rdatastr()
-	{
-		if (strlen($this->nsdname)) {
-			return($this->nsdname);
-		}
-		return("; no data");
-	}
+    /* }}} */
+    /* Net_DNS_RR_NS::rdatastr() {{{ */
+    function rdatastr()
+    {
+        if (strlen($this->nsdname)) {
+            return($this->nsdname);
+        }
+        return("; no data");
+    }
 
-	/* }}} */
-	/* Net_DNS_RR_NS::rr_rdata($packet, $offset) {{{ */
-	function rr_rdata($packet, $offset)
-	{
-		if (strlen($this->nsdname)) {
-			return($packet->dn_comp($this->nsdname, $offset));
-		}
-		return(NULL);
-	}
+    /* }}} */
+    /* Net_DNS_RR_NS::rr_rdata($packet, $offset) {{{ */
+    function rr_rdata($packet, $offset)
+    {
+        if (strlen($this->nsdname)) {
+            return($packet->dn_comp($this->nsdname, $offset));
+        }
+        return(NULL);
+    }
 
-	/* }}} */
+    /* }}} */
 }
 /* }}} */
 /* VIM settings {{{

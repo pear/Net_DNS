@@ -30,55 +30,55 @@
  */
 class Net_DNS_Question
 {
-	/* class variable definitions {{{ */
-	var $qname = NULL;
-	var $qtype = NULL;
-	var $qclass = NULL;
+    /* class variable definitions {{{ */
+    var $qname = NULL;
+    var $qtype = NULL;
+    var $qclass = NULL;
 
-	/* }}} */
-	/* class constructor Net_DNS_Question($qname, $qtype, $qclass) {{{ */
-	function Net_DNS_Question($qname, $qtype, $qclass)
-	{
-		if (   is_null(Net_DNS::typesbyname($qtype))
-				&&  !is_null(Net_DNS::classesbyname($qtype))
-				&& is_null(Net_DNS::classesbyname($qclass))
-				&&  !is_null(Net_DNS::typesbyname($qclass))) {
+    /* }}} */
+    /* class constructor Net_DNS_Question($qname, $qtype, $qclass) {{{ */
+    function Net_DNS_Question($qname, $qtype, $qclass)
+    {
+        if (   is_null(Net_DNS::typesbyname($qtype))
+                &&  !is_null(Net_DNS::classesbyname($qtype))
+                && is_null(Net_DNS::classesbyname($qclass))
+                &&  !is_null(Net_DNS::typesbyname($qclass))) {
 
-			$t = $qtype;
-			$qtype = $qclass;
-			$qclass = $t;
-		}
+            $t = $qtype;
+            $qtype = $qclass;
+            $qclass = $t;
+        }
 
-		$this->qname = $qname;
-		$this->qtype = $qtype;
-		$this->qclass = $qclass;
-	}
+        $this->qname = $qname;
+        $this->qtype = $qtype;
+        $this->qclass = $qclass;
+    }
 
-	/* }}} */
-	/* Net_DNS_Question::display() {{{*/
-	function display()
-	{
-		echo $this->string() . "\n";
-	}
+    /* }}} */
+    /* Net_DNS_Question::display() {{{*/
+    function display()
+    {
+        echo $this->string() . "\n";
+    }
 
-	/*}}}*/
-	/* Net_DNS_Question::string() {{{*/
-	function string()
-	{
-		return($this->qname . ".\t" . $this->qclass . "\t" . $this->qtype);
-	}
+    /*}}}*/
+    /* Net_DNS_Question::string() {{{*/
+    function string()
+    {
+        return($this->qname . ".\t" . $this->qclass . "\t" . $this->qtype);
+    }
 
-	/*}}}*/
-	/* Net_DNS_Question::data($packet, $offset) {{{*/
-	function data($packet, $offset)
-	{
-		$data = $packet->dn_comp($this->qname, $offset);
-		$data .= pack("n", Net_DNS::typesbyname(strtoupper($this->qtype)));
-		$data .= pack("n", Net_DNS::classesbyname(strtoupper($this->qclass)));
-		return($data);
-	}
+    /*}}}*/
+    /* Net_DNS_Question::data($packet, $offset) {{{*/
+    function data($packet, $offset)
+    {
+        $data = $packet->dn_comp($this->qname, $offset);
+        $data .= pack("n", Net_DNS::typesbyname(strtoupper($this->qtype)));
+        $data .= pack("n", Net_DNS::classesbyname(strtoupper($this->qclass)));
+        return($data);
+    }
 
-	/*}}}*/
+    /*}}}*/
 }
 /* }}} */
 
