@@ -51,8 +51,7 @@
     <license>LGPL 2.1</license>
     <state>beta</state>
     <notes>
-        Supports TSIG signed DNS packets for generating
-        DNS update packets (re: rfc2485)
+        Supports TSIG signed DNS packets for generating DNS update packets (re: rfc2485)
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="Net">

@@ -39,7 +39,7 @@ class Net_DNS_RR_MX extends Net_DNS_RR
     var $exchange;
 
     /* }}} */
-    /* class constructor - RR($rro, $data, $offset = "") {{{ */
+    /* class constructor - RR(&$rro, $data, $offset = "") {{{ */
     function Net_DNS_RR_MX($rro, $data, $offset = "")
     {
         $this->name = $rro->name;

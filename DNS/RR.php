@@ -239,7 +239,7 @@ class Net_DNS_RR
 
     /* }}} */
     /* Net_DNS_RR::rdata() {{{ */
-    function rdata($packetORrdata, $offset = "")
+    function rdata(&$packetORrdata, $offset = "")
     {
         if ($offset) {
             return($this->rr_rdata($packetORrdata, $offset));
@@ -252,13 +252,13 @@ class Net_DNS_RR
 
     /* }}} */
     /* Net_DNS_RR::rr_rdata($packet, $offset) {{{ */
-    function rr_rdata($packet, $offset)
+    function rr_rdata(&$packet, $offset)
     {
         return((strlen($this->rdata) ? $this->rdata : ""));
     }
     /* }}} */
     /* Net_DNS_RR::data() {{{ */
-    function data($packet, $offset)
+    function data(&$packet, $offset)
     {
         $data = $packet->dn_comp($this->name, $offset);
         $data .= pack("n", Net_DNS::typesbyname(strtoupper($this->type)));
@@ -267,7 +267,7 @@ class Net_DNS_RR
 
         $offset += strlen($data) + 2;  // The 2 extra bytes are for rdlength
 
-        $rdata = $this->rdata(&$packet, $offset);
+        $rdata = $this->rdata($packet, $offset);
         $data .= pack("n", strlen($rdata));
         $data .= $rdata;
 

@@ -38,7 +38,7 @@ class Net_DNS_RR_CNAME extends Net_DNS_RR
     var $cname;
 
     /* }}} */
-    /* class constructor - RR($rro, $data, $offset = "") {{{ */
+    /* class constructor - RR(&$rro, $data, $offset = "") {{{ */
     function Net_DNS_RR_CNAME($rro, $data, $offset = "")
     {
         $this->name = $rro->name;

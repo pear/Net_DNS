@@ -38,7 +38,7 @@ class Net_DNS_RR_PTR extends Net_DNS_RR
     var $ptrdname;
 
     /* }}} */
-    /* class constructor - RR($rro, $data, $offset = "") {{{ */
+    /* class constructor - RR(&$rro, $data, $offset = "") {{{ */
     function Net_DNS_RR_PTR($rro, $data, $offset = "")
     {
         $this->name = $rro->name;

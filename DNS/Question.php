@@ -69,7 +69,7 @@ class Net_DNS_Question
     }
 
     /*}}}*/
-    /* Net_DNS_Question::data($packet, $offset) {{{*/
+    /* Net_DNS_Question::data(&$packet, $offset) {{{*/
     function data($packet, $offset)
     {
         $data = $packet->dn_comp($this->qname, $offset);

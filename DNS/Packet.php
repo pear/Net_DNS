@@ -287,19 +287,19 @@ class Net_DNS_Packet
         $data = $this->header->data();
 
         for ($ctr = 0; $ctr < $this->header->qdcount; $ctr++) {
-            $data .= $this->question[$ctr]->data(&$this, strlen($data));
+            $data .= $this->question[$ctr]->data($this, strlen($data));
         }
 
         for ($ctr = 0; $ctr < $this->header->ancount; $ctr++) {
-            $data .= $this->answer[$ctr]->data(&$this, strlen($data));
+            $data .= $this->answer[$ctr]->data($this, strlen($data));
         }
 
         for ($ctr = 0; $ctr < $this->header->nscount; $ctr++) {
-            $data .= $this->authority[$ctr]->data(&$this, strlen($data));
+            $data .= $this->authority[$ctr]->data($this, strlen($data));
         }
 
         for ($ctr = 0; $ctr < $this->header->arcount; $ctr++) {
-            $data .= $this->additional[$ctr]->data(&$this, strlen($data));
+            $data .= $this->additional[$ctr]->data($this, strlen($data));
         }
 
         return($data);

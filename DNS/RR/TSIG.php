@@ -49,7 +49,7 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
     var $key;
 
     /* }}} */
-    /* class constructor - RR($rro, $data, $offset = "") {{{ */
+    /* class constructor - RR(&$rro, $data, $offset = "") {{{ */
     function Net_DNS_RR_TSIG($rro, $data, $offset = "")
     {
         $this->name = $rro->name;
