@@ -707,7 +707,7 @@ class Net_DNS_Resolver
             if (isset($this->sockets[$sock_key]) && is_resource($this->sockets[$sock_key])) {
                 $sock = &$this->sockets[$sock_key];
             } else {
-                if (! ($sock = fsockopen($ns, $dstport, $errno,
+                if (! ($sock = @fsockopen($ns, $dstport, $errno,
                                 $errstr, $timeout))) {
                     $this->errorstring = 'connection failed';
                     if ($this->debug) {
@@ -742,8 +742,10 @@ class Net_DNS_Resolver
             socket_set_timeout($sock, $timeout);
             $buf = fread($sock, 2);
             $e = socket_get_status($sock);
-            $len = unpack('nint', $buf);
-            $len = $len['int'];
+            /* If $buf is empty, we want to supress errors
+               long enough to reach the continue; down the line */
+            $len = @unpack('nint', $buf);
+            $len = @$len['int'];
             if (!$len) {
                 continue;
             }
