@@ -27,13 +27,13 @@
     <filelist>
       <dir name="/" baseinstalldir="Net">
         <file role="php">DNS.php</file>
-      	<dir name="DNS">
+        <dir name="DNS">
           <file role="php">Packet.php</file>
           <file role="php">Header.php</file>
           <file role="php">Question.php</file>
           <file role="php">Resolver.php</file>
           <file role="php">RR.php</file>
-      	  <dir name="RR">
+          <dir name="RR">
             <file role="php">A.php</file>
             <file role="php">NS.php</file>
             <file role="php">CNAME.php</file>
@@ -41,7 +41,38 @@
             <file role="php">SOA.php</file>
             <file role="php">PTR.php</file>
           </dir>
-	</dir>
+        </dir>
+      </dir>
+    </filelist>
+  </release> 
+  <release>
+    <version>0.02</version>
+    <date>2002-08-15</date>
+    <license>LGPL 2.1</license>
+    <state>beta</state>
+    <notes>
+        Supports TSIG signed DNS packets for generating
+        DNS update packets (re: rfc2485)
+    </notes>
+    <filelist>
+      <dir name="/" baseinstalldir="Net">
+        <file role="php">DNS.php</file>
+        <dir name="DNS">
+          <file role="php">Packet.php</file>
+          <file role="php">Header.php</file>
+          <file role="php">Question.php</file>
+          <file role="php">Resolver.php</file>
+          <file role="php">RR.php</file>
+          <dir name="RR">
+            <file role="php">A.php</file>
+            <file role="php">NS.php</file>
+            <file role="php">CNAME.php</file>
+            <file role="php">MX.php</file>
+            <file role="php">SOA.php</file>
+            <file role="php">PTR.php</file>
+            <file role="php">TSIG.php</file>
+          </dir>
+        </dir>
       </dir>
     </filelist>
   </release> 
