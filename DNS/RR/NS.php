@@ -55,7 +55,7 @@ class Net_DNS_RR_NS extends Net_DNS_RR
                 $this->nsdname = $nsdname;
             }
         } else {
-            $this->nsdname = ereg_replace("[ \t]+(.+)[ \t]*$", '\\1', $string);
+            $this->nsdname = ereg_replace("[ \t]+(.+)[ \t]*$", '\\1', $data);
         }
     }
 

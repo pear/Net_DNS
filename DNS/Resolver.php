@@ -1010,31 +1010,6 @@ class Net_DNS_Resolver
     }
 
     /* }}} */
-    /* not completed - Net_DNS_Resolver::bgsend() {{{ */
-    /**
-     * Unknown - not ported yet
-     */
-    function bgsend()
-    {
-    }
-
-    /* }}} */
-    /* not completed - Net_DNS_Resolver::bgread() {{{ */
-    /**
-     * Unknown - not ported yet
-     */
-    function bgread()
-    {
-    }
-    /* }}} */
-    /* not completed - Net_DNS_Resolver::bgisready() {{{ */
-    /**
-     * Unknown - not ported yet
-     */
-    function bgisready()
-    {
-    }
-    /* }}} */
     /* Net_DNS_Resolver::make_query_packet($packetORname, $type = '', $class = '') {{{ */
     /**
      * Unknown
