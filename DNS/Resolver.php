@@ -1072,6 +1072,22 @@ class Net_DNS_Resolver
     }
 
     /* }}} */
+    /* Net_DNS_Resolver::axfr_old($dname, $class = 'IN') {{{ */
+    /**
+     * Performs an AXFR query (zone transfer) (OLD BUGGY STYLE)
+     *
+     * This is deprecated and should not be used!
+     *
+     * @param string $dname The domain (zone) to transfer
+     * @param string $class The class in which to look for the zone.
+     * @return object Net_DNS_Packet
+     * @access public
+     */
+    function axfr_old($dname, $class = 'IN')
+    {
+        return($this->axfr($dname, $class, TRUE));
+    }
+    /* }}} */
     /* Net_DNS_Resolver::axfr($dname, $class = 'IN', $old = FALSE) {{{ */
     /**
      * Performs an AXFR query (zone transfer)
