@@ -61,7 +61,7 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
             ereg('("[^"]*"|[^ \t]*)[ \t]*$', $data, $regs);
             $regs[1] = str_replace(chr(2) . chr(2), '\\"', $regs[1]);
             $regs[1] = str_replace(chr(1) . chr(1), '\\\\', $regs[1]);
-            $regs[1] = stripslashes($value);
+            $regs[1] = stripslashes($regs[1]);
 
             $this->text = $regs[1];
         }

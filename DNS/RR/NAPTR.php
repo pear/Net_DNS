@@ -24,7 +24,7 @@
 /**
  * A representation of a resource record of type <b>NAPTR</b>
  *
- * @package Net_NAPTR
+ * @package Net_DNS
  */
 class Net_DNS_RR_NAPTR extends Net_DNS_RR
 {
