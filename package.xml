@@ -15,12 +15,6 @@
       <email>eric@ypass.net</email>
       <role>lead</role>
     </maintainer>
-    <maintainer>
-      <user>pollita</user>
-      <role>developer</role>
-      <name>Sara Golemon</name>
-      <email>pollita@php.net</email>
-    </maintainer>
   </maintainers>
   <release>
     <version>1.00b2</version>
