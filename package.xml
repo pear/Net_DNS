@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE package SYSTEM "../package.dtd">
+<!-- do not use the "Type" attribute here, that one is only for
+     generated package.xml files -->
+<package version="1.0">
+  <name>Net_DNS</name>
+  <summary>Resolver library used to communicate with a DNS server</summary>
+  <description>
+    A resolver library used to communicate with a name server to perform DNS queries, zone transfers, dynamic DNS updates, etc.  Creates an object hierarchy from a DNS server's response, which allows you to view all of the information given by the DNS server.  It bypasses the system's resolver library and communicates directly with the server.
+  </description>
+  <maintainers>
+    <maintainer>
+      <user>ekilfoil</user>
+      <name>Eric Kilfoil</name>
+      <email>eric@ypass.net</email>
+      <role>lead</role>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>0.01</version>
+    <date>2002-05-14</date>
+    <license>LGPL 2.1</license>
+    <state>devel</state>
+    <notes>
+      Currently only supports A, CNAME, NS, PTR, MX, and SOA records.
+    </notes>
+    <filelist>
+      <dir name="/" baseinstalldir="Net">
+        <file role="php">DNS.php</file>
+      	<dir name="DNS">
+          <file role="php">Packet.php</file>
+          <file role="php">Header.php</file>
+          <file role="php">Question.php</file>
+          <file role="php">Resolver.php</file>
+          <file role="php">RR.php</file>
+      	  <dir name="RR">
+            <file role="php">A.php</file>
+            <file role="php">NS.php</file>
+            <file role="php">CNAME.php</file>
+            <file role="php">MX.php</file>
+            <file role="php">SOA.php</file>
+            <file role="php">PTR.php</file>
+          </dir>
+	</dir>
+      </dir>
+    </filelist>
+  </release> 
+</package>
