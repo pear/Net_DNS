@@ -83,13 +83,13 @@ class Net_DNS_RR_NS extends Net_DNS_RR
 }
 /* }}} */
 /* VIM settings {{{
-* Local variables:
-* tab-width: 4
-* c-basic-offset: 4
-* soft-stop-width: 4
-* c indent on
-* End:
-* vim600: sw=4 ts=4 sts=4 cindent fdm=marker
-* vim<600: sw=4 ts=4
-* }}} */
+ * Local variables:
+ * tab-width: 4
+ * c-basic-offset: 4
+ * soft-stop-width: 4
+ * c indent on
+ * End:
+ * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
+ * vim<600: sw=4 ts=4
+ * }}} */
 ?>

@@ -87,7 +87,7 @@ class Net_DNS_RR_A extends Net_DNS_RR
     {
         $aparts = split("\.", $this->address);
         if (count($aparts) == 4) {
-            return(pack("n4", $aparts[0], $aparts[1], $aparts[2], $aparts[3]));
+            return(pack("c4", $aparts[0], $aparts[1], $aparts[2], $aparts[3]));
         }
         return(NULL);
     }
@@ -103,7 +103,7 @@ class Net_DNS_RR_A extends Net_DNS_RR
  * soft-stop-width: 4
  * c indent on
  * End:
- * vim600: sw=4 ts=4 sts=4 cindent fdm=marker
+ * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
  * vim<600: sw=4 ts=4
  * }}} */
 ?>

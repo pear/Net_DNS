@@ -182,7 +182,7 @@ class Net_DNS_Packet
         $offset = 12;
 
         $this->question = array();
-        for ($ctr = 0; $ctr < count($this->header->qdcount); $ctr++) {
+        for ($ctr = 0; $ctr < $this->header->qdcount; $ctr++) {
             list($qobj, $offset) = $this->parse_question($data, $offset);
             if (is_null($qobj)) {
                 return(NULL);
@@ -286,33 +286,20 @@ class Net_DNS_Packet
     {
         $data = $this->header->data();
 
-        if ($this->header->qdcount > 0) {
-            foreach ($this->question as $question)
-            {
-                $data .= $question->data($this, strlen($data));
-            }
+        for ($ctr = 0; $ctr < $this->header->qdcount; $ctr++) {
+            $data .= $this->question[$ctr]->data(&$this, strlen($data));
         }
 
-        if ($this->header->ancount > 0) {
-            foreach ($this->answer as $answer)
-            {
-                $data .= $answer->data($this, strlen($data));
-            }
+        for ($ctr = 0; $ctr < $this->header->ancount; $ctr++) {
+            $data .= $this->answer[$ctr]->data(&$this, strlen($data));
         }
 
-        if ($this->header->nscount > 0) {
-            foreach ($this->authority as $authority)
-            {
-                $data .= $authority->data($this, strlen($data));
-            }
+        for ($ctr = 0; $ctr < $this->header->nscount; $ctr++) {
+            $data .= $this->authority[$ctr]->data(&$this, strlen($data));
         }
 
-
-        if ($this->header->arcount > 0) {
-            foreach ($this->additional as $additional)
-            {
-                $data .= $additional->data($this, strlen($data));
-            }
+        for ($ctr = 0; $ctr < $this->header->arcount; $ctr++) {
+            $data .= $this->additional[$ctr]->data(&$this, strlen($data));
         }
 
         return($data);
@@ -341,8 +328,7 @@ class Net_DNS_Packet
         while (count($names)) {
             $dname = join(".", $names);
             if ($this->compnames[$dname] != "") {
-                $pointer = $this->compnames[$dname];
-                $compname .= pack("n", 0xc000 | $pointer);
+                $compname .= pack("n", 0xc000 | $this->compnames[$dname]);
                 break;
             }
 
@@ -554,6 +540,37 @@ class Net_DNS_Packet
             $retval .= ";; " . $qr->string() . "\n";
         }
 
+        $section = ($this->header->opcode == "UPDATE") ? "PREREQUISITE" : "ANSWER";
+        $retval .= "\n;; $section SECTION (" . $this->header->ancount     .
+            " record" . ($this->header->ancount == 1 ? "" : "s") .
+            ")\n";
+
+        if (is_array($this->answer)) {
+            foreach ($this->answer as $ans) {
+                $retval .= ";; " . $ans->string() . "\n";
+            }
+        }
+
+        $section = ($this->header->opcode == "UPDATE") ? "UPDATE" : "AUTHORITY";
+        $retval .= "\n;; $section SECTION (" . $this->header->nscount     .
+            " record" . ($this->header->nscount == 1 ? "" : "s") .
+            ")\n";
+
+        if (is_array($this->authority)) {
+            foreach ($this->authority as $auth) {
+                $retval .= ";; " . $auth->string() . "\n";
+            }
+        }
+
+        $retval .= "\n;; ADDITIONAL SECTION (" . $this->header->arcount     .
+            " record" . ($this->header->arcount == 1 ? "" : "s") .
+            ")\n";
+
+        if (is_array($this->additional)) {
+            foreach ($this->additional as $addl) {
+                $retval .= ";; " . $addl->string() . "\n";
+            }
+        }
 
         $retval .= "\n\n";
         return($retval);
@@ -569,7 +586,7 @@ class Net_DNS_Packet
  * soft-stop-width: 4
  * c indent on
  * End:
- * vim600: sw=4 ts=4 sts=4 cindent fdm=marker
+ * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
  * vim<600: sw=4 ts=4
  * }}} */
 ?>

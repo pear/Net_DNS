@@ -27,6 +27,7 @@ require_once("$phpdns_basedir/DNS/RR/CNAME.php");
 require_once("$phpdns_basedir/DNS/RR/PTR.php");
 require_once("$phpdns_basedir/DNS/RR/SOA.php");
 require_once("$phpdns_basedir/DNS/RR/MX.php");
+require_once("$phpdns_basedir/DNS/RR/TSIG.php");
 /* }}} */
 /* Net_DNS_RR object definition {{{ */
 /**
@@ -166,7 +167,7 @@ class Net_DNS_RR
 
             if (class_exists("Net_DNS_RR_" . $rrtype)) {
                 $scn = "Net_DNS_RR_" . $rrtype;
-                $rc = $scn($rro, $rdata);
+                $rc = new $scn($this, $rdata);
                 return($rc);
             } else {
                 return($this);
@@ -241,7 +242,7 @@ class Net_DNS_RR
     function rdata($packetORrdata, $offset = "")
     {
         if ($offset) {
-            return($this->rr_data($packetORrdata, $offset));
+            return($this->rr_rdata($packetORrdata, $offset));
         } else if (strlen($this->rdata)) {
             return($this->rdata);
         } else {
@@ -266,7 +267,7 @@ class Net_DNS_RR
 
         $offset += strlen($data) + 2;  // The 2 extra bytes are for rdlength
 
-        $rdata = $this->rdata($packet, $offset);
+        $rdata = $this->rdata(&$packet, $offset);
         $data .= pack("n", strlen($rdata));
         $data .= $rdata;
 
@@ -282,7 +283,7 @@ class Net_DNS_RR
  * soft-stop-width: 4
  * c indent on
  * End:
- * vim600: sw=4 ts=4 sts=4 cindent fdm=marker
+ * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
  * vim<600: sw=4 ts=4
  * }}} */
 ?>

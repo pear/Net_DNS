@@ -55,7 +55,7 @@ class Net_DNS_RR_PTR extends Net_DNS_RR
                 $this->ptrdname = $ptrdname;
             }
         } else {
-            $this->ptrdname = ereg_replace("[ \t]+(.+)[ \t]*$", "\\1", $string);
+            $this->ptrdname = ereg_replace("[ \t]+(.+)[ \t]*$", "\\1", $data);
         }
     }
 
@@ -89,7 +89,7 @@ class Net_DNS_RR_PTR extends Net_DNS_RR
  * soft-stop-width: 4
  * c indent on
  * End:
- * vim600: sw=4 ts=4 sts=4 cindent fdm=marker
+ * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
  * vim<600: sw=4 ts=4
  * }}} */
 ?>

@@ -312,21 +312,21 @@ class Net_DNS_Resolver
             $value = $regs[2];
 
             switch ($option) {
-                case "domain":
+                case 'domain':
                     $this->domain = $regs[2];
                     break;
-                case "search":
+                case 'search':
                     $this->searchlist[count($this->searchlist)] = $regs[2];
                     break;
-                case "nameserver":
+                case 'nameserver':
                     foreach (split(" ", $regs[2]) as $ns)
-                    $this->nameservers[count($this->nameservers)] = $ns;
+                        $this->nameservers[count($this->nameservers)] = $ns;
                     break;
             }
         }
         fclose($f);
     }
-    
+
     /* }}} */
     /* Net_DNS_Resolver::read_env() {{{ */
     /**
@@ -596,6 +596,10 @@ class Net_DNS_Resolver
     {
         $packet = $this->make_query_packet($packetORname, $qtype, $qclass);
         $packet_data = $packet->data();
+        if ($this->debug) {
+            $packet->display();
+            $this->printhex($packet_data);
+        }
 
         if ($this->usevc != 0 || strlen($packet_data > 512)) {
             $ans = $this->send_tcp($packet, $packet_data);
@@ -611,7 +615,36 @@ class Net_DNS_Resolver
         }
         return($ans);
     }
-    
+
+    /* }}} */
+    /* Net_DNS_Resolver::printhex($packet_data) {{{ */
+    /**
+     * Sends a packet via TCP to the list of name servers.
+     */
+    function printhex($data)
+    {
+        $data = "  " . $data;
+        $start = 0;
+        while ($start < strlen($data)) {
+            printf(";; %03d: ", $start);
+            for ($ctr = $start; $ctr < $start+16; $ctr++) {
+                if ($ctr < strlen($data))
+                    printf("%02x ", ord($data[$ctr]));
+                else
+                    echo "   ";
+            }
+            echo "   ";
+            for ($ctr = $start; $ctr < $start+16; $ctr++) {
+                if (ord($data[$ctr]) < 32 || ord($data[$ctr]) > 127) {
+                    echo ".";
+                } else {
+                    echo $data[$ctr];
+                }
+            }
+            echo "\n";
+            $start += 16;
+        }
+    }
     /* }}} */
     /* Net_DNS_Resolver::send_tcp($packet, $packet_data) {{{ */
     /**
@@ -1057,8 +1090,9 @@ class Net_DNS_Resolver
  * c-basic-offset: 4
  * soft-stop-width: 4
  * c indent on
+ * expandtab on
  * End:
- * vim600: sw=4 ts=4 sts=4 cindent fdm=marker
+ * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
  * vim<600: sw=4 ts=4
  * }}} */
 ?>

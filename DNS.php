@@ -43,12 +43,12 @@
 
 /* Include information {{{ */
 
-   $phpdns_basedir = "Net";
-   require_once("$phpdns_basedir/DNS/Header.php");
-   require_once("$phpdns_basedir/DNS/Question.php");
-   require_once("$phpdns_basedir/DNS/Packet.php");
-   require_once("$phpdns_basedir/DNS/Resolver.php");
-   require_once("$phpdns_basedir/DNS/RR.php");
+    $phpdns_basedir = "Net";
+    require_once("$phpdns_basedir/DNS/Header.php");
+    require_once("$phpdns_basedir/DNS/Question.php");
+    require_once("$phpdns_basedir/DNS/Packet.php");
+    require_once("$phpdns_basedir/DNS/Resolver.php");
+    require_once("$phpdns_basedir/DNS/RR.php");
 
 /* }}} */
 /* GLOBAL VARIABLE definitions {{{ */
@@ -332,11 +332,11 @@ class Net_DNS
                 "SRV"           => 33,
                 "ATMA"          => 34,
                 "NAPTR"         => 35,
-                "TSIG"          => 36,
                 "UINFO"         => 100,
                 "UID"           => 101,
                 "GID"           => 102,
                 "UNSPEC"        => 103,
+                "TSIG"          => 250,
                 "IXFR"          => 251,
                 "AXFR"          => 252,
                 "MAILB"         => 253,
@@ -398,11 +398,11 @@ class Net_DNS
                 33 => "SRV",
                 34 => "ATMA",
                 35 => "NAPTR",
-                36 => "TSIG",
                 100 => "UINFO",
                 101 => "UID",
                 102 => "GID",
                 103 => "UNSPEC",
+                250 => "TSIG",
                 251 => "IXFR",
                 252 => "AXFR",
                 253 => "MAILB",
@@ -497,7 +497,7 @@ class Net_DNS
  * soft-stop-width: 4
  * c indent on
  * End:
- * vim600: sw=4 ts=4 sts=4 cindent fdm=marker
+ * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
  * vim<600: sw=4 ts=4
  * }}} */
 ?>
