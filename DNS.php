@@ -1,7 +1,7 @@
 <?php
 /*
  *  Module written/ported by Eric Kilfoil <eric@ypass.net>
- * 
+ *
  *  This is the copyright notice from the PERL Net::DNS module:
  *
  *  Copyright (c) 1997-2000 Michael Fuhr.  All rights reserved.  This
@@ -9,7 +9,7 @@
  *  under the same terms as Perl itself.
  *
  *  The majority of this is _NOT_ my code.  I simply ported it from the
- *  PERL Net::DNS module.  
+ *  PERL Net::DNS module.
  *
  *  The author of the Net::DNS module is Michael Fuhr <mike@fuhr.org>
  *  http://www.fuhr.org/~mfuhr/perldns/
@@ -105,13 +105,13 @@ class Net_DNS
      * Translates the name of a DNS OPCODE into it's assigned  number
      * listed in RFC1035, RFC1996, or RFC2136. Valid  OPCODES are:
      * <ul>
-     *   <li>QUERY   
-     *   <li>IQUERY   
-     *   <li>STATUS   
-     *   <li>NS_NOTIFY_OP   
+     *   <li>QUERY
+     *   <li>IQUERY
+     *   <li>STATUS
+     *   <li>NS_NOTIFY_OP
      *   <li>UPDATE
      * <ul>
-     * 
+     *
      * @param   string  $opcode A DNS Packet OPCODE name
      * @return  integer The integer value of an OPCODE
      * @see     Net_DNS::opcodesbyval()
@@ -137,7 +137,7 @@ class Net_DNS
      * Translates opcode integers into names
      *
      * Translates the integer value of an opcode into it's name
-     * 
+     *
      * @param   integer $opcodeval  A DNS packet opcode integer
      * @return  string  The name of the OPCODE
      * @see     Net_DNS::opcodesbyname()
@@ -164,19 +164,19 @@ class Net_DNS
      *
      * Translates the name of a DNS RCODE (result code) into it's assigned number.
      * <ul>
-     *   <li>NOERROR   
-     *   <li>FORMERR   
-     *   <li>SERVFAIL   
-     *   <li>NXDOMAIN   
-     *   <li>NOTIMP   
-     *   <li>REFUSED   
-     *   <li>YXDOMAIN   
-     *   <li>YXRRSET   
-     *   <li>NXRRSET   
-     *   <li>NOTAUTH   
+     *   <li>NOERROR
+     *   <li>FORMERR
+     *   <li>SERVFAIL
+     *   <li>NXDOMAIN
+     *   <li>NOTIMP
+     *   <li>REFUSED
+     *   <li>YXDOMAIN
+     *   <li>YXRRSET
+     *   <li>NXRRSET
+     *   <li>NOTAUTH
      *   <li>NOTZONE
      * <ul>
-     * 
+     *
      * @param   string  $rcode  A DNS Packet RCODE name
      * @return  integer The integer value of an RCODE
      * @see     Net_DNS::rcodesbyval()
@@ -208,7 +208,7 @@ class Net_DNS
      * Translates rcode integers into names
      *
      * Translates the integer value of an rcode into it's name
-     * 
+     *
      * @param   integer $rcodeval   A DNS packet rcode integer
      * @return  string  The name of the RCODE
      * @see     Net_DNS::rcodesbyname()
@@ -243,54 +243,54 @@ class Net_DNS
      * Valid resource record types are:
      *
      * <ul>
-     *   <li>A   
-     *   <li>NS   
-     *   <li>MD   
-     *   <li>MF   
-     *   <li>CNAME   
-     *   <li>SOA   
-     *   <li>MB   
-     *   <li>MG   
-     *   <li>MR   
-     *   <li>NULL   
-     *   <li>WKS   
-     *   <li>PTR   
-     *   <li>HINFO   
-     *   <li>MINFO   
-     *   <li>MX   
-     *   <li>TXT   
-     *   <li>RP   
-     *   <li>AFSDB   
-     *   <li>X25   
-     *   <li>ISDN   
-     *   <li>RT   
-     *   <li>NSAP   
-     *   <li>NSAP_PTR   
-     *   <li>SIG   
-     *   <li>KEY   
-     *   <li>PX   
-     *   <li>GPOS   
-     *   <li>AAAA   
-     *   <li>LOC   
-     *   <li>NXT   
-     *   <li>EID   
-     *   <li>NIMLOC   
-     *   <li>SRV   
-     *   <li>ATMA   
-     *   <li>NAPTR   
-     *   <li>TSIG   
-     *   <li>UINFO   
-     *   <li>UID   
-     *   <li>GID   
-     *   <li>UNSPEC   
-     *   <li>IXFR   
-     *   <li>AXFR   
-     *   <li>MAILB   
-     *   <li>MAILA   
+     *   <li>A
+     *   <li>NS
+     *   <li>MD
+     *   <li>MF
+     *   <li>CNAME
+     *   <li>SOA
+     *   <li>MB
+     *   <li>MG
+     *   <li>MR
+     *   <li>NULL
+     *   <li>WKS
+     *   <li>PTR
+     *   <li>HINFO
+     *   <li>MINFO
+     *   <li>MX
+     *   <li>TXT
+     *   <li>RP
+     *   <li>AFSDB
+     *   <li>X25
+     *   <li>ISDN
+     *   <li>RT
+     *   <li>NSAP
+     *   <li>NSAP_PTR
+     *   <li>SIG
+     *   <li>KEY
+     *   <li>PX
+     *   <li>GPOS
+     *   <li>AAAA
+     *   <li>LOC
+     *   <li>NXT
+     *   <li>EID
+     *   <li>NIMLOC
+     *   <li>SRV
+     *   <li>ATMA
+     *   <li>NAPTR
+     *   <li>TSIG
+     *   <li>UINFO
+     *   <li>UID
+     *   <li>GID
+     *   <li>UNSPEC
+     *   <li>IXFR
+     *   <li>AXFR
+     *   <li>MAILB
+     *   <li>MAILA
      *   <li>ANY
      * <ul>
-     * 
-     * @param   string  $rrtype A DNS packet RR type name   
+     *
+     * @param   string  $rrtype A DNS packet RR type name
      * @return  integer The integer value of an RR type
      * @see     Net_DNS::typesbyval()
      */
@@ -355,7 +355,7 @@ class Net_DNS
      * Translates RR type integers into names
      *
      * Translates the integer value of an RR type into it's name
-     * 
+     *
      * @param   integer $rrtypeval  A DNS packet RR type integer
      * @return  string  The name of the RR type
      * @see     Net_DNS::typesbyname()
@@ -421,13 +421,13 @@ class Net_DNS
      * translates a DNS class from it's name to it's  integer value. Valid
      * class names are:
      * <ul>
-     *   <li>IN   
-     *   <li>CH   
-     *   <li>HS   
-     *   <li>NONE   
+     *   <li>IN
+     *   <li>CH
+     *   <li>HS
+     *   <li>NONE
      *   <li>ANY
      * </ul>
-     * 
+     *
      * @param   string  $class  A DNS packet class type
      * @return  integer The integer value of an class type
      * @see     Net_DNS::classesbyval()
@@ -453,7 +453,7 @@ class Net_DNS
      * Translates RR class integers into names
      *
      * Translates the integer value of an RR class into it's name
-     * 
+     *
      * @param   integer $classval   A DNS packet RR class integer
      * @return  string  The name of the RR class
      * @see     Net_DNS::classesbyname()
