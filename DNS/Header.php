@@ -152,7 +152,6 @@ class Net_DNS_Header
                 return(0);
 
             $a = unpack("nid/C2flags/n4counts", $data);
-            echo $a["rcounts1"];
             $this->id      = $a["id"];
             $this->qr      = ($a["flags1"] >> 7) & 0x1;
             $this->opcode  = ($a["flags1"] >> 3) & 0xf;

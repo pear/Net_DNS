@@ -54,7 +54,7 @@ class Net_DNS_RR_A extends Net_DNS_RR
                  *  We don't have inet_ntoa in PHP?
                  */
                 $aparts = unpack("C4b", $this->rdata);
-                $addr .= $aparts["b1"] . "." .
+                $addr = $aparts["b1"] . "." .
                     $aparts["b2"] . "." .
                     $aparts["b3"] . "." .
                     $aparts["b4"];

@@ -326,8 +326,9 @@ class Net_DNS_Packet
     {
         $names = explode(".", $name);
         while (count($names)) {
+            $compname = "";
             $dname = join(".", $names);
-            if ($this->compnames[$dname] != "") {
+            if (isset($this->compnames[$dname]) != "") {
                 $compname .= pack("n", 0xc000 | $this->compnames[$dname]);
                 break;
             }
@@ -389,7 +390,7 @@ class Net_DNS_Packet
                 if (is_null($name2[0])) {
                     return(array(NULL, NULL));
                 }
-                $name .= $name2[0];
+                $name = $name2[0];
                 $offset += $int16sz;
                 break;
             } else {
@@ -400,7 +401,7 @@ class Net_DNS_Packet
                 }
 
                 $elem = substr($packet, $offset, $len);
-                $name .= $elem . ".";
+                $name = $elem . ".";
                 $offset += $len;
             }
         }

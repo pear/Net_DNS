@@ -474,7 +474,7 @@ class Net_DNS_Resolver
          * PTR query.
          */
         if (preg_match("/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $name, $regs)) {
-            $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa.";
+            $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
             $type = "PTR";
         }
 
@@ -558,7 +558,7 @@ class Net_DNS_Resolver
          * PTR query.
          */
         if (preg_match("/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $name, $regs)) {
-            $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa.";
+            $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
             $type = "PTR";
         }
 
@@ -597,7 +597,6 @@ class Net_DNS_Resolver
         $packet = $this->make_query_packet($packetORname, $qtype, $qclass);
         $packet_data = $packet->data();
         if ($this->debug) {
-            $packet->display();
             $this->printhex($packet_data);
         }
 
@@ -820,6 +819,7 @@ class Net_DNS_Resolver
                  * data come in from the network...
                  */
                 usleep(500);
+                $buf = "";
                 while (! strlen($buf) && $timetoTO > (time() +
                             (double)microtime())) {
                     socket_set_blocking($s, FALSE);
@@ -835,7 +835,7 @@ class Net_DNS_Resolver
                             if ($ans->header->qr != "1") {
                                 continue;
                             }
-                            if ($ans->header->id == $packet->header_id) {
+                            if ($ans->header->id == $packet->header->id) {
                                 continue;
                             }
                             $this->errorstring = $ans->header->rcode;
@@ -927,7 +927,7 @@ class Net_DNS_Resolver
                         if ($ans->header->qr != "1") {
                             continue;
                         }
-                        if ($ans->header->id == $packet->header_id) {
+                        if ($ans->header->id == $packet->header->id) {
                             continue;
                         }
                         $this->errorstring = $ans->header->rcode;
@@ -1024,7 +1024,7 @@ class Net_DNS_Resolver
              * PTR query.
              */
             if (preg_match("/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/", $name, $regs)) {
-                $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa.";
+                $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
                 $type = "PTR";
             }
 
