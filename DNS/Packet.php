@@ -328,7 +328,7 @@ class Net_DNS_Packet
         $compname = "";
         while (count($names)) {
             $dname = join(".", $names);
-            if ($this->compnames[$dname] != "") {
+            if (isset($this->compnames[$dname])) {
                 $compname .= pack("n", 0xc000 | $this->compnames[$dname]);
                 break;
             }

@@ -835,7 +835,7 @@ class Net_DNS_Resolver
                             if ($ans->header->qr != "1") {
                                 continue;
                             }
-                            if ($ans->header->id == $packet->header->id) {
+                            if ($ans->header->id != $packet->header->id) {
                                 continue;
                             }
                             $this->errorstring = $ans->header->rcode;
