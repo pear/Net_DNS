@@ -79,7 +79,7 @@ class Net_DNS
      * @var object Net_DNS_Resolver
      */
     var $resolver;
-    var $VERSION = '0.01';
+    var $VERSION = '1.00b2'; // This should probably be a define :(
     var $PACKETSZ = 512;
     var $HFIXEDSZ = 12;
     var $QFIXEDSZ = 4;
