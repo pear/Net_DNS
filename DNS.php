@@ -343,10 +343,10 @@ class Net_DNS
                 'MAILA'         => 254,
                 'ANY'           => 255,
                 );
-                if (! strlen($rc[$rrtype])) {
-                    $rc[$rrtype] = NULL;
-                }
-                return($rc[$rrtype]);
+        if (empty($rc[$rrtype])) {
+            $rc[$rrtype] = NULL;
+        }
+        return($rc[$rrtype]);
     }
 
     /*}}}*/
@@ -409,10 +409,11 @@ class Net_DNS
                 254 => 'MAILA',
                 255 => 'ANY',
                 );
-                if (! strlen($rc[$rrtypeval])) {
-                    $rc[$rrtypeval] = NULL;
-                }
-                return($rc[$rrtypeval]);
+        $rrtypeval = preg_replace(array('/\s*/',' /^0*/'), '', $rrtypeval);
+        if (empty($rc[$rrtypeval])) {
+            $rc[$rrtypeval] = NULL;
+        }
+        return($rc[$rrtypeval]);
     }
 
     /*}}}*/
@@ -467,7 +468,8 @@ class Net_DNS
                 254 => 'NONE',
                 255 => 'ANY'
                 );
-        if (! strlen($rc[$classval])) {
+        $classval = preg_replace(array('/\s*/',' /^0*/'), '', $classval);
+        if (empty($rc[$classval])) {
             $rc[$classval] = NULL;
         }
         return($rc[$classval]);
