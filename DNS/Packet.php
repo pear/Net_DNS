@@ -441,46 +441,6 @@ class Net_DNS_Packet
     }
 
     /*}}}*/
-    /* Net_DNS_Packet::label_extract($packet, $offset) {{{ */
-    /**
-     * DNS packet decompression method
-     *
-     * Extracts the label stored at a particular location in a DNS
-     * packet.  The first argument is a variable containing  the packet
-     * data.  The second argument is the offset within the  packet where
-     * the (possibly) compressed domain name is stored.
-     * 
-     * @param   string  $packet The packet data
-     * @param   integer $offset The location offset in the packet of the
-     *                          label to extract.
-     * @return  array   Returns a list of type array($name, $offset) where
-     *                  $name is the name of the label which was decompressed
-     *                  and $offset is the offset of the next field in the
-     *                  packet.  Returns array(NULL, NULL) on error
-     */
-    function label_extract($packet, $offset)
-    {
-        $packetlen = strlen($packet);
-        $name = '';
-        if ($packetlen < ($offset + 1)) {
-            return(array(NULL, NULL));
-        }
-
-        $a = unpack("@$offset/Cchar", $packet);
-        $len = $a['char'];
-		$offset++;
-
-        if ($len + $offset > $packetlen) {
-            $name = substr($packet, $offset);
-            $offset = $packetlen;
-        } else {
-            $name = substr($packet, $offset, $len);
-            $offset += $len;
-        }
-        return(array($name, $offset));
-    }
-
-    /*}}}*/
     /* Net_DNS_Packet::parse_question($data, $offset) {{{ */
     /**
      * Parses the question section of a packet
