@@ -28,6 +28,7 @@ require_once("$phpdns_basedir/DNS/RR/PTR.php");
 require_once("$phpdns_basedir/DNS/RR/SOA.php");
 require_once("$phpdns_basedir/DNS/RR/MX.php");
 require_once("$phpdns_basedir/DNS/RR/TSIG.php");
+require_once("$phpdns_basedir/DNS/RR/SRV.php");
 /* }}} */
 /* Net_DNS_RR object definition {{{ */
 /**
