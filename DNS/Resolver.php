@@ -206,6 +206,16 @@ class Net_DNS_Resolver
 	 * @access public
 	 */
 	var $debug;
+	/**
+	 * use the (currently) experimental PHP socket library
+	 *
+	 * If set to TRUE (non-zero), the Resolver will attempt to use the
+	 * much more effecient PHP sockets extension (if available).
+	 *
+	 * @var boolean $useEnhancedSockets;
+	 * @access public
+	 */
+	var $useEnhancedSockets = 1;
 
 	/* }}} */
 	/* class constructor - Net_DNS_Resolver() {{{ */
@@ -703,17 +713,21 @@ class Net_DNS_Resolver
 	}
 
 	/* }}} */
-	/* Net_DNS_Resolver::send_udp($packet, $packet_data) {{{ */
+	/* Net_DNS_Resolver::send_udp_no_sock_lib($packet, $packet_data) {{{ */
 	/**
 	 * Sends a packet via UDP to the list of name servers.
+	 *
+	 * This function sends a packet to a nameserver.  It is called by
+	 * send_udp if the sockets PHP extension is not compiled into PHP.
 	 *
 	 * @param string $packet	A packet object to send to the NS list
 	 * @param string $packet_data	The data in the packet as returned by
 	 *								the Net_DNS_Packet::data() method
 	 * @return object Net_DNS_Packet Returns an answer packet object
-	 * @see Net_DNS_Resolver::send_tcp(), Net_DNS_Resolver::send()
+	 * @see Net_DNS_Resolver::send_tcp(), Net_DNS_Resolver::send(),
+	 *		Net_DNS_Resolver::send_udp(), Net_DNS_Resolver::send_udp_with_sock_lib()
 	 */
-	function send_udp($packet, $packet_data)
+	function send_udp_no_sock_lib($packet, $packet_data)
 	{
 		$retrans = $this->retrans;
 		$timeout = $retrans;
@@ -804,6 +818,128 @@ class Net_DNS_Resolver
 				$this->errorstring = "query timed out";
 				return(NULL);
 			}
+		}
+	}
+
+	/* }}} */
+	/* Net_DNS_Resolver::send_udp_with_sock_lib($packet, $packet_data) {{{ */
+	/**
+	 * Sends a packet via UDP to the list of name servers.
+	 *
+	 * This function sends a packet to a nameserver.  It is called by
+	 * send_udp if the sockets PHP extension is compiled into PHP.
+	 *
+	 * @param string $packet	A packet object to send to the NS list
+	 * @param string $packet_data	The data in the packet as returned by
+	 *								the Net_DNS_Packet::data() method
+	 * @return object Net_DNS_Packet Returns an answer packet object
+	 * @see Net_DNS_Resolver::send_tcp(), Net_DNS_Resolver::send(),
+	 *		Net_DNS_Resolver::send_udp(), Net_DNS_Resolver::send_udp_no_sock_lib()
+	 */
+	function send_udp_with_sock_lib($packet, $packet_data)
+	{
+		$retrans = $this->retrans;
+		$timeout = $retrans;
+
+		//$w = error_reporting(0);
+		$ctr = 0;
+		// Create a socket handle for each nameserver
+		foreach ($this->nameservers as $nameserver) {
+			if ((($sock[$ctr++] = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP)) >= 0) &&
+					socket_connect($sock[$ctr-1], $nameserver, $this->port) >= 0) {
+				$peerhost[$ctr-1] = $nameserver;
+				$peerport[$ctr-1] = $this->port;
+				socket_set_nonblock($sock[$ctr-1]);
+			} else {
+				$ctr--;
+			}
+		}
+		//error_reporting($w);
+
+		if ($ctr == 0) {
+			$this->errorstring = "no nameservers";
+			return(NULL);
+		}
+
+		for ($i = 0; $i < $this->retry; $i++, $retrans *= 2,
+				$timeout = (int) ($retrans / (count($ns)+1))) {
+			if ($timeout < 1) {
+				$timeout = 1;
+			}
+
+			foreach ($sock as $k => $s) {
+				if ($this->debug) {
+					echo ";; send_udp(" . $peerhost[$k] . ":" . $peerport[$k] . "): sending " . strlen($packet_data) . " bytes\n";
+				}
+
+				if (! socket_write($s, $packet_data)) {
+					if ($this->debug) {
+						echo ";; send error\n";
+					}
+				}
+
+				$set = array($s);
+				echo ";; timeout set to $timeout seconds\n";
+				$changed = socket_select($set, $w = null, $e = null, $timeout);
+				if ($changed) {
+					$buf = socket_read($set[0], 512);
+					$this->answerfrom = $peerhost[$k];
+					$this->answersize = strlen($buf);
+					if ($this->debug) {
+						echo ";; answer from " . $peerhost[$k] . ":" .
+							$peerport[$k] .  ": " . strlen($buf) . " bytes\n";
+					}
+					$ans = new Net_DNS_Packet($this->debug);
+					if ($ans->parse($buf)) {
+						if ($ans->header->qr != "1") {
+							continue;
+						}
+						if ($ans->header->id == $packet->header_id) {
+							continue;
+						}
+						$this->errorstring = $ans->header->rcode;
+						$ans->answerfrom = $this->answerfrom;
+						$ans->answersize = $this->answersize;
+						return($ans);
+					}
+				}
+
+				$this->errorstring = "query timed out";
+				return(NULL);
+			}
+		}
+	}
+
+	/* }}} */
+	/* Net_DNS_Resolver::send_udp($packet, $packet_data) {{{ */
+	/**
+	 * Sends a packet via UDP to the list of name servers.
+	 *
+	 * This function sends a packet to a nameserver.  send_udp calls
+	 * either Net_DNS_Resolver::send_udp_no_sock_lib() or
+	 * Net_DNS_Resolver::send_udp_with_sock_lib() depending on whether or
+	 * not the sockets extension is compiled into PHP.  Note that using the
+	 * sockets extension is MUCH more effecient.
+	 *
+	 * @param object Net_DNS_Packet $packet	A packet object to send to the NS list
+	 * @param string $packet_data	The data in the packet as returned by
+	 *								the Net_DNS_Packet::data() method
+	 * @return object Net_DNS_Packet Returns an answer packet object
+	 * @see Net_DNS_Resolver::send_tcp(), Net_DNS_Resolver::send(),
+	 *		Net_DNS_Resolver::send_udp(), Net_DNS_Resolver::send_udp_no_sock_lib()
+	 */
+	function send_udp($packet, $packet_data)
+	{
+		if (extension_loaded("sockets") && $this->useEnhancedSockets) {
+			if ($this->debug) {
+				echo ";; using extended PHP sockets\n";
+			}
+			return($this->send_udp_with_sock_lib($packet, $packet_data));
+		} else {
+			if ($this->debug) {
+				echo ";; using simple sockets\n";
+			}
+			return($this->send_udp_no_sock_lib($packet, $packet_data));
 		}
 	}
 
