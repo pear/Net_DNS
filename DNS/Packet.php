@@ -524,6 +524,7 @@ class Net_DNS_Packet
      */ 
     function string()
     {
+        $retval = "";
         if ($this->answerfrom) {
             $retval .= ";; Answer received from " . $this->answerfrom . "(" .
                 $this->answersize . " bytes)\n;;\n";
