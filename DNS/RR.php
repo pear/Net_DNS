@@ -58,18 +58,18 @@ class Net_DNS_RR
      * I finally did it... i pass an array to the function
      * instead of a parameter list... UGH... i hate perl...
      */
-    /* class constructor - Net_DNS_RR($rrdata) {{{ */
-    function Net_DNS_RR($rrdata)
+    /* class factory - &factory($rrdata) {{{ */
+    function &factory($rrdata)
     {
         if (is_string($rrdata)) {
-            $this = $this->new_from_string($rrdata);
+            return Net_DNS_RR::new_from_string($rrdata);
         } else if (count($rrdata) == 7) {
             list ($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset) = $rrdata;
-            $this = $this->new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset);
+            return Net_DNS_RR::new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset);
         } else {
-            $this = $this->new_from_array($rrdata);
+            return Net_DNS_RR::new_from_array($rrdata);
         }
-    }
+	}
 
     /* }}} */
     /* Net_DNS_RR::new_from_data($name, $ttl, $rrtype, $rrclass, $rdlength, $data, $offset) {{{ */
