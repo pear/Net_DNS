@@ -91,8 +91,7 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
             }
 
             $this->algorithm   = NET_DNS_DEFAULT_ALGORITHM;
-            //$this->time_signed = time();
-            $this->time_signed = 1028243762;
+            $this->time_signed = time();
 
             $this->fudge       = NET_DNS_DEFAULT_FUDGE;
             $this->mac_size    = 0;
@@ -149,15 +148,6 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
             $key = base64_decode($key);
 
             $newpacket = $packet;
-            $newpacket->header->qdcount = 0;
-            $newpacket->question = array();
-            $newpacket->header->ancount = 0;
-            $newpacket->answer = array();
-            $newpacket->header->nscount = 0;
-            $newpacket->authority = array();
-            $newpacket->header->arcount = 0;
-            $newpacket->additional = array();
-            $newpacket->display();
             $newoffset = $offset;
             array_pop($newpacket->additional);
             $newpacket->header->arcount--;
@@ -194,10 +184,7 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
                 $sigdata .= pack("nN", 0, $this->other_data);
             }
 
-            $r = new Net_DNS_Resolver();
-            $r->printhex($sigdata);
             $this->mac = mhash(MHASH_MD5, $sigdata, $key);
-            echo bin2hex($this->mac) . "<br>" . bin2hex($key) . "<br>";
             $this->mac_size = strlen($this->mac);
 
             /*
