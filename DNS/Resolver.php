@@ -299,6 +299,7 @@ class Net_DNS_Resolver
     {
         if (! ($f = fopen($file, "r"))) {
             $this->error = "can't open $file";
+            return(FALSE);
         }
 
         while (! feof($f)) {
