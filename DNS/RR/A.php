@@ -39,7 +39,7 @@ class Net_DNS_RR_A extends Net_DNS_RR
     var $address;
     /* }}} */
     /* class constructor - Net_DNS_RR_A(&$rro, $data, $offset = "") {{{ */
-    function Net_DNS_RR_A($rro, $data, $offset = "")
+    function Net_DNS_RR_A(&$rro, $data, $offset = "")
     {
         $this->name = $rro->name;
         $this->type = $rro->type;
