@@ -538,7 +538,7 @@ class Net_DNS_Packet
     function parse_rr($data, $offset)
     {
         list($name, $offset) = $this->dn_expand($data, $offset);
-        if (! strlen($name)) {
+        if ($name === NULL) {
             return(array(NULL, NULL));
         }
 
