@@ -164,9 +164,11 @@ class Net_DNS_Packet
         $this->answer = NULL;
         $this->authority = NULL;
         $this->additional = NULL;
+        /* Do not print question packet
         if ($this->debug) {
             $this->display();
         }
+        */
     }
 
     /* }}} */
