@@ -39,21 +39,23 @@ class Net_DNS_Question
     /* class constructor Net_DNS_Question($qname, $qtype, $qclass) {{{ */
     function Net_DNS_Question($qname, $qtype, $qclass)
     {
-        if (   is_null(Net_DNS::typesbyname($qtype))
-                &&  !is_null(Net_DNS::classesbyname($qtype))
-                && is_null(Net_DNS::classesbyname($qclass))
-                &&  !is_null(Net_DNS::typesbyname($qclass))) {
+        $qtype  = !is_null($qtype)  ? strtoupper($qtype)  : 'ANY';
+        $qclass = !is_null($qclass) ? strtoupper($qclass) : 'ANY';
 
-            $t = $qtype;
-            $qtype = $qclass;
-            $qclass = $t;
+        // Check if the caller has the type and class reversed.
+        // We are not that kind for unknown types.... :-)
+        if ( ( is_null(Net_DNS::typesbyname($qtype)) ||
+               is_null(Net_DNS::classesbyname($qtype)) )
+          && !is_null(Net_DNS::classesbyname($qclass))
+          && !is_null(Net_DNS::typesbyname($qclass)))
+        {
+            list($qtype, $qclass) = array($qclass, $qtype);
         }
-
+        $qname = preg_replace(array('/^\.+/', '/\.+$/'), '', $qname);
         $this->qname = $qname;
         $this->qtype = $qtype;
         $this->qclass = $qclass;
     }
-
     /* }}} */
     /* Net_DNS_Question::display() {{{*/
     function display()
