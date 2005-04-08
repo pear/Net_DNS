@@ -172,7 +172,7 @@ class Net_DNS_Resolver
      * The location of the system resolv.conf file.
      *
      * The location of the system resolv.conf file.
-     * 
+     *
      * @var string $resolv_conf
      */
     var $resolv_conf = '/etc/resolv.conf';
@@ -449,7 +449,7 @@ class Net_DNS_Resolver
                 if (ereg('^[0-9]+(\.[0-9]+){0,3}$', $ns, $regs)) {
                     $newns[count($newns)] = $ns;
                 } else {
-                    /* 
+                    /*
                      * This still needs to be ported
                      *
                      if ($ns !~ /\./) {
@@ -516,7 +516,7 @@ class Net_DNS_Resolver
         /*
          * If the name contains at least one dot then try it as is first.
          */
-        if (strchr($name, '.')) {
+        if (strstr($name, '.')) {
             if ($this->debug) {
                 echo ";; search($name, $type, $class)\n";
             }
@@ -546,7 +546,7 @@ class Net_DNS_Resolver
         /*
          * Finally, if the name has no dots then try it as is.
          */
-        if (! strlen(strchr($name, '.'))) {
+        if (! strlen(strstr($name, '.'))) {
             if ($this->debug) {
                 echo ";; search($name, $type, $class)\n";
             }
