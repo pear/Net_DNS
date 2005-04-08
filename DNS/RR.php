@@ -61,39 +61,48 @@ class Net_DNS_RR
     /* class constructor - Net_DNS_RR($rrdata) {{{ */
     function Net_DNS_RR($rrdata)
     {
-        if (is_string($rrdata)) {
-            $this = $this->new_from_string($rrdata);
-        } else if (count($rrdata) == 7) {
-            list ($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset) = $rrdata;
-            $this = $this->new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset);
-        } else {
-            $this = $this->new_from_array($rrdata);
+        if ($rrdata != 'getRR') { //BC check/warning remove later
+            trigger_error("Please use Net_DNS_RR::getRR() instead");
         }
+    }
+
+    function getRR($rrdata)
+    {
+        if (is_string($rrdata)) {
+            $rr = Net_DNS_RR::new_from_string($rrdata);
+        } elseif (count($rrdata) == 7) {
+            list($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset) = $rrdata;
+            $rr = Net_DNS_RR::new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset);
+        } else {
+            $rr = Net_DNS_RR::new_from_array($rrdata);
+        }
+        return $rr;
     }
 
     /* }}} */
     /* Net_DNS_RR::new_from_data($name, $ttl, $rrtype, $rrclass, $rdlength, $data, $offset) {{{ */
-    function new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset)
+    function &new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset)
     {
-        $this->name = $name;
-        $this->type = $rrtype;
-        $this->class = $rrclass;
-        $this->ttl = $ttl;
-        $this->rdlength = $rdlength;
-        $this->rdata = substr($data, $offset, $rdlength);
+        $rr = &new Net_DNS_RR('getRR');
+        $rr->name = $name;
+        $rr->type = $rrtype;
+        $rr->class = $rrclass;
+        $rr->ttl = $ttl;
+        $rr->rdlength = $rdlength;
+        $rr->rdata = substr($data, $offset, $rdlength);
         if (class_exists('Net_DNS_RR_' . $rrtype)) {
             $scn = 'Net_DNS_RR_' . $rrtype;
-            $subclass = new $scn($this, $data, $offset);
-            return($subclass);
+            return new $scn($rr, $data, $offset);
         } else {
-            return($this);
+            return $rr;
         }
     }
 
     /* }}} */
     /* Net_DNS_RR::new_from_string($rrstring, $update_type = '') {{{ */
-    function new_from_string($rrstring, $update_type = '')
+    function &new_from_string($rrstring, $update_type = '')
     {
+        $rr = &new Net_DNS_RR('getRR');
         $ttl = 0;
         $parts = preg_split('/[\s]+/', $rrstring);
         while ($s = array_shift($parts)) {
@@ -163,54 +172,54 @@ class Net_DNS_RR
         }
 
         if (strlen($rrtype)) {
-            $this->name = $name;
-            $this->type = $rrtype;
-            $this->class = $rrclass;
-            $this->ttl = $ttl;
-            $this->rdlength = 0;
-            $this->rdata = '';
+            $rr->name = $name;
+            $rr->type = $rrtype;
+            $rr->class = $rrclass;
+            $rr->ttl = $ttl;
+            $rr->rdlength = 0;
+            $rr->rdata = '';
 
             if (class_exists('Net_DNS_RR_' . $rrtype)) {
                 $scn = 'Net_DNS_RR_' . $rrtype;
-                $rc = new $scn($this, $rdata);
-                return($rc);
+                return new $scn($rr, $rdata);
             } else {
-                return($this);
+                return $rr;
             }
         } else {
-            return(NULL);
+            return NULL;
         }
     }
 
     /* }}} */
     /* Net_DNS_RR::new_from_array($rrarray) {{{ */
-    function new_from_array($rrarray)
+    function &new_from_array($rrarray)
     {
+        $rr = &new Net_DNS_RR('getRR');
         foreach ($rrarray as $k => $v) {
-            $this->{strtolower($k)} = $v;
+            $rr->{strtolower($k)} = $v;
         }
 
-        if (! strlen($this->name)) {
-            return(NULL);
+        if (! strlen($rr->name)) {
+            return NULL;
         }
-        if (! strlen($this->type)){
-            return(NULL);
+        if (! strlen($rr->type)){
+            return NULL;
         }
-        if (! $this->ttl) {
-            $this->ttl = 0;
+        if (! $rr->ttl) {
+            $rr->ttl = 0;
         }
-        if (! strlen($this->class)) {
-            $this->class = 'IN';
+        if (! strlen($rr->class)) {
+            $rr->class = 'IN';
         }
-        if (strlen($this->rdata)) {
-            $this->rdlength = strlen($rdata);
+        if (strlen($rr->rdata)) {
+            $rr->rdlength = strlen($rdata);
         }
         if (class_exists('Net_DNS_RR_' . $rrtype)) {
             $scn = 'Net_DNS_RR_' . $rrtype;
-            $rc = new $scn($this, $rdata);
-            return($rc);
-        } else
-            return($this);
+            return new $scn($rr, $rdata);
+        } else {
+            return $rr;
+        }
     }
 
     /* }}} */
