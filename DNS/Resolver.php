@@ -532,7 +532,7 @@ class Net_DNS_Resolver
          * PTR query.
          */
         if (preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/', $name, $regs)) {
-            $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
+            $name = $regs[4].'.'.$regs[3].'.'.$regs[2].'.'.$regs[1].'.in-addr.arpa.';
             $type = 'PTR';
         }
 
