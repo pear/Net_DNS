@@ -50,7 +50,7 @@ class Net_DNS_RR_AAAA extends Net_DNS_RR
         $this->rdata = $rro->rdata;
 
         if ($offset) {
-			$this->address = Net_DNS_RR_AAAA::ipv6_decompress(substr($this->rdata, 0, $this->rdlength));
+            $this->address = Net_DNS_RR_AAAA::ipv6_decompress(substr($this->rdata, 0, $this->rdlength));
         } else {
             if (strlen($data)) {
                 if (count($adata = explode(':', $data, 8)) >= 3) {
@@ -75,7 +75,7 @@ class Net_DNS_RR_AAAA extends Net_DNS_RR
     /* Net_DNS_RR_AAAA::rr_rdata($packet, $offset) {{{ */
     function rr_rdata($packet, $offset)
     {
-		return Net_DNS_RR_AAAA::ipv6_compress($this->address);
+        return Net_DNS_RR_AAAA::ipv6_compress($this->address);
     }
 
     /* }}} */
@@ -112,18 +112,19 @@ class Net_DNS_RR_AAAA extends Net_DNS_RR
             /* Must be 8 shorts long */
             return '::';
         }
-        $a = unpack('n8b', $pack);
-        foreach($a as $idx => $value)
-            $a[$idx] = dechex($value);
-        $addr = implode(':', $a);
-        /* Shorthand the first :0:0:0: set into a :: */
+        $a = unpack('n8', $pack);
+        $addr = vsprintf("%x:%x:%x:%x:%x:%x:%x:%x", $a);
+        /* Shorthand the first :0:0: set into a :: */
         /* TODO: Make this is a single replacement pattern */
-        if (substr($addr, -4, 4) == ':0:0') {
+        if (substr($addr, -4) == ':0:0') {
             return preg_replace('/((:0){2,})$/', '::', $addr);
+        } elseif (substr($addr, 0, 4) == '0:0:') {
+            return '0:0:'. substr($addr, 4);
         } else {
-            return preg_replace('/(:?(0:){2,})/', '::', $addr);
+            return preg_replace('/(:(0:){2,})/', '::', $addr);
         }
     }
+
     /* }}} */
 }
 /* }}} */
