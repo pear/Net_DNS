@@ -68,22 +68,22 @@ class Net_DNS_RR_MX extends Net_DNS_RR
     /* Net_DNS_RR_MX::rdatastr() {{{ */
     function rdatastr()
     {
-        if ($this->preference) {
-            return($this->preference . ' ' . $this->exchange . '.');
+        if (preg_match('/^[0-9]+$/', $this->preference)) {
+            return $this->preference . ' ' . $this->exchange . '.';
         }
-        return('; no data');
+        return '; no data';
     }
 
     /* }}} */
     /* Net_DNS_RR_MX::rr_rdata($packet, $offset) {{{ */
     function rr_rdata($packet, $offset)
     {
-        if ($this->preference) {
+        if (preg_match('/^[0-9]+$/', $this->preference)) {
             $rdata = pack('n', $this->preference);
             $rdata .= $packet->dn_comp($this->exchange, $offset + strlen($rdata));
-            return($rdata);
+            return $rdata;
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */
