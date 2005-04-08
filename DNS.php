@@ -54,8 +54,8 @@
 /* GLOBAL VARIABLE definitions {{{ */
 
 // Used by the Net_DNS_Resolver object to generate an ID
-mt_srand((double) microtime() * 10000);
-$_Net_DNS_packet_id = (int)mt_rand(0, 65535);
+
+$GLOBALS['_Net_DNS_packet_id'] = mt_rand(0, 65535);
 
 /* }}} */
 /* Net_DNS object definition (incomplete) {{{ */
@@ -436,16 +436,16 @@ class Net_DNS
     function classesbyname($class)
     {
         $rc = array(
-                'IN'            => 1,
-                'CH'            => 3,
-                'HS'            => 4,
-                'NONE'          => 254,
-                'ANY'           => 255
+                'IN'   => 1,   // RFC 1035
+                'CH'   => 3,   // RFC 1035
+                'HS'   => 4,   // RFC 1035
+                'NONE' => 254, // RFC 2136
+                'ANY'  => 255  // RFC 1035
                 );
-        if (! isset($rc[$class])) {
+        if (!isset($rc[$class])) {
             $rc[$class] = NULL;
         }
-        return($rc[$class]);
+        return $rc[$class];
     }
 
     /*}}}*/

@@ -162,7 +162,7 @@ class Net_DNS_Resolver
      */
     var $answersize;
     /**
-     * The number of seconds after which a TCP connetion should timeout
+     * The number of seconds after which a TCP connection should timeout
      *
      * @var integer $tcp_timeout
      * @access public
@@ -215,7 +215,7 @@ class Net_DNS_Resolver
      * @var boolean $useEnhancedSockets;
      * @access public
      */
-    var $useEnhancedSockets = 1;
+    var $useEnhancedSockets = true;
     /**
      * An array of sockets connected to a name servers
      *
@@ -257,29 +257,29 @@ class Net_DNS_Resolver
     /**
      * Initializes the Resolver Object
      */
-    function Net_DNS_Resolver()
+    function Net_DNS_Resolver($defaults = array())
     {
-        $default = array(
+        $mydefaults = array(
                 'nameservers' => array(),
-                'port'    => '53',
-                'domain'  => '',
+                'port'        => '53',
+                'domain'      => '',
                 'searchlist'  => array(),
-                'retrans' => 5,
-                'retry'   => 4,
-                'usevc'   => 0,
-                'stayopen'  => 0,
-                'igntc'   => 0,
-                'recurse' => 1,
-                'defnames'  => 1,
-                'dnsrch'  => 1,
-                'debug'   => 0,
+                'retrans'     => 5,
+                'retry'       => 4,
+                'usevc'       => 0,
+                'stayopen'    => 0,
+                'igntc'       => 0,
+                'recurse'     => 1,
+                'defnames'    => 1,
+                'dnsrch'      => 1,
+                'debug'       => 0,
                 'errorstring' => 'unknown error or no error',
-                'answerfrom'    => '',
-                'answersize'    => 0,
-                'tcp_timeout'   => 120
+                'answerfrom'  => '',
+                'answersize'  => 0,
+                'tcp_timeout' => 120
                 );
-        foreach ($default as $k => $v) {
-            $this->{$k} = $v;
+        foreach ($mydefaults as $k => $v) {
+            $this->{$k} = isset($defaults[$k]) ? $defaults[$k] : $v;
         }
         $this->confpath[0] = getenv('HOME');
         $this->confpath[1] = '.';
@@ -405,7 +405,7 @@ class Net_DNS_Resolver
      */
     function string()
     {
-        $state = ";; Net_DNS_Resolver state:\n";
+        $state  = ";; Net_DNS_Resolver state:\n";
         $state .= ';;  domain       = ' . $this->domain . "\n";
         $state .= ';;  searchlist   = ' . implode(' ', $this->searchlist) . "\n";
         $state .= ';;  nameservers  = ' . implode(' ', $this->nameservers) . "\n";
@@ -431,61 +431,84 @@ class Net_DNS_Resolver
      */
     function nextid()
     {
-        global $_Net_DNS_packet_id;
-
-        return($_Net_DNS_packet_id++);
+        if ($GLOBALS['_Net_DNS_packet_id']++ > 65535) {
+        	$GLOBALS['_Net_DNS_packet_id']= 1;
+        }
+        return $GLOBALS['_Net_DNS_packet_id'];
     }
     /* }}} */
-    /* not completed - Net_DNS_Resolver::nameservers() {{{ */
+    /* Net_DNS_Resolver::nameservers() {{{ */
     /**
-     * Unknown - not ported yet
+     * Gets or sets the nameservers to be queried.
+     *
+     * Returns the current nameservers if an array of new nameservers is not
+     * given as the argument OR sets the nameservers to the given nameservers.
+     *
+     * Nameservers not specified by ip address must be able to be resolved by
+     * your systems default resolver to be used.
+     *
+     * @access public
      */
-    function nameservers($nsa)
+    function nameservers($nsa = array())
     {
         $defres = new Net_DNS_Resolver();
 
-        if (is_array($ns)) {
+        if (is_array($nsa)) {
+            $a = array();
             foreach ($nsa as $ns) {
-                if (ereg('^[0-9]+(\.[0-9]+){0,3}$', $ns, $regs)) {
-                    $newns[count($newns)] = $ns;
+                if (preg_match('/^(\d+(:?\.\d+){0,3})$/', $ns)) {
+                    $a[] = ($ns == 0) ? '0.0.0.0' : $ns;
                 } else {
-                    /*
-                     * This still needs to be ported
-                     *
-                     if ($ns !~ /\./) {
-                     if (defined $defres->searchlist) {
-                     @names = map { $ns . "." . $_ }
-                     $defres->searchlist;
-                     }
-                     elsif (defined $defres->domain) {
-                     @names = ($ns . "." . $defres->domain);
-                     }
-                     }
-                     else {
-                     @names = ($ns);
-                     }
-
-                     my $packet = $defres->search($ns);
-                     $this->errorstring($defres->errorstring);
-                     if (defined($packet)) {
-                     push @a, cname_addr([@names], $packet);
-                     }
-                 */
+                    $names = array();
+                    if (!preg_match('/\./', $ns)) {
+                        if (!empty($defres->searchlist)) {
+                            foreach ($defres->searchlist as $suffix) {
+                                $names[] = $ns .'.' . $suffix;
+                            }
+                        } elseif (!empty($defres->domain)) {
+                            $names[] = $ns .'.'. $defres->domain;
+                        }
+                    } else {
+                        $names[] = $ns;
+                    }
+                    $packet = $defres->search($ns);
+                    if (is_object($packet)) {
+                        $addresses = $this->cname_addr($names, $packet);
+                        foreach ($addresses as $b) {
+                            $a[] = $b;
+                        }
+                        $a = array_unique($a);
+                    }
                 }
             }
-            $this->nameservers = $nsa;
+            if (count($a)) {
+                $this->nameservers = $a;
+            }
         }
-        return($this->nameservers);
+        return $this->nameservers;
     }
 
     /* }}} */
-    /* not completed - Net_DNS_Resolver::cname_addr() {{{ */
-    /**
-     * Unknown - not ported yet
-     */
-    function cname_addr()
+    /* not tested -- Net_DNS_Resolver::cname_addr() {{{ */
+    function cname_addr($names, $packet)
     {
-    }
+        $addr = array();
+        //my $oct2 = '(?:2[0-4]\d|25[0-5]|[0-1]?\d\d|\d)';
+        foreach ($packet->answer as $rr) {
+            if (in_array($rr->name, $names)) {
+                if ($rr->type == 'CNAME') {
+                    $names[] = $rr->cname;
+                } elseif ($rr->type == 'A') {
+                    // Run a basic taint check.
+                    //next RR unless $rr->address =~ m/^($oct2\.$oct2\.$oct2\.$oct2)$/o;
+
+                    $addr[] = $rr->address;
+                }
+            }
+		}
+		return $addr;
+	}
+
     /* }}} */
     /* Net_DNS_Resolver::search() {{{ */
     /**
@@ -522,7 +545,7 @@ class Net_DNS_Resolver
             }
             $ans = $this->query($name, $type, $class);
             if ((is_object($ans)) && $ans->header->ancount > 0) {
-                return($ans);
+                return $ans;
             }
         }
 
@@ -538,7 +561,7 @@ class Net_DNS_Resolver
                 }
                 $ans = $this->query($newname, $type, $class);
                 if ((is_object($ans)) && $ans->header->ancount > 0) {
-                    return($ans);
+                    return $ans;
                 }
             }
         }
@@ -553,14 +576,14 @@ class Net_DNS_Resolver
             $ans = $this->query("$name.", $type, $class);
             if (($ans = $this->query($name, $type, $class)) &&
                     $ans->header->ancount > 0) {
-                return($ans);
+                return $ans;
             }
         }
 
         /*
          * No answer was found.
          */
-        return(0);
+        return 0;
     }
 
     /* }}} */
@@ -627,9 +650,9 @@ class Net_DNS_Resolver
     {
         $ans = $this->rawQuery($name,$type,$class);
         if (is_object($ans) && $ans->header->ancount > 0) {
-            return($ans);
+            return $ans;
         }
-        return(0);
+        return 0;
     }
 
     /* }}} */
@@ -931,8 +954,9 @@ class Net_DNS_Resolver
         $ctr = 0;
         // Create a socket handle for each nameserver
         foreach ($this->nameservers as $nameserver) {
-            if ((($sock[$ctr++] = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP)) >= 0) &&
-                    socket_connect($sock[$ctr-1], $nameserver, $this->port) >= 0) {
+            if ((($sock[$ctr++] = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP))) &&
+                  socket_connect($sock[$ctr-1], $nameserver, $this->port))
+            {
                 $peerhost[$ctr-1] = $nameserver;
                 $peerport[$ctr-1] = $this->port;
                 socket_set_nonblock($sock[$ctr-1]);
