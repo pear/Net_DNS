@@ -315,9 +315,9 @@ class Net_DNS_Resolver
 
         $this->read_env();
 
-        if (!strlen($this->domain) && strlen($this->searchlist)) {
-            $this->default{'domain'} = $this->default{'searchlist'}[0];
-        } else if (! strlen($this->searchlist) && strlen($this->domain)) {
+        if (!strlen($this->domain) && sizeof($this->searchlist)) {
+            $this->domain = $this->searchlist[0];
+        } else if (! sizeof($this->searchlist) && strlen($this->domain)) {
             $this->searchlist = array($this->domain);
         }
         error_reporting($err);
