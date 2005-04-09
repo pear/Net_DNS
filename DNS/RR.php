@@ -55,26 +55,35 @@ class Net_DNS_RR
     /* }}} */
 
     /*
-     * I finally did it... i pass an array to the function
-     * instead of a parameter list... UGH... i hate perl...
+     * Use Net_DNS_RR::factory() instead
+     *
+     * @access private
      */
     /* class constructor - Net_DNS_RR($rrdata) {{{ */
     function Net_DNS_RR($rrdata)
     {
         if ($rrdata != 'getRR') { //BC check/warning remove later
-            trigger_error("Please use Net_DNS_RR::getRR() instead");
+            trigger_error("Please use Net_DNS_RR::factory() instead");
         }
     }
 
-    function getRR($rrdata)
+    /*
+     * Returns an RR object, use this instead of constructor
+     *
+     * @param mixed $rr_rdata Options as string, array or data
+     * @return object Net_DNS_RR or Net_DNS_RR_<type>
+     * @access public
+     * @see Net_DNS_RR::new_from_array Net_DNS_RR::new_from_data Net_DNS_RR::new_from_string
+     */
+    function &factory($rrdata)
     {
         if (is_string($rrdata)) {
-            $rr = Net_DNS_RR::new_from_string($rrdata);
+            $rr = &Net_DNS_RR::new_from_string($rrdata);
         } elseif (count($rrdata) == 7) {
             list($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset) = $rrdata;
-            $rr = Net_DNS_RR::new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset);
+            $rr = &Net_DNS_RR::new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset);
         } else {
-            $rr = Net_DNS_RR::new_from_array($rrdata);
+            $rr = &Net_DNS_RR::new_from_array($rrdata);
         }
         return $rr;
     }
