@@ -23,7 +23,7 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.00b3</version>
+    <version>1.0.0b3</version>
     <date>2005-04-08</date>
     <license>LGPL 2.1</license>
     <state>beta</state>
@@ -63,6 +63,7 @@ Ensured php5 compatibility
     </deps>
   </release>
   <changelog>
+    <release>
     <version>1.00b2</version>
     <date>2003-06-10</date>
     <license>LGPL 2.1</license>
@@ -72,6 +73,7 @@ Ensured php5 compatibility
 - Fixed bug 23812 (as well as other unreported bugs)
 - Added capability for extracting arbritrary lables from a packet (Sara Goleman).
     </notes>
+    </release>
 
     <release>
       <version>1.00b1</version>
