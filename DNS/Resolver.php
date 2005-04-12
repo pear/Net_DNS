@@ -25,7 +25,7 @@
 /**
  * A DNS Resolver library
  *
- * Resolver library.  Builds a DNS query packet, sends  the packet to the
+ * Resolver library.  Builds a DNS query packet, sends the packet to the
  * server and parses the reponse.
  *
  * @package Net_DNS
@@ -38,7 +38,7 @@ class Net_DNS_Resolver
      *
      * An array of all nameservers to query
      *
-     * @var array   $nameservers
+     * @var array $nameservers
      * @access public
      */
     var $nameservers;
@@ -233,7 +233,7 @@ class Net_DNS_Resolver
      */
     var $_axfr_sock;
     /**
-     * axfr resource record lsit
+     * axfr resource record list
      *
      * Used to store a resource record list from a zone transfer
      *
@@ -291,7 +291,7 @@ class Net_DNS_Resolver
     /**
      * Initalizes the resolver library
      *
-     * res_init() searches for resolver library configuration files  an
+     * res_init() searches for resolver library configuration files and
      * initializes the various properties of the resolver object.
      *
      * @see Net_DNS_Resolver::$resolv_conf, Net_DNS_Resolver::$dotfile,
@@ -307,7 +307,7 @@ class Net_DNS_Resolver
         }
 
         foreach ($this->confpath as $dir) {
-            $file = "$dir/" . $this->dotfile;
+            $file = $dir.DIRECTORY_SEPARATOR.$this->dotfile;
             if (file_exists($file) && is_readable($file)) {
                 $this->read_config($file);
             }
@@ -354,8 +354,9 @@ class Net_DNS_Resolver
                     $this->searchlist[count($this->searchlist)] = $regs[2];
                     break;
                 case 'nameserver':
-                    foreach (split(' ', $regs[2]) as $ns)
+                    foreach (split(' ', $regs[2]) as $ns) {
                         $this->nameservers[count($this->nameservers)] = $ns;
+                    }
                     break;
             }
         }
@@ -434,7 +435,7 @@ class Net_DNS_Resolver
         if ($GLOBALS['_Net_DNS_packet_id']++ > 65535) {
         	$GLOBALS['_Net_DNS_packet_id']= 1;
         }
-        return $GLOBALS['_Net_DNS_packet_id'];
+        return($GLOBALS['_Net_DNS_packet_id']);
     }
     /* }}} */
     /* Net_DNS_Resolver::nameservers() {{{ */
@@ -445,7 +446,7 @@ class Net_DNS_Resolver
      * given as the argument OR sets the nameservers to the given nameservers.
      *
      * Nameservers not specified by ip address must be able to be resolved by
-     * your systems default resolver to be used.
+     * the default settings of a new Net_DNS_Resolver.
      *
      * @access public
      */
@@ -485,7 +486,7 @@ class Net_DNS_Resolver
                 $this->nameservers = $a;
             }
         }
-        return $this->nameservers;
+        return($this->nameservers);
     }
 
     /* }}} */
@@ -506,7 +507,7 @@ class Net_DNS_Resolver
                 }
             }
 		}
-		return $addr;
+		return($addr);
 	}
 
     /* }}} */
@@ -544,13 +545,13 @@ class Net_DNS_Resolver
                 echo ";; search($name, $type, $class)\n";
             }
             $ans = $this->query($name, $type, $class);
-            if ((is_object($ans)) && $ans->header->ancount > 0) {
-                return $ans;
+            if (is_object($ans) && ($ans->header->ancount > 0)) {
+                return($ans);
             }
         }
 
         /*
-         * If the name doesn't end in a dot then apply the search list.
+         * If the name does not end in a dot then apply the search list.
          */
         $domain = '';
         if ((! preg_match('/\.$/', $name)) && $this->dnsrch) {
@@ -560,8 +561,8 @@ class Net_DNS_Resolver
                     echo ";; search($newname, $type, $class)\n";
                 }
                 $ans = $this->query($newname, $type, $class);
-                if ((is_object($ans)) && $ans->header->ancount > 0) {
-                    return $ans;
+                if (is_object($ans) && ($ans->header->ancount > 0)) {
+                    return($ans);
                 }
             }
         }
@@ -569,21 +570,20 @@ class Net_DNS_Resolver
         /*
          * Finally, if the name has no dots then try it as is.
          */
-        if (! strlen(strstr($name, '.'))) {
+        if (strpos($name, '.') === false) {
             if ($this->debug) {
                 echo ";; search($name, $type, $class)\n";
             }
-            $ans = $this->query("$name.", $type, $class);
-            if (($ans = $this->query($name, $type, $class)) &&
-                    $ans->header->ancount > 0) {
-                return $ans;
+            $ans = $this->query($name.'.', $type, $class);
+            if (is_object($ans) && ($ans->header->ancount > 0)) {
+                return($ans);
             }
         }
 
         /*
          * No answer was found.
          */
-        return 0;
+        return(0);
     }
 
     /* }}} */
@@ -591,13 +591,13 @@ class Net_DNS_Resolver
     /**
      * Queries nameservers for an answer
      *
-     * Queries the nameservers listed in the resolver configuration for  an
+     * Queries the nameservers listed in the resolver configuration for an
      * answer to a question packet.
      *
      * @param string $name The name (LHS) of a resource record to query.
      * @param string $type The type of record to query.
      * @param string $class The class of record to query.
-     * @return mixed an object of type Net_DNS_Packet, regarless of whether the packet
+     * @return mixed an object of type Net_DNS_Packet, regardless of whether the packet
      *               has an answer or not
      * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
      * @access public
@@ -605,7 +605,7 @@ class Net_DNS_Resolver
     function rawQuery($name, $type = 'A', $class = 'IN')
     {
         /*
-         * If the name doesn't contain any dots then append the default domain.
+         * If the name does not contain any dots then append the default domain.
          */
         if ((strchr($name, '.') < 0) && $this->defnames) {
             $name .= '.' . $this->domain;
@@ -616,7 +616,7 @@ class Net_DNS_Resolver
          * PTR query.
          */
         if (preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/', $name, $regs)) {
-            $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
+            $name = $regs[4].'.'.$regs[3].'.'.$regs[2].'.'.$regs[1].'.in-addr.arpa.';
             $type = 'PTR';
         }
 
@@ -635,7 +635,7 @@ class Net_DNS_Resolver
     /**
      * Queries nameservers for an answer
      *
-     * Queries the nameservers listed in the resolver configuration for  an
+     * Queries the nameservers listed in the resolver configuration for an
      * answer to a question packet.
      *
      * @param string $name The name (LHS) of a resource record to query.
@@ -648,11 +648,11 @@ class Net_DNS_Resolver
      */
     function query($name, $type = 'A', $class = 'IN')
     {
-        $ans = $this->rawQuery($name,$type,$class);
+        $ans = $this->rawQuery($name, $type, $class);
         if (is_object($ans) && $ans->header->ancount > 0) {
-            return $ans;
+            return($ans);
         }
-        return 0;
+        return(0);
     }
 
     /* }}} */
@@ -661,9 +661,9 @@ class Net_DNS_Resolver
      * Sends a packet to a nameserver
      *
      * Determines the appropriate communication method (UDP or TCP) and
-     * send a DNS packet to a nameserver.  Use of the this function
+     * sends a DNS packet to a nameserver.  Use of the this function
      * directly  is discouraged. $packetORname should always be a properly
-     * formatted binary DNS packet.  However, it is possible to send  a
+     * formatted binary DNS packet.  However, it is possible to send a
      * query here and bypass Net_DNS_Resolver::query()
      *
      * @param string $packetORname      A binary DNS packet stream or a
@@ -695,7 +695,7 @@ class Net_DNS_Resolver
     /* }}} */
     /* Net_DNS_Resolver::printhex($packet_data) {{{ */
     /**
-     * Sends a packet via TCP to the list of name servers.
+     * Prints packet data as hex code.
      */
     function printhex($data)
     {
@@ -704,10 +704,11 @@ class Net_DNS_Resolver
         while ($start < strlen($data)) {
             printf(';; %03d: ', $start);
             for ($ctr = $start; $ctr < $start+16; $ctr++) {
-                if ($ctr < strlen($data))
+                if ($ctr < strlen($data)) {
                     printf('%02x ', ord($data[$ctr]));
-                else
+                } else {
                     echo '   ';
+                }
             }
             echo '   ';
             for ($ctr = $start; $ctr < $start+16; $ctr++) {
@@ -1031,7 +1032,7 @@ class Net_DNS_Resolver
      * either Net_DNS_Resolver::send_udp_no_sock_lib() or
      * Net_DNS_Resolver::send_udp_with_sock_lib() depending on whether or
      * not the sockets extension is compiled into PHP.  Note that using the
-     * sockets extension is MUCH more effecient.
+     * sockets extension is MUCH more efficient.
      *
      * @param object Net_DNS_Packet $packet A packet object to send to the NS list
      * @param string $packet_data   The data in the packet as returned by
@@ -1078,7 +1079,7 @@ class Net_DNS_Resolver
              * PTR query.
              */
             if (preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/', $name, $regs)) {
-                $name = "$regs[4].$regs[3].$regs[2].$regs[1].in-addr.arpa";
+                $name = $regs[4].'.'.$regs[3].'.'.$regs[2].'.'.$regs[1].'.in-addr.arpa.';
                 $type = 'PTR';
             }
 
@@ -1090,7 +1091,6 @@ class Net_DNS_Resolver
         }
 
         $packet->header->rd = $this->recurse;
-
         return($packet);
     }
 
@@ -1124,7 +1124,8 @@ class Net_DNS_Resolver
      *
      * @param string $dname The domain (zone) to transfer
      * @param string $class The class in which to look for the zone.
-     * @param boolean $old Requires 'old' style many-answer format to function.  Used for backwards compatibility only.
+     * @param boolean $old Requires 'old' style many-answer format to function.
+                           Used for backwards compatibility only.
      * @return object Net_DNS_Packet
      * @access public
      */
