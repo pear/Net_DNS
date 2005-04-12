@@ -971,16 +971,23 @@ class Net_DNS_Resolver
             $this->errorstring = 'no nameservers';
             return(NULL);
         }
-
-        for ($i = 0; $i < $this->retry; $i++, $retrans *= 2,
-                $timeout = (int) ($retrans / (count($ns)+1))) {
+        // Try each nameserver up to $this->retry times
+        for ($i = 0; $i < $this->retry; $i++) {
+            if ($i != 0) {
+                // Set the timeout for each retry based on the number of
+                // nameservers there is a connected socket for.
+                $retrans *= 2; 
+                $timeout = (int) ($retrans / $ctr);
+            }
+            // Make sure the timeout is at least 1 second
             if ($timeout < 1) {
                 $timeout = 1;
             }
 
+            // Try each nameserver
             foreach ($sock as $k => $s) {
                 if ($this->debug) {
-                    echo ';; send_udp(' . $peerhost[$k] . ':' . $peerport[$k] . '): sending ' . strlen($packet_data) . " bytes\n";
+                    echo "\n;; send_udp(" . $peerhost[$k] . ':' . $peerport[$k] . '): sending ' . strlen($packet_data) . " bytes\n";
                 }
 
                 if (! socket_write($s, $packet_data)) {
@@ -995,7 +1002,31 @@ class Net_DNS_Resolver
                 }
                 $changed = socket_select($set, $w = null, $e = null, $timeout);
                 if ($changed) {
-                    $buf = socket_read($set[0], 512);
+                    // Test to see if the connection was refused.  Linux servers will send
+                    // an ICMP message which will cause the client's next system call to
+                    // return ECONNREFUSED if the server is not listening on the ip:port queried
+                    if (socket_get_option($s, SOL_SOCKET, SO_ERROR) == SOCKET_ECONNREFUSED) {
+                        // Unix socket connection was refused
+                        if ($this->debug) {
+                            echo ';; connection to ' . $peerhost[$k] . ':' . $peerport[$k] . " was refused\n";
+                        }
+                        // Try the next server.
+                        continue;
+                    }
+
+                    // Read the response
+                    $buf = @socket_read($s, 512);
+                    if (socket_last_error($s) != 0) {
+                        // No data could be read from socket
+                        if ($this->debug) {
+                            echo ';; no data could be read from ' . $peerhost[$k] . ':' . $peerport[$k] . "\n";
+                        }
+                        // Reset the non-specific socket error status
+                        socket_clear_error();
+                        // Try the next server.
+                        continue;
+                    }
+
                     $this->answerfrom = $peerhost[$k];
                     $this->answersize = strlen($buf);
                     if ($this->debug) {
@@ -1005,22 +1036,26 @@ class Net_DNS_Resolver
                     $ans = new Net_DNS_Packet($this->debug);
                     if ($ans->parse($buf)) {
                         if ($ans->header->qr != '1') {
+                            // Ignore packet if it is not a response
                             continue;
-                        }
-                        if ($ans->header->id != $packet->header->id) {
+                        } elseif ($ans->header->id != $packet->header->id) {
+                            // Ignore packet if the response id does not match the query id
                             continue;
+                        } else {
+                            // Return the DNS response packet
+                            $this->errorstring = $ans->header->rcode;
+                            $ans->answerfrom = $this->answerfrom;
+                            $ans->answersize = $this->answersize;
+                            return($ans);
                         }
-                        $this->errorstring = $ans->header->rcode;
-                        $ans->answerfrom = $this->answerfrom;
-                        $ans->answersize = $this->answersize;
-                        return($ans);
                     }
+                } elseif ($this->debug) {
+                    echo ";; query to ". $peerhost[$k] . ':' . $peerport[$k] . " timed out\n";
                 }
-
-                $this->errorstring = 'query timed out';
-                return(NULL);
             }
         }
+        $this->errorstring = 'query timed out';
+        return(NULL);
     }
 
     /* }}} */
