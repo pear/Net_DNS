@@ -23,8 +23,8 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.0b3</version>
-    <date>2005-04-08</date>
+    <version>1.0.0rc1</version>
+    <date>2005-04-17</date>
     <license>LGPL 2.1</license>
     <state>beta</state>
     <notes>
