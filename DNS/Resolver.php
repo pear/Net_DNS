@@ -976,7 +976,7 @@ class Net_DNS_Resolver
             if ($i != 0) {
                 // Set the timeout for each retry based on the number of
                 // nameservers there is a connected socket for.
-                $retrans *= 2; 
+                $retrans *= 2;
                 $timeout = (int) ($retrans / $ctr);
             }
             // Make sure the timeout is at least 1 second
@@ -1016,10 +1016,11 @@ class Net_DNS_Resolver
 
                     // Read the response
                     $buf = @socket_read($s, 512);
-                    if (socket_last_error($s) != 0) {
+                    if ($buf === false) {
                         // No data could be read from socket
                         if ($this->debug) {
                             echo ';; no data could be read from ' . $peerhost[$k] . ':' . $peerport[$k] . "\n";
+                            echo ';; socket_error: ' . socket_strerror(socket_last_error()) . "\n";
                         }
                         // Reset the non-specific socket error status
                         socket_clear_error();
