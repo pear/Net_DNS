@@ -23,13 +23,12 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.0rc1</version>
-    <date>2005-04-17</date>
+    <version>1.0.0rc2</version>
+    <date>2005-05-07</date>
     <license>LGPL 2.1</license>
     <state>beta</state>
     <notes>
-Fixed all pending bugs
-Ensured php5 compatibility
+Fixed bug with sockets extension making all queries fail
     </notes>
     <filelist>
       <dir name="/" baseinstalldir="Net">
@@ -63,6 +62,16 @@ Ensured php5 compatibility
     </deps>
   </release>
   <changelog>
+    <release>
+    <version>1.0.0rc1</version>
+    <date>2005-04-17</date>
+    <license>LGPL 2.1</license>
+    <state>beta</state>
+    <notes>
+Fixed all pending bugs
+Ensured php5 compatibility
+    </notes>
+    </release>
     <release>
     <version>1.00b2</version>
     <date>2003-06-10</date>
