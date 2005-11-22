@@ -91,10 +91,10 @@ class Net_DNS_RR_NAPTR extends Net_DNS_RR
     /* Net_DNS_RR_NAPTR::rdatastr() {{{ */
     function rdatastr()
     {
-        if ($this->port) {
+        if ($this->rdata) {
             return(intval($this->order) . ' ' . intval($this->preference) . ' "' . addslashes($this->flags) . '" "' . 
                    addslashes($this->services) . '" "' . addslashes($this->regex) . '" "' . addslashes($this->replacement) . '"');
-        } else return('; no data');
+        } else return '; no data';
     }
 
     /* }}} */
