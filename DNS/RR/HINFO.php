@@ -91,7 +91,7 @@ class Net_DNS_RR_HINFO extends Net_DNS_RR
             $rdata .= pack('C', strlen($this->os))  . $this->os;
             return $rdata;
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

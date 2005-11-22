@@ -194,7 +194,7 @@ class Net_DNS_RR
                 return $rr;
             }
         } else {
-            return NULL;
+            return null;
         }
     }
 
@@ -208,10 +208,10 @@ class Net_DNS_RR
         }
 
         if (! strlen($rr->name)) {
-            return NULL;
+            return null;
         }
         if (! strlen($rr->type)){
-            return NULL;
+            return null;
         }
         if (! $rr->ttl) {
             $rr->ttl = 0;
@@ -268,7 +268,7 @@ class Net_DNS_RR
         } else if (strlen($this->rdata)) {
             return $this->rdata;
         } else {
-            return NULL;
+            return null;
         }
     }
 

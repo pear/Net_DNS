@@ -109,7 +109,7 @@ class Net_DNS_RR_NAPTR extends Net_DNS_RR
             $rdata .= $packet->dn_comp($this->replacement, $offset + strlen($rdata));
             return $rdata;
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

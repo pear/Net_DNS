@@ -89,7 +89,7 @@ class Net_DNS_RR_A extends Net_DNS_RR
         if (count($aparts) == 4) {
             return pack('c4', $aparts[0], $aparts[1], $aparts[2], $aparts[3]);
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

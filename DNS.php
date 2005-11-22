@@ -126,7 +126,7 @@ class Net_DNS
                 'UPDATE'       => 5,   // RFC 2136
                 );
         if (! strlen($op[$opcode])) {
-            $op[$opcode] = NULL;
+            $op[$opcode] = null;
         }
         return($op[$opcode]);
     }
@@ -152,7 +152,7 @@ class Net_DNS
                 5 => 'UPDATE',
                 );
         if (! strlen($opval[$opcodeval])) {
-            $opval[$opcodeval] = NULL;
+            $opval[$opcodeval] = null;
         }
         return($opval[$opcodeval]);
     }
@@ -197,7 +197,7 @@ class Net_DNS
                 'NOTZONE'   => 10,    // RFC 2136
                 );
         if (! strlen($rc[$rcode])) {
-            $rc[$rcode] = NULL;
+            $rc[$rcode] = null;
         }
         return($rc[$rcode]);
     }
@@ -229,7 +229,7 @@ class Net_DNS
                 10 => 'NOTZONE',
                 );
         if (! strlen($rc[$rcodeval])) {
-            $rc[$rcodeval] = NULL;
+            $rc[$rcodeval] = null;
         }
         return($rc[$rcodeval]);
     }
@@ -344,7 +344,7 @@ class Net_DNS
                 'ANY'           => 255,
                 );
         if (empty($rc[$rrtype])) {
-            $rc[$rrtype] = NULL;
+            $rc[$rrtype] = null;
         }
         return($rc[$rrtype]);
     }
@@ -411,7 +411,7 @@ class Net_DNS
                 );
         $rrtypeval = preg_replace(array('/\s*/',' /^0*/'), '', $rrtypeval);
         if (empty($rc[$rrtypeval])) {
-            $rc[$rrtypeval] = NULL;
+            $rc[$rrtypeval] = null;
         }
         return($rc[$rrtypeval]);
     }
@@ -443,7 +443,7 @@ class Net_DNS
                 'ANY'  => 255  // RFC 1035
                 );
         if (!isset($rc[$class])) {
-            $rc[$class] = NULL;
+            $rc[$class] = null;
         }
         return $rc[$class];
     }
@@ -470,7 +470,7 @@ class Net_DNS
                 );
         $classval = preg_replace(array('/\s*/',' /^0*/'), '', $classval);
         if (empty($rc[$classval])) {
-            $rc[$classval] = NULL;
+            $rc[$classval] = null;
         }
         return($rc[$classval]);
     }

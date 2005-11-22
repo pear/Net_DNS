@@ -118,7 +118,7 @@ class Net_DNS_RR_SOA extends Net_DNS_RR
                     $this->minimum);
             return $rdata;
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

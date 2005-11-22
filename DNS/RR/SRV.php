@@ -89,7 +89,7 @@ class Net_DNS_RR_SRV extends Net_DNS_RR
             $rdata .= $packet->dn_comp($this->target, $offset + strlen($rdata));
             return $rdata;
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

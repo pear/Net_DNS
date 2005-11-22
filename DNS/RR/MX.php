@@ -83,7 +83,7 @@ class Net_DNS_RR_MX extends Net_DNS_RR
             $rdata .= $packet->dn_comp($this->exchange, $offset + strlen($rdata));
             return $rdata;
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

@@ -76,7 +76,7 @@ class Net_DNS_RR_NS extends Net_DNS_RR
         if (strlen($this->nsdname)) {
             return $packet->dn_comp($this->nsdname, $offset);
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

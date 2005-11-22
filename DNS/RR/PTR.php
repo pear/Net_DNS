@@ -76,7 +76,7 @@ class Net_DNS_RR_PTR extends Net_DNS_RR
         if (strlen($this->ptrdname)) {
             return $packet->dn_comp($this->ptrdname, $offset);
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */

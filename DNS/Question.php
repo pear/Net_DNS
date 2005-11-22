@@ -31,9 +31,9 @@
 class Net_DNS_Question
 {
     /* class variable definitions {{{ */
-    var $qname = NULL;
-    var $qtype = NULL;
-    var $qclass = NULL;
+    var $qname = null;
+    var $qtype = null;
+    var $qclass = null;
 
     /* }}} */
     /* class constructor Net_DNS_Question($qname, $qtype, $qclass) {{{ */

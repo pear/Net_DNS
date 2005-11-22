@@ -740,7 +740,7 @@ class Net_DNS_Resolver
             if ($this->debug) {
                 echo ";; ERROR: send_tcp: no nameservers\n";
             }
-            return NULL;
+            return null;
         }
         $timeout = $this->tcp_timeout;
 
@@ -864,7 +864,7 @@ class Net_DNS_Resolver
 
         if ($ctr == 0) {
             $this->errorstring = 'no nameservers';
-            return NULL;
+            return null;
         }
 
         for ($i = 0; $i < $this->retry; $i++, $retrans *= 2,
@@ -926,7 +926,7 @@ class Net_DNS_Resolver
                 }
 
                 $this->errorstring = 'query timed out';
-                return NULL;
+                return null;
             }
         }
     }
@@ -969,7 +969,7 @@ class Net_DNS_Resolver
 
         if ($ctr == 0) {
             $this->errorstring = 'no nameservers';
-            return NULL;
+            return null;
         }
         // Try each nameserver up to $this->retry times
         for ($i = 0; $i < $this->retry; $i++) {
@@ -1056,7 +1056,7 @@ class Net_DNS_Resolver
             }
         }
         $this->errorstring = 'query timed out';
-        return NULL;
+        return null;
     }
 
     /* }}} */
@@ -1176,20 +1176,20 @@ class Net_DNS_Resolver
                 if ($this->debug) {
                     echo ";; ERROR: no nameservers\n";
                 }
-                return NULL;
+                return null;
             }
             $packet = $this->make_query_packet($dname, 'AXFR', $class);
             $packet_data = $packet->data();
             $ans = $this->send_tcp($packet, $packet_data);
             return $ans;
         } else {
-            if ($this->axfr_start($dname, $class) === NULL) {
-                return NULL;
+            if ($this->axfr_start($dname, $class) === null) {
+                return null;
             }
             $ret = array();
-            while (($ans = $this->axfr_next()) !== NULL) {
-                if ($ans === NULL) {
-                    return NULL;
+            while (($ans = $this->axfr_next()) !== null) {
+                if ($ans === null) {
+                    return null;
                 }
                 array_push($ret, $ans);
             }
@@ -1219,7 +1219,7 @@ class Net_DNS_Resolver
             if ($this->debug) {
                 echo ";; ERROR: axfr_start: no nameservers\n";
             }
-            return NULL;
+            return null;
         }
         $packet = $this->make_query_packet($dname, "AXFR", $class);
         $packet_data = $packet->data();
@@ -1290,19 +1290,19 @@ class Net_DNS_Resolver
         if (! count($this->_axfr_rr)) {
             if (! isset($this->_axfr_sock) || ! is_resource($this->_axfr_sock)) {
                 $this->errorstring = 'no zone transfer in progress';
-                return NULL;
+                return null;
             }
             $timeout = $this->tcp_timeout;
             $buf = $this->read_tcp($this->_axfr_sock, 2, $this->debug);
             if (! strlen($buf)) {
                 $this->errorstring = 'truncated zone transfer';
-                return NULL;
+                return null;
             }
             $len = unpack('n1len', $buf);
             $len = $len['len'];
             if (! $len) {
                 $this->errorstring = 'truncated zone transfer';
-                return NULL;
+                return null;
             }
             $buf = $this->read_tcp($this->_axfr_sock, $len, $this->debug);
             if ($this->debug) {
@@ -1313,22 +1313,22 @@ class Net_DNS_Resolver
                 if ($this->debug) {
                     echo ';; ' . $err . "\n";
                 }
-                return NULL;
+                return null;
             }
             $ans = new Net_DNS_Packet($this->debug);
             if (! $ans->parse($buf)) {
                 if (! $this->errorstring) {
                     $this->errorstring = 'unknown error during packet parsing';
                 }
-                return NULL;
+                return null;
             }
             if ($ans->header->ancount < 1) {
                 $this->errorstring = 'truncated zone transfer';
-                return NULL;
+                return null;
             }
             if ($ans->header->rcode != 'NOERROR') {
                 $this->errorstring = 'errorcode ' . $ans->header->rcode . ' returned';
-                return NULL;
+                return null;
             }
             foreach ($ans->answer as $rr) {
                 if ($rr->type == 'SOA') {

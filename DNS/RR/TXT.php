@@ -84,7 +84,7 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
             $rdata  = pack('C', strlen($this->text)) . $this->text;
             return $rdata;
         }
-        return NULL;
+        return null;
     }
 
     /* }}} */
