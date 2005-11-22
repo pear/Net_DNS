@@ -128,7 +128,7 @@ class Net_DNS
         if (! strlen($op[$opcode])) {
             $op[$opcode] = null;
         }
-        return($op[$opcode]);
+        return $op[$opcode];
     }
 
     /* }}} */
@@ -154,7 +154,7 @@ class Net_DNS
         if (! strlen($opval[$opcodeval])) {
             $opval[$opcodeval] = null;
         }
-        return($opval[$opcodeval]);
+        return $opval[$opcodeval];
     }
 
     /*}}}*/
@@ -199,7 +199,7 @@ class Net_DNS
         if (! strlen($rc[$rcode])) {
             $rc[$rcode] = null;
         }
-        return($rc[$rcode]);
+        return $rc[$rcode];
     }
 
     /*}}}*/
@@ -231,7 +231,7 @@ class Net_DNS
         if (! strlen($rc[$rcodeval])) {
             $rc[$rcodeval] = null;
         }
-        return($rc[$rcodeval]);
+        return $rc[$rcodeval];
     }
 
     /*}}}*/
@@ -346,7 +346,7 @@ class Net_DNS
         if (empty($rc[$rrtype])) {
             $rc[$rrtype] = null;
         }
-        return($rc[$rrtype]);
+        return $rc[$rrtype];
     }
 
     /*}}}*/
@@ -413,7 +413,7 @@ class Net_DNS
         if (empty($rc[$rrtypeval])) {
             $rc[$rrtypeval] = null;
         }
-        return($rc[$rrtypeval]);
+        return $rc[$rrtypeval];
     }
 
     /*}}}*/
@@ -472,7 +472,7 @@ class Net_DNS
         if (empty($rc[$classval])) {
             $rc[$classval] = null;
         }
-        return($rc[$classval]);
+        return $rc[$classval];
     }
 
     /*}}}*/

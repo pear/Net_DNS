@@ -65,7 +65,7 @@ class Net_DNS_RR_CNAME extends Net_DNS_RR
         if (strlen($this->cname)) {
             return $this->cname . '.';
         }
-        return('; no data');
+        return '; no data';
     }
 
     /* }}} */
@@ -73,9 +73,9 @@ class Net_DNS_RR_CNAME extends Net_DNS_RR
     function rr_rdata($packet, $offset)
     {
         if (strlen($this->cname)) {
-            return($packet->dn_comp($this->cname, $offset));
+            return $packet->dn_comp($this->cname, $offset);
         }
-        return(NULL);
+        return null;
     }
 
     /* }}} */

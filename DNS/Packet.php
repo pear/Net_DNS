@@ -393,7 +393,7 @@ class Net_DNS_Packet
      * @return  array   Returns a list of type array($name, $offset) where
      *                  $name is the name of the label which was decompressed
      *                  and $offset is the offset of the next field in the
-     *                  packet.  Returns array(NULL, null) on error
+     *                  packet.  Returns array(null, null) on error
      */
     function dn_expand($packet, $offset)
     {
@@ -402,7 +402,7 @@ class Net_DNS_Packet
         $name = '';
         while (1) {
             if ($packetlen < ($offset + 1)) {
-                return array(NULL, null);
+                return array(null, null);
             }
 
             $a = unpack("@$offset/Cchar", $packet);
@@ -413,7 +413,7 @@ class Net_DNS_Packet
                 break;
             } else if (($len & 0xc0) == 0xc0) {
                 if ($packetlen < ($offset + $int16sz)) {
-                    return array(NULL, null);
+                    return array(null, null);
                 }
                 $ptr = unpack("@$offset/ni", $packet);
                 $ptr = $ptr['i'];
@@ -421,7 +421,7 @@ class Net_DNS_Packet
                 $name2 = Net_DNS_Packet::dn_expand($packet, $ptr);
 
                 if (is_null($name2[0])) {
-                    return array(NULL, null);
+                    return array(null, null);
                 }
                 $name .= $name2[0];
                 $offset += $int16sz;
@@ -430,7 +430,7 @@ class Net_DNS_Packet
                 $offset++;
 
                 if ($packetlen < ($offset + $len)) {
-                    return array(NULL, null);
+                    return array(null, null);
                 }
 
                 $elem = substr($packet, $offset, $len);
@@ -458,14 +458,14 @@ class Net_DNS_Packet
      * @return  array   Returns a list of type array($name, $offset) where
      *                  $name is the name of the label which was decompressed
      *                  and $offset is the offset of the next field in the
-     *                  packet.  Returns array(NULL, null) on error
+     *                  packet.  Returns array(null, null) on error
      */
     function label_extract($packet, $offset)
     {
         $packetlen = strlen($packet);
         $name = '';
         if ($packetlen < ($offset + 1)) {
-            return array(NULL, null);
+            return array(null, null);
         }
 
         $a = unpack("@$offset/Cchar", $packet);
@@ -502,11 +502,11 @@ class Net_DNS_Packet
     {
         list($qname, $offset) = $this->dn_expand($data, $offset);
         if (is_null($qname)) {
-            return array(NULL, null);
+            return array(null, null);
         }
 
         if (strlen($data) < ($offset + 2 * 2)) {
-            return array(NULL, null);
+            return array(null, null);
         }
 
         $q = unpack("@$offset/n2int", $data);
@@ -541,11 +541,11 @@ class Net_DNS_Packet
     {
         list($name, $offset) = $this->dn_expand($data, $offset);
         if ($name === null) {
-            return array(NULL, null);
+            return array(null, null);
         }
 
         if (strlen($data) < ($offset + 10)) {
-            return array(NULL, null);
+            return array(null, null);
         }
 
         $a = unpack("@$offset/n2tc/Nttl/nrdlength", $data);
@@ -559,7 +559,7 @@ class Net_DNS_Packet
 
         $offset += 10;
         if (strlen($data) < ($offset + $rdlength)) {
-            return array(NULL, null);
+            return array(null, null);
         }
 
         $rrobj = &Net_DNS_RR::factory(array($name,
@@ -571,7 +571,7 @@ class Net_DNS_Packet
                     $offset));
 
         if (is_null($rrobj)) {
-            return array(NULL, null);
+            return array(null, null);
         }
 
         $offset += $rdlength;
