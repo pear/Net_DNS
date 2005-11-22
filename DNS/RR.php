@@ -101,10 +101,9 @@ class Net_DNS_RR
         $rr->rdata = substr($data, $offset, $rdlength);
         if (class_exists('Net_DNS_RR_' . $rrtype)) {
             $scn = 'Net_DNS_RR_' . $rrtype;
-            return new $scn($rr, $data, $offset);
-        } else {
-            return $rr;
+            $rr = new $scn($rr, $data, $offset);
         }
+        return $rr;
     }
 
     /* }}} */
