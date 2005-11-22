@@ -199,7 +199,7 @@ class Net_DNS_Resolver
     /**
      * debugging flag
      *
-     * If set to TRUE (non-zero), debugging code will be displayed as the
+     * If set to true (non-zero), debugging code will be displayed as the
      * resolver makes the request.
      *
      * @var boolean $debug;
@@ -209,7 +209,7 @@ class Net_DNS_Resolver
     /**
      * use the (currently) experimental PHP socket library
      *
-     * If set to TRUE (non-zero), the Resolver will attempt to use the
+     * If set to true (non-zero), the Resolver will attempt to use the
      * much more effecient PHP sockets extension (if available).
      *
      * @var boolean $useEnhancedSockets;
@@ -422,7 +422,7 @@ class Net_DNS_Resolver
         $state .= 'dnsrch   = ' . $this->dnsrch . "\n";
         $state .= ';;  recurse  = ' . $this->recurse . '  ';
         $state .= 'debug    = ' . $this->debug . "\n";
-        return($state);
+        return $state;
     }
 
     /* }}} */
@@ -435,7 +435,7 @@ class Net_DNS_Resolver
         if ($GLOBALS['_Net_DNS_packet_id']++ > 65535) {
         	$GLOBALS['_Net_DNS_packet_id']= 1;
         }
-        return($GLOBALS['_Net_DNS_packet_id']);
+        return $GLOBALS['_Net_DNS_packet_id'];
     }
     /* }}} */
     /* Net_DNS_Resolver::nameservers() {{{ */
@@ -486,7 +486,7 @@ class Net_DNS_Resolver
                 $this->nameservers = $a;
             }
         }
-        return($this->nameservers);
+        return $this->nameservers;
     }
 
     /* }}} */
@@ -507,7 +507,7 @@ class Net_DNS_Resolver
                 }
             }
 		}
-		return($addr);
+		return $addr;
 	}
 
     /* }}} */
@@ -522,7 +522,7 @@ class Net_DNS_Resolver
      * @param string $type The type of record to query.
      * @param string $class The class of record to query.
      * @return mixed    an object of type Net_DNS_Packet on success,
-     *                  or FALSE on failure.
+     *                  or false on failure.
      * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
      * @access public
      */
@@ -546,7 +546,7 @@ class Net_DNS_Resolver
             }
             $ans = $this->query($name, $type, $class);
             if (is_object($ans) && ($ans->header->ancount > 0)) {
-                return($ans);
+                return $ans;
             }
         }
 
@@ -562,7 +562,7 @@ class Net_DNS_Resolver
                 }
                 $ans = $this->query($newname, $type, $class);
                 if (is_object($ans) && ($ans->header->ancount > 0)) {
-                    return($ans);
+                    return $ans;
                 }
             }
         }
@@ -576,14 +576,14 @@ class Net_DNS_Resolver
             }
             $ans = $this->query($name.'.', $type, $class);
             if (is_object($ans) && ($ans->header->ancount > 0)) {
-                return($ans);
+                return $ans;
             }
         }
 
         /*
          * No answer was found.
          */
-        return(0);
+        return false;
     }
 
     /* }}} */
@@ -627,7 +627,7 @@ class Net_DNS_Resolver
         $packet->buildQuestion($name, $type, $class);
         $packet->header->rd = $this->recurse;
         $ans = $this->send($packet);
-        return($ans);
+        return $ans;
     }
 
     /* }}} */
@@ -642,7 +642,7 @@ class Net_DNS_Resolver
      * @param string $type The type of record to query.
      * @param string $class The class of record to query.
      * @return mixed    an object of type Net_DNS_Packet on success,
-     *                  or FALSE on failure.
+     *                  or false on failure.
      * @see Net_DNS::typesbyname(), Net_DNS::classesbyname()
      * @access public
      */
@@ -650,9 +650,9 @@ class Net_DNS_Resolver
     {
         $ans = $this->rawQuery($name, $type, $class);
         if (is_object($ans) && $ans->header->ancount > 0) {
-            return($ans);
+            return $ans;
         }
-        return(0);
+        return false;
     }
 
     /* }}} */
@@ -689,7 +689,7 @@ class Net_DNS_Resolver
                 $ans = $this->send_tcp($packet, $packet_data);
             }
         }
-        return($ans);
+        return $ans;
     }
 
     /* }}} */
@@ -740,7 +740,7 @@ class Net_DNS_Resolver
             if ($this->debug) {
                 echo ";; ERROR: send_tcp: no nameservers\n";
             }
-            return(NULL);
+            return NULL;
         }
         $timeout = $this->tcp_timeout;
 
@@ -817,7 +817,7 @@ class Net_DNS_Resolver
             $this->errorstring = $ans->header->rcode;
             $ans->answerfrom = $this->answerfrom;
             $ans->answersize = $this->answersize;
-            return($ans);
+            return $ans;
         }
     }
 
@@ -855,7 +855,7 @@ class Net_DNS_Resolver
             if ($sock[$ctr++] = fsockopen("udp://$nameserver", $this->port)) {
                 $peerhost[$ctr-1] = $nameserver;
                 $peerport[$ctr-1] = $this->port;
-                socket_set_blocking($sock, FALSE);
+                socket_set_blocking($sock, false);
             } else {
                 $ctr--;
             }
@@ -864,7 +864,7 @@ class Net_DNS_Resolver
 
         if ($ctr == 0) {
             $this->errorstring = 'no nameservers';
-            return(NULL);
+            return NULL;
         }
 
         for ($i = 0; $i < $this->retry; $i++, $retrans *= 2,
@@ -899,7 +899,7 @@ class Net_DNS_Resolver
                 $buf = '';
                 while (! strlen($buf) && $timetoTO > (time() +
                             (double)microtime())) {
-                    socket_set_blocking($s, FALSE);
+                    socket_set_blocking($s, false);
                     if ($buf = fread($s, 512)) {
                         $this->answerfrom = $peerhost[$k];
                         $this->answersize = strlen($buf);
@@ -918,7 +918,7 @@ class Net_DNS_Resolver
                             $this->errorstring = $ans->header->rcode;
                             $ans->answerfrom = $this->answerfrom;
                             $ans->answersize = $this->answersize;
-                            return($ans);
+                            return $ans;
                         }
                     }
                     // Sleep another 1/100th of a second... this sucks...
@@ -926,7 +926,7 @@ class Net_DNS_Resolver
                 }
 
                 $this->errorstring = 'query timed out';
-                return(NULL);
+                return NULL;
             }
         }
     }
@@ -969,7 +969,7 @@ class Net_DNS_Resolver
 
         if ($ctr == 0) {
             $this->errorstring = 'no nameservers';
-            return(NULL);
+            return NULL;
         }
         // Try each nameserver up to $this->retry times
         for ($i = 0; $i < $this->retry; $i++) {
@@ -1047,7 +1047,7 @@ class Net_DNS_Resolver
                             $this->errorstring = $ans->header->rcode;
                             $ans->answerfrom = $this->answerfrom;
                             $ans->answersize = $this->answersize;
-                            return($ans);
+                            return $ans;
                         }
                     }
                 } elseif ($this->debug) {
@@ -1056,7 +1056,7 @@ class Net_DNS_Resolver
             }
         }
         $this->errorstring = 'query timed out';
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */
@@ -1083,12 +1083,12 @@ class Net_DNS_Resolver
             if ($this->debug) {
                 echo "\n;; using extended PHP sockets\n";
             }
-            return($this->send_udp_with_sock_lib($packet, $packet_data));
+            return $this->send_udp_with_sock_lib($packet, $packet_data);
         } else {
             if ($this->debug) {
                 echo "\n;; using simple sockets\n";
             }
-            return($this->send_udp_no_sock_lib($packet, $packet_data));
+            return $this->send_udp_no_sock_lib($packet, $packet_data);
         }
     }
 
@@ -1127,7 +1127,7 @@ class Net_DNS_Resolver
         }
 
         $packet->header->rd = $this->recurse;
-        return($packet);
+        return $packet;
     }
 
     /* }}} */
@@ -1144,18 +1144,18 @@ class Net_DNS_Resolver
      */
     function axfr_old($dname, $class = 'IN')
     {
-        return($this->axfr($dname, $class, TRUE));
+        return $this->axfr($dname, $class, true);
     }
     /* }}} */
-    /* Net_DNS_Resolver::axfr($dname, $class = 'IN', $old = FALSE) {{{ */
+    /* Net_DNS_Resolver::axfr($dname, $class = 'IN', $old = false) {{{ */
     /**
      * Performs an AXFR query (zone transfer)
      *
      * Requests a zone transfer from the nameservers. Note that zone
      * transfers will ALWAYS use TCP regardless of the setting of the
-     * Net_DNS_Resolver::$usevc flag.  If $old is set to TRUE, Net_DNS requires
+     * Net_DNS_Resolver::$usevc flag.  If $old is set to true, Net_DNS requires
      * a nameserver that supports the many-answers style transfer format.  Large
-     * zone transfers will not function properly.  Setting $old to TRUE is _NOT_
+     * zone transfers will not function properly.  Setting $old to true is _NOT_
      * recommended and should only be used for backwards compatibility.
      *
      * @param string $dname The domain (zone) to transfer
@@ -1165,7 +1165,7 @@ class Net_DNS_Resolver
      * @return object Net_DNS_Packet
      * @access public
      */
-    function axfr($dname, $class = 'IN', $old = FALSE)
+    function axfr($dname, $class = 'IN', $old = false)
     {
         if ($old) {
             if ($this->debug) {
@@ -1176,24 +1176,24 @@ class Net_DNS_Resolver
                 if ($this->debug) {
                     echo ";; ERROR: no nameservers\n";
                 }
-                return(NULL);
+                return NULL;
             }
             $packet = $this->make_query_packet($dname, 'AXFR', $class);
             $packet_data = $packet->data();
             $ans = $this->send_tcp($packet, $packet_data);
-            return($ans);
+            return $ans;
         } else {
             if ($this->axfr_start($dname, $class) === NULL) {
-                return(NULL);
+                return NULL;
             }
             $ret = array();
             while (($ans = $this->axfr_next()) !== NULL) {
                 if ($ans === NULL) {
-                    return(NULL);
+                    return NULL;
                 }
                 array_push($ret, $ans);
             }
-            return($ret);
+            return $ret;
         }
     }
 
@@ -1219,7 +1219,7 @@ class Net_DNS_Resolver
             if ($this->debug) {
                 echo ";; ERROR: axfr_start: no nameservers\n";
             }
-            return(NULL);
+            return NULL;
         }
         $packet = $this->make_query_packet($dname, "AXFR", $class);
         $packet_data = $packet->data();
@@ -1272,7 +1272,7 @@ class Net_DNS_Resolver
             $this->_axfr_sock = $sock;
             $this->_axfr_rr = array();
             $this->_axfr_soa_count = 0;
-            return($sock);
+            return $sock;
         }
     }
 
@@ -1290,19 +1290,19 @@ class Net_DNS_Resolver
         if (! count($this->_axfr_rr)) {
             if (! isset($this->_axfr_sock) || ! is_resource($this->_axfr_sock)) {
                 $this->errorstring = 'no zone transfer in progress';
-                return(NULL);
+                return NULL;
             }
             $timeout = $this->tcp_timeout;
             $buf = $this->read_tcp($this->_axfr_sock, 2, $this->debug);
             if (! strlen($buf)) {
                 $this->errorstring = 'truncated zone transfer';
-                return(NULL);
+                return NULL;
             }
             $len = unpack('n1len', $buf);
             $len = $len['len'];
             if (! $len) {
                 $this->errorstring = 'truncated zone transfer';
-                return(NULL);
+                return NULL;
             }
             $buf = $this->read_tcp($this->_axfr_sock, $len, $this->debug);
             if ($this->debug) {
@@ -1313,22 +1313,22 @@ class Net_DNS_Resolver
                 if ($this->debug) {
                     echo ';; ' . $err . "\n";
                 }
-                return(NULL);
+                return NULL;
             }
             $ans = new Net_DNS_Packet($this->debug);
             if (! $ans->parse($buf)) {
                 if (! $this->errorstring) {
                     $this->errorstring = 'unknown error during packet parsing';
                 }
-                return(NULL);
+                return NULL;
             }
             if ($ans->header->ancount < 1) {
                 $this->errorstring = 'truncated zone transfer';
-                return(NULL);
+                return NULL;
             }
             if ($ans->header->rcode != 'NOERROR') {
                 $this->errorstring = 'errorcode ' . $ans->header->rcode . ' returned';
-                return(NULL);
+                return NULL;
             }
             foreach ($ans->answer as $rr) {
                 if ($rr->type == 'SOA') {
@@ -1344,7 +1344,7 @@ class Net_DNS_Resolver
             }
         }
         $rr = array_shift($this->_axfr_rr);
-        return($rr);
+        return $rr;
     }
 
     /* }}} */
@@ -1377,7 +1377,7 @@ class Net_DNS_Resolver
 
             $buf .= $read_buf;
         }
-        return($buf);
+        return $buf;
     }
     /* }}} */
 }

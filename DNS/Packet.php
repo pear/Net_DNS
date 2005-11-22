@@ -37,7 +37,7 @@ class Net_DNS_Packet
     /**
      * debugging flag
      *
-     * If set to TRUE (non-zero), debugging code will be displayed as the
+     * If set to true (non-zero), debugging code will be displayed as the
      * packet is parsed.
      *
      * @var boolean $debug
@@ -126,7 +126,7 @@ class Net_DNS_Packet
     var $additional;
 
     /* }}} */
-    /* class constructor - Net_DNS_Packet($debug = FALSE) {{{ */
+    /* class constructor - Net_DNS_Packet($debug = false) {{{ */
     /*
      * unfortunately (or fortunately), we can't follow the same
      * silly method for determining if name is a hostname or a packet
@@ -140,7 +140,7 @@ class Net_DNS_Packet
      *
      * @param boolean $debug Turns debugging on or off
      */
-    function Net_DNS_Packet($debug = FALSE)
+    function Net_DNS_Packet($debug = false)
     {
         $this->debug = $debug;
         $this->compnames = array();
@@ -187,7 +187,7 @@ class Net_DNS_Packet
      * </ul>
      *
      * @param string $data  A binary string containing a DNS packet
-     * @return boolean TRUE on success, NULL on parser error
+     * @return boolean true on success, NULL on parser error
      */
     function parse($data)
     {
@@ -217,7 +217,7 @@ class Net_DNS_Packet
         for ($ctr = 0; $ctr < $this->header->qdcount; $ctr++) {
             list($qobj, $offset) = $this->parse_question($data, $offset);
             if (is_null($qobj)) {
-                return(NULL);
+                return NULL;
             }
 
             $this->question[count($this->question)] = $qobj;
@@ -244,7 +244,7 @@ class Net_DNS_Packet
             list($rrobj, $offset) = $this->parse_rr($data, $offset);
 
             if (is_null($rrobj)) {
-                return(NULL);
+                return NULL;
             }
             array_push($this->answer, $rrobj);
             if ($this->debug) {
@@ -269,7 +269,7 @@ class Net_DNS_Packet
             list($rrobj, $offset) = $this->parse_rr($data, $offset);
 
             if (is_null($rrobj)) {
-                return(NULL);
+                return NULL;
             }
             array_push($this->authority, $rrobj);
             if ($this->debug) {
@@ -293,7 +293,7 @@ class Net_DNS_Packet
             list($rrobj, $offset) = $this->parse_rr($data, $offset);
 
             if (is_null($rrobj)) {
-                return(NULL);
+                return NULL;
             }
             array_push($this->additional, $rrobj);
             if ($this->debug) {
@@ -301,7 +301,7 @@ class Net_DNS_Packet
             }
         }
 
-        return(TRUE);
+        return true;
     }
 
     /* }}} */
@@ -334,7 +334,7 @@ class Net_DNS_Packet
             $data .= $this->additional[$ctr]->data($this, strlen($data));
         }
 
-        return($data);
+        return $data;
     }
 
     /*}}}*/
@@ -374,7 +374,7 @@ class Net_DNS_Packet
         if (! count($names)) {
             $compname .= pack('C', 0);
         }
-        return($compname);
+        return $compname;
     }
 
     /*}}}*/
@@ -402,7 +402,7 @@ class Net_DNS_Packet
         $name = '';
         while (1) {
             if ($packetlen < ($offset + 1)) {
-                return(array(NULL, NULL));
+                return array(NULL, NULL);
             }
 
             $a = unpack("@$offset/Cchar", $packet);
@@ -413,7 +413,7 @@ class Net_DNS_Packet
                 break;
             } else if (($len & 0xc0) == 0xc0) {
                 if ($packetlen < ($offset + $int16sz)) {
-                    return(array(NULL, NULL));
+                    return array(NULL, NULL);
                 }
                 $ptr = unpack("@$offset/ni", $packet);
                 $ptr = $ptr['i'];
@@ -421,7 +421,7 @@ class Net_DNS_Packet
                 $name2 = Net_DNS_Packet::dn_expand($packet, $ptr);
 
                 if (is_null($name2[0])) {
-                    return(array(NULL, NULL));
+                    return array(NULL, NULL);
                 }
                 $name .= $name2[0];
                 $offset += $int16sz;
@@ -430,7 +430,7 @@ class Net_DNS_Packet
                 $offset++;
 
                 if ($packetlen < ($offset + $len)) {
-                    return(array(NULL, NULL));
+                    return array(NULL, NULL);
                 }
 
                 $elem = substr($packet, $offset, $len);
@@ -439,7 +439,7 @@ class Net_DNS_Packet
             }
         }
         $name = ereg_replace('\.$', '', $name);
-        return(array($name, $offset));
+        return array($name, $offset);
     }
 
     /*}}}*/
@@ -465,7 +465,7 @@ class Net_DNS_Packet
         $packetlen = strlen($packet);
         $name = '';
         if ($packetlen < ($offset + 1)) {
-            return(array(NULL, NULL));
+            return array(NULL, NULL);
         }
 
         $a = unpack("@$offset/Cchar", $packet);
@@ -479,7 +479,7 @@ class Net_DNS_Packet
             $name = substr($packet, $offset, $len);
             $offset += $len;
         }
-        return(array($name, $offset));
+        return array($name, $offset);
     }
 
     /*}}}*/
@@ -502,11 +502,11 @@ class Net_DNS_Packet
     {
         list($qname, $offset) = $this->dn_expand($data, $offset);
         if (is_null($qname)) {
-            return(array(NULL, NULL));
+            return array(NULL, NULL);
         }
 
         if (strlen($data) < ($offset + 2 * 2)) {
-            return(array(NULL, NULL));
+            return array(NULL, NULL);
         }
 
         $q = unpack("@$offset/n2int", $data);
@@ -518,7 +518,7 @@ class Net_DNS_Packet
         $qclass = Net_DNS::classesbyval($qclass);
 
         $q = new Net_DNS_Question($qname, $qtype, $qclass);
-        return(array($q, $offset));
+        return array($q, $offset);
     }
 
     /*}}}*/
@@ -541,11 +541,11 @@ class Net_DNS_Packet
     {
         list($name, $offset) = $this->dn_expand($data, $offset);
         if ($name === NULL) {
-            return(array(NULL, NULL));
+            return array(NULL, NULL);
         }
 
         if (strlen($data) < ($offset + 10)) {
-            return(array(NULL, NULL));
+            return array(NULL, NULL);
         }
 
         $a = unpack("@$offset/n2tc/Nttl/nrdlength", $data);
@@ -559,7 +559,7 @@ class Net_DNS_Packet
 
         $offset += 10;
         if (strlen($data) < ($offset + $rdlength)) {
-            return(array(NULL, NULL));
+            return array(NULL, NULL);
         }
 
         $rrobj = &Net_DNS_RR::factory(array($name,
@@ -571,12 +571,12 @@ class Net_DNS_Packet
                     $offset));
 
         if (is_null($rrobj)) {
-            return(array(NULL, NULL));
+            return array(NULL, NULL);
         }
 
         $offset += $rdlength;
 
-        return(array($rrobj, $offset));
+        return array($rrobj, $offset);
     }
 
     /* }}} */
@@ -648,7 +648,7 @@ class Net_DNS_Packet
         }
 
         $retval .= "\n\n";
-        return($retval);
+        return $retval;
     }
 
     /*}}}*/

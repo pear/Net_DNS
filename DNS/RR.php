@@ -241,11 +241,11 @@ class Net_DNS_RR
     /* Net_DNS_RR::string() {{{ */
     function string()
     {
-        return($this->name . ".\t" . (strlen($this->name) < 16 ? "\t" : '') .
+        return $this->name . ".\t" . (strlen($this->name) < 16 ? "\t" : '') .
                 $this->ttl  . "\t"  .
                 $this->class. "\t"  .
                 $this->type . "\t"  .
-                $this->rdatastr());
+                $this->rdatastr();
 
     }
 
@@ -254,9 +254,9 @@ class Net_DNS_RR
     function rdatastr()
     {
         if ($this->rdlength) {
-            return('; rdlength = ' . $this->rdlength);
+            return '; rdlength = ' . $this->rdlength;
         }
-        return('; no data');
+        return '; no data';
     }
 
     /* }}} */
@@ -264,11 +264,11 @@ class Net_DNS_RR
     function rdata(&$packetORrdata, $offset = '')
     {
         if ($offset) {
-            return($this->rr_rdata($packetORrdata, $offset));
+            return $this->rr_rdata($packetORrdata, $offset);
         } else if (strlen($this->rdata)) {
-            return($this->rdata);
+            return $this->rdata;
         } else {
-            return(NULL);
+            return NULL;
         }
     }
 
@@ -276,7 +276,7 @@ class Net_DNS_RR
     /* Net_DNS_RR::rr_rdata($packet, $offset) {{{ */
     function rr_rdata(&$packet, $offset)
     {
-        return((strlen($this->rdata) ? $this->rdata : ''));
+        return (strlen($this->rdata) ? $this->rdata : '');
     }
     /* }}} */
     /* Net_DNS_RR::data() {{{ */
@@ -293,7 +293,7 @@ class Net_DNS_RR
         $data .= pack('n', strlen($rdata));
         $data .= $rdata;
 
-        return($data);
+        return $data;
     }
     /* }}} */
 }

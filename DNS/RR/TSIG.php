@@ -133,7 +133,7 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
             $rdatastr = '; no data';
         }
 
-        return($rdatastr);
+        return $rdatastr;
     }
 
     /* }}} */
@@ -207,7 +207,7 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
                 $rdata .= pack('nN', 0, $this->other_data);
             }
         }
-        return($rdata);
+        return $rdata;
     }
     /* }}} */
     /* Net_DNS_RR_TSIG::error() {{{ */

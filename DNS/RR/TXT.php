@@ -72,8 +72,8 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
     function rdatastr()
     {
         if ($this->text) {
-            return('"' . addslashes($this->text) . '"');
-        } else return('; no data');
+            return '"' . addslashes($this->text) . '"';
+        } else return '; no data';
     }
 
     /* }}} */
@@ -82,9 +82,9 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
     {
         if ($this->text) {
             $rdata  = pack('C', strlen($this->text)) . $this->text;
-            return($rdata);
+            return $rdata;
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */

@@ -78,8 +78,8 @@ class Net_DNS_RR_HINFO extends Net_DNS_RR
     function rdatastr()
     {
         if ($this->text) {
-            return('"' . addslashes($this->cpu) . '" "' . addslashes($this->os) . '"');
-        } else return('; no data');
+            return '"' . addslashes($this->cpu) . '" "' . addslashes($this->os) . '"';
+        } else return '; no data';
     }
 
     /* }}} */
@@ -89,9 +89,9 @@ class Net_DNS_RR_HINFO extends Net_DNS_RR
         if ($this->text) {
             $rdata  = pack('C', strlen($this->cpu)) . $this->cpu;
             $rdata .= pack('C', strlen($this->os))  . $this->os;
-            return($rdata);
+            return $rdata;
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */

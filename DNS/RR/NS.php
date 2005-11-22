@@ -64,9 +64,9 @@ class Net_DNS_RR_NS extends Net_DNS_RR
     function rdatastr()
     {
         if (strlen($this->nsdname)) {
-            return($this->nsdname . '.');
+            return $this->nsdname . '.';
         }
-        return('; no data');
+        return '; no data';
     }
 
     /* }}} */
@@ -74,9 +74,9 @@ class Net_DNS_RR_NS extends Net_DNS_RR
     function rr_rdata($packet, $offset)
     {
         if (strlen($this->nsdname)) {
-            return($packet->dn_comp($this->nsdname, $offset));
+            return $packet->dn_comp($this->nsdname, $offset);
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */

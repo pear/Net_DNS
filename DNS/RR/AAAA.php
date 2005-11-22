@@ -67,9 +67,9 @@ class Net_DNS_RR_AAAA extends Net_DNS_RR
     function rdatastr()
     {
         if (strlen($this->address)) {
-            return($this->address);
+            return $this->address;
         }
-        return('; no data');
+        return '; no data';
     }
     /* }}} */
     /* Net_DNS_RR_AAAA::rr_rdata($packet, $offset) {{{ */

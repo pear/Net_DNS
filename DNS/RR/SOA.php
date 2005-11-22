@@ -99,9 +99,9 @@ class Net_DNS_RR_SOA extends Net_DNS_RR
                     $this->serial . ' ' .  $this->refresh . ' ' .  $this->retry . ' ' .
                     $this->expire . ' ' .  $this->minimum;
             }
-            return($rdatastr);
+            return $rdatastr;
         }
-        return('; no data');
+        return '; no data';
     }
 
     /* }}} */
@@ -116,9 +116,9 @@ class Net_DNS_RR_SOA extends Net_DNS_RR
                     $this->retry,
                     $this->expire,
                     $this->minimum);
-            return($rdata);
+            return $rdata;
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */

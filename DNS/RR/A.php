@@ -77,9 +77,9 @@ class Net_DNS_RR_A extends Net_DNS_RR
     function rdatastr()
     {
         if (strlen($this->address)) {
-            return($this->address);
+            return $this->address;
         }
-        return('; no data');
+        return '; no data';
     }
     /* }}} */
     /* Net_DNS_RR_A::rr_rdata($packet, $offset) {{{ */
@@ -87,9 +87,9 @@ class Net_DNS_RR_A extends Net_DNS_RR
     {
         $aparts = split('\.', $this->address);
         if (count($aparts) == 4) {
-            return(pack('c4', $aparts[0], $aparts[1], $aparts[2], $aparts[3]));
+            return pack('c4', $aparts[0], $aparts[1], $aparts[2], $aparts[3]);
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */

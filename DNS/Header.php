@@ -149,7 +149,7 @@ class Net_DNS_Header
              * will examine only the header section of the DNS packet
              */
             if (strlen($data) < 12)
-                return(0);
+                return false;
 
             $a = unpack('nid/C2flags/n4counts', $data);
             $this->id      = $a['id'];
@@ -236,7 +236,7 @@ class Net_DNS_Header
                 'nscount = ' . $this->nscount . '  '    .
                 'arcount = ' . $this->arcount . "\n";
         }
-        return($retval);
+        return $retval;
     }
 
     /* }}} */

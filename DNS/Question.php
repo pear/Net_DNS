@@ -67,7 +67,7 @@ class Net_DNS_Question
     /* Net_DNS_Question::string() {{{*/
     function string()
     {
-        return($this->qname . ".\t" . $this->qclass . "\t" . $this->qtype);
+        return $this->qname . ".\t" . $this->qclass . "\t" . $this->qtype;
     }
 
     /*}}}*/
@@ -77,7 +77,7 @@ class Net_DNS_Question
         $data = $packet->dn_comp($this->qname, $offset);
         $data .= pack('n', Net_DNS::typesbyname(strtoupper($this->qtype)));
         $data .= pack('n', Net_DNS::classesbyname(strtoupper($this->qclass)));
-        return($data);
+        return $data;
     }
 
     /*}}}*/

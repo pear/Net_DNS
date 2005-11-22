@@ -92,8 +92,8 @@ class Net_DNS_RR_NAPTR extends Net_DNS_RR
     function rdatastr()
     {
         if ($this->rdata) {
-            return(intval($this->order) . ' ' . intval($this->preference) . ' "' . addslashes($this->flags) . '" "' . 
-                   addslashes($this->services) . '" "' . addslashes($this->regex) . '" "' . addslashes($this->replacement) . '"');
+            return intval($this->order) . ' ' . intval($this->preference) . ' "' . addslashes($this->flags) . '" "' . 
+                   addslashes($this->services) . '" "' . addslashes($this->regex) . '" "' . addslashes($this->replacement) . '"';
         } else return '; no data';
     }
 
@@ -107,9 +107,9 @@ class Net_DNS_RR_NAPTR extends Net_DNS_RR
             $rdata .= pack('C', strlen($this->services)) . $this->services;
             $rdata .= pack('C', strlen($this->regex))    . $this->regex;
             $rdata .= $packet->dn_comp($this->replacement, $offset + strlen($rdata));
-            return($rdata);
+            return $rdata;
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */

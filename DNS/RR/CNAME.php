@@ -63,7 +63,7 @@ class Net_DNS_RR_CNAME extends Net_DNS_RR
     function rdatastr()
     {
         if (strlen($this->cname)) {
-            return($this->cname . '.');
+            return $this->cname . '.';
         }
         return('; no data');
     }

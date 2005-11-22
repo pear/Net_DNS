@@ -75,9 +75,9 @@ class Net_DNS_RR_SRV extends Net_DNS_RR
     function rdatastr()
     {
         if ($this->port) {
-            return(intval($this->preference) . ' ' . intval($this->weight) . ' ' . intval($this->port) . ' ' . $this->target . '.');
+            return intval($this->preference) . ' ' . intval($this->weight) . ' ' . intval($this->port) . ' ' . $this->target . '.';
         }
-        return('; no data');
+        return '; no data';
     }
 
     /* }}} */
@@ -87,9 +87,9 @@ class Net_DNS_RR_SRV extends Net_DNS_RR
         if (isset($this->preference)) {
             $rdata = pack('nnn', $this->preference, $this->weight, $this->port);
             $rdata .= $packet->dn_comp($this->target, $offset + strlen($rdata));
-            return($rdata);
+            return $rdata;
         }
-        return(NULL);
+        return NULL;
     }
 
     /* }}} */
