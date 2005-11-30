@@ -23,16 +23,12 @@ $state = 'beta';
 $summary = 'Resolver library used to communicate with a DNS server.';
 
 $description = <<<EOT
-A resolver library used to communicate with a name server to perform DNS queries,
-zone transfers, dynamic DNS updates, etc.
-
-Creates an object hierarchy from a DNS server response, which allows you to
-view all of the information given by the DNS server. It bypasses the system
-resolver library and communicates directly with the server.
+A resolver library used to communicate with a name server to perform DNS queries, zone transfers, dynamic DNS updates, etc.
+Creates an object hierarchy from a DNS server response, which allows you to view all of the information given by the DNS server. It bypasses the system resolver library and communicates directly with the server.
 EOT;
 
 $notes = <<<EOT
-* Fixed all peding bugs
+* Fixed all pending bugs
 * Fixed coding styles
 * Added class documentation
 EOT;
