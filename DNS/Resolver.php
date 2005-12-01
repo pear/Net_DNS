@@ -36,8 +36,6 @@ class Net_DNS_Resolver
     /**
      * An array of all nameservers to query
      *
-     * An array of all nameservers to query
-     *
      * @var array $nameservers
      * @access public
      */
@@ -45,15 +43,11 @@ class Net_DNS_Resolver
     /**
      * The UDP port to use for the query (default = 53)
      *
-     * The UDP port to use for the query (default = 53)
-     *
      * @var integer $port
      * @access public
      */
     var $port;
     /**
-     * The domain in which the resolver client host resides.
-     *
      * The domain in which the resolver client host resides.
      *
      * @var string $domain
@@ -73,15 +67,11 @@ class Net_DNS_Resolver
     /**
      * The number of seconds between retransmission of unaswered queries
      *
-     * The number of seconds between retransmission of unaswered queries
-     *
      * @var integer $retrans
      * @access public
      */
     var $retrans;
     /**
-     * The number of times unanswered requests should be retried
-     *
      * The number of times unanswered requests should be retried
      *
      * @var integer $retry
@@ -135,8 +125,6 @@ class Net_DNS_Resolver
     /**
      * Contains the value of the last error returned by the resolver.
      *
-     * Contains the value of the last error returned by the resolver.
-     *
      * @var string $errorstring
      * @access public
      */
@@ -171,8 +159,6 @@ class Net_DNS_Resolver
     /**
      * The location of the system resolv.conf file.
      *
-     * The location of the system resolv.conf file.
-     *
      * @var string $resolv_conf
      */
     var $resolv_conf = '/etc/resolv.conf';
@@ -188,8 +174,6 @@ class Net_DNS_Resolver
      */
     var $dotfile = '.resolv.conf';
     /**
-     * A array of directories to search for the user's resolver config
-     *
      * A array of directories to search for the user's resolver config
      *
      * @var string $confpath
@@ -256,6 +240,8 @@ class Net_DNS_Resolver
     /* class constructor - Net_DNS_Resolver() {{{ */
     /**
      * Initializes the Resolver Object
+     * 
+     * @return Net_DNS_Resolver
      */
     function Net_DNS_Resolver($defaults = array())
     {

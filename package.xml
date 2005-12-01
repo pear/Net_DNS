@@ -21,13 +21,13 @@ Creates an object hierarchy from a DNS server response, which allows you to view
   </maintainer>
   </maintainers>
  <release>
-  <version>1.0.0rc2</version>
-  <date>2005-11-30</date>
+  <version>1.0.0rc3</version>
+  <date>2005-12-01</date>
   <license>PHP License 3.01</license>
   <state>beta</state>
-  <notes>* Fixed all pending bugs
-* Fixed coding styles
-* Added class documentation
+  <notes>* Added new parameter for class constructor
+  array with configuration values for the
+  Net_DNS_Resolver() class
   </notes>
   <deps>
    <dep type="php" rel="ge" version="4.2" optional="no"/>
@@ -123,6 +123,16 @@ Creates an object hierarchy from a DNS server response, which allows you to view
     <notes>* Fixed all pending bugs
 * Fixed coding styles
 * Added class documentation
+    </notes>
+   </release>
+   <release>
+    <version>1.0.0rc3</version>
+    <date>2005-12-01</date>
+    <license>PHP License 3.01</license>
+    <state>beta</state>
+    <notes>* Added new parameter for class constructor
+  array with configuration values for the
+  Net_DNS_Resolver() class
     </notes>
    </release>
  </changelog>

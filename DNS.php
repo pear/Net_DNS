@@ -75,7 +75,7 @@ class Net_DNS
     /**
      * A default resolver object created on instantiation
      *
-     * @var object Net_DNS_Resolver
+     * @var Net_DNS_Resolver object
      */
     var $resolver;
     var $VERSION = '1.00b2'; // This should probably be a define :(
@@ -87,14 +87,17 @@ class Net_DNS
     var $INT16SZ = 2;
     /* }}} */
     /* class constructor - Net_DNS() {{{ */
-    /**
+
+	/**
      * Initializes a resolver object
      *
      * @see Net_DNS_Resolver
-     */
-    function Net_DNS()
+	 * @param array $defaults
+	 * @return Net_DNS
+	 */
+    function Net_DNS($defaults = array())
     {
-        $this->resolver = new Net_DNS_Resolver();
+        $this->resolver = new Net_DNS_Resolver($defaults);
     }
     /* }}} */
     /* Net_DNS::opcodesbyname() {{{ */
