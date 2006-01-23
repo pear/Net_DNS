@@ -21,7 +21,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
   </maintainer>
   </maintainers>
  <release>
-  <version>1.0.0rc3</version>
+  <version>1.0.0RC3</version>
   <date>2005-12-01</date>
   <license>PHP License 3.01</license>
   <state>beta</state>

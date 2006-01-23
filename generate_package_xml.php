@@ -17,7 +17,7 @@ $packagedir = &$cvsdir;
  */
 $category = 'Net';
 $package = 'Net_DNS';
-$version = '1.0.0rc3';
+$version = '1.0.0RC3';
 $state = 'beta';
 
 $summary = 'Resolver library used to communicate with a DNS server.';
