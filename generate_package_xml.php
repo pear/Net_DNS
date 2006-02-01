@@ -17,7 +17,7 @@ $packagedir = &$cvsdir;
  */
 $category = 'Net';
 $package = 'Net_DNS';
-$version = '1.0.0RC3';
+$version = '1.0.0RC4';
 $state = 'beta';
 
 $summary = 'Resolver library used to communicate with a DNS server.';
@@ -28,9 +28,8 @@ Creates an object hierarchy from a DNS server response, which allows you to view
 EOT;
 
 $notes = <<<EOT
-* Added new parameter for class constructor
-  array with configuration values for the
-  Net_DNS_Resolver() class
+* BUGFIX #5339
+* BUGFIX #6107
 EOT;
 
 $e = $pkg->setOptions(array(

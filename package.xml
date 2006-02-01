@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0" packagerversion="1.4.5">
+<package version="1.0" packagerversion="1.4.6">
  <name>Net_DNS</name>
  <summary>Resolver library used to communicate with a DNS server.</summary>
  <description>A resolver library used to communicate with a name server to perform DNS queries, zone transfers, dynamic DNS updates, etc.
@@ -21,13 +21,12 @@ Creates an object hierarchy from a DNS server response, which allows you to view
   </maintainer>
   </maintainers>
  <release>
-  <version>1.0.0RC3</version>
-  <date>2005-12-01</date>
+  <version>1.0.0RC4</version>
+  <date>2006-02-01</date>
   <license>PHP License 3.01</license>
   <state>beta</state>
-  <notes>* Added new parameter for class constructor
-  array with configuration values for the
-  Net_DNS_Resolver() class
+  <notes>* BUGFIX #5339
+* BUGFIX #6107
   </notes>
   <deps>
    <dep type="php" rel="ge" version="4.2" optional="no"/>
@@ -133,6 +132,15 @@ Creates an object hierarchy from a DNS server response, which allows you to view
     <notes>* Added new parameter for class constructor
   array with configuration values for the
   Net_DNS_Resolver() class
+    </notes>
+   </release>
+   <release>
+    <version>1.0.0RC4</version>
+    <date>2006-02-01</date>
+    <license>PHP License 3.01</license>
+    <state>beta</state>
+    <notes>* BUGFIX #5339
+* BUGFIX #6107
     </notes>
    </release>
  </changelog>
