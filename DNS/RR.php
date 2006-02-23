@@ -75,10 +75,10 @@ class Net_DNS_RR
      * @access public
      * @see Net_DNS_RR::new_from_array Net_DNS_RR::new_from_data Net_DNS_RR::new_from_string
      */
-    function &factory($rrdata)
+    function &factory($rrdata, $update_type = '')
     {
         if (is_string($rrdata)) {
-            $rr = &Net_DNS_RR::new_from_string($rrdata);
+            $rr = &Net_DNS_RR::new_from_string($rrdata, $update_type);
         } elseif (count($rrdata) == 7) {
             list($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset) = $rrdata;
             $rr = &Net_DNS_RR::new_from_data($name, $rrtype, $rrclass, $ttl, $rdlength, $data, $offset);
