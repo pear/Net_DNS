@@ -860,7 +860,7 @@ class Net_DNS_Resolver
         }
 
         for ($i = 0; $i < $this->retry; $i++, $retrans *= 2,
-                $timeout = (int) ($retrans / (count($ns)+1))) {
+                $timeout = (int) ($retrans / $ctr)) {
             if ($timeout < 1) {
                 $timeout = 1;
             }
