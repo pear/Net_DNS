@@ -113,7 +113,8 @@ class Net_DNS_RR
         $rr = &new Net_DNS_RR('getRR');
         $ttl = 0;
         $parts = preg_split('/[\s]+/', $rrstring);
-        while ($s = array_shift($parts)) {
+        while (count($parts) > 0) {
+			$s = array_shift($parts);
             if (!isset($name)) {
                 $name = ereg_replace('\.+$', '', $s);
             } else if (preg_match('/^\d+$/', $s)) {
