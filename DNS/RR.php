@@ -220,11 +220,11 @@ class Net_DNS_RR
             $rr->class = 'IN';
         }
         if (strlen($rr->rdata)) {
-            $rr->rdlength = strlen($rdata);
+            $rr->rdlength = strlen($rr->rdata);
         }
-        if (class_exists('Net_DNS_RR_' . $rrtype)) {
-            $scn = 'Net_DNS_RR_' . $rrtype;
-            return new $scn($rr, $rdata);
+        if (class_exists('Net_DNS_RR_' . $rr->rrtype)) {
+            $scn = 'Net_DNS_RR_' . $rr->rrtype;
+            return new $scn($rr, $rr->rdata);
         } else {
             return $rr;
         }
