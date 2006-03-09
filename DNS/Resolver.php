@@ -847,7 +847,7 @@ class Net_DNS_Resolver
             if ($sock[$ctr++] = fsockopen("udp://$nameserver", $this->port)) {
                 $peerhost[$ctr-1] = $nameserver;
                 $peerport[$ctr-1] = $this->port;
-                socket_set_blocking($sock, false);
+                socket_set_blocking($sock[$ctr-1], false);
             } else {
                 $ctr--;
             }
