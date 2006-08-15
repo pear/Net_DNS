@@ -50,8 +50,8 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
 
         if ($offset) {
             if ($this->rdlength > 0) {
-				$maxoffset = $this->rdlength + $offset;
-                while( $maxoffset > $offset ) {
+                $maxoffset = $this->rdlength + $offset;
+                while($maxoffset > $offset) {
                     list($text, $offset) = Net_DNS_Packet::label_extract($data, $offset);
                     $this->text[] = $text;
                 }
@@ -74,9 +74,9 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
     function rdatastr()
     {
         if ($this->text) {
-             if(is_array($this->text)) {
+             if (is_array($this->text)) {
                  $tmp = array();
-                 foreach($this->text as $t) {
+                 foreach ($this->text as $t) {
                      $tmp[] = '"'.addslashes($t).'"';
                  }
                  return implode(' ',$tmp);
