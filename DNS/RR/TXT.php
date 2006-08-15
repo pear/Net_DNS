@@ -50,9 +50,11 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
 
         if ($offset) {
             if ($this->rdlength > 0) {
-                list($text, $offset) = Net_DNS_Packet::label_extract($data, $offset);
-
-                $this->text = $text;
+				$maxoffset = $this->rdlength + $offset;
+                while( $maxoffset > $offset ) {
+                    list($text, $offset) = Net_DNS_Packet::label_extract($data, $offset);
+                    $this->text[] = $text;
+                }
             }
         } else {
             $data = str_replace('\\\\', chr(1) . chr(1), $data); /* disguise escaped backslash */
@@ -72,7 +74,15 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
     function rdatastr()
     {
         if ($this->text) {
-            return '"' . addslashes($this->text) . '"';
+             if(is_array($this->text)) {
+                 $tmp = array();
+                 foreach($this->text as $t) {
+                     $tmp[] = '"'.addslashes($t).'"';
+                 }
+                 return implode(' ',$tmp);
+             } else {
+                 return '"' . addslashes($this->text) . '"';
+             }
         } else return '; no data';
     }
 
