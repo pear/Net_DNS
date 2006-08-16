@@ -51,7 +51,7 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
         if ($offset) {
             if ($this->rdlength > 0) {
                 $maxoffset = $this->rdlength + $offset;
-                while($maxoffset > $offset) {
+                while ($maxoffset > $offset) {
                     list($text, $offset) = Net_DNS_Packet::label_extract($data, $offset);
                     $this->text[] = $text;
                 }
