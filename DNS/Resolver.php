@@ -917,9 +917,10 @@ class Net_DNS_Resolver
                     usleep(1000);
                 }
 
-                $this->errorstring = 'query timed out';
-                return null;
             }
+            
+            $this->errorstring = 'query timed out';
+            return null;
         }
     }
 
