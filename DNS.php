@@ -20,7 +20,7 @@
 * Any questions directly related to this class library should be directed
 * to the maintainer.
 *
-* 
+*
 * PHP versions 4 and 5
 *
 * LICENSE: This source file is subject to version 3.01 of the PHP license
@@ -42,12 +42,11 @@
 
 /* Include information {{{ */
 
-    $phpdns_basedir = 'Net';
-    require_once("$phpdns_basedir/DNS/Header.php");
-    require_once("$phpdns_basedir/DNS/Question.php");
-    require_once("$phpdns_basedir/DNS/Packet.php");
-    require_once("$phpdns_basedir/DNS/Resolver.php");
-    require_once("$phpdns_basedir/DNS/RR.php");
+    require_once("Net/DNS/Header.php");
+    require_once("Net/DNS/Question.php");
+    require_once("Net/DNS/Packet.php");
+    require_once("Net/DNS/Resolver.php");
+    require_once("Net/DNS/RR.php");
 
 /* }}} */
 /* GLOBAL VARIABLE definitions {{{ */
