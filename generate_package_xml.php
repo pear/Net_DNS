@@ -17,8 +17,8 @@ $packagedir = &$cvsdir;
  */
 $category = 'Net';
 $package = 'Net_DNS';
-$version = '1.0.0RC4';
-$state = 'beta';
+$version = '1.0.0';
+$state = 'stable';
 
 $summary = 'Resolver library used to communicate with a DNS server.';
 
@@ -28,15 +28,17 @@ Creates an object hierarchy from a DNS server response, which allows you to view
 EOT;
 
 $notes = <<<EOT
-* BUGFIX #5339
-* BUGFIX #6107
+some minor bugfixes and a security fix.
+\$phpdns_basedir was removed an require_once statements
+related to this variable are now hardcoded.
+Bugfix #9162
 EOT;
 
 $e = $pkg->setOptions(array(
 			'simpleoutput' 		=> true,
 			'baseinstalldir' 	=> $category,
 			'summary' 			=> $summary,
-			'description' 		=> $description, 
+			'description' 		=> $description,
 			'version' 			=> $version,
 			'license' 			=> 'PHP License 3.01',
 			'packagedirectory' 	=> $packagedir,
@@ -54,15 +56,15 @@ $e = $pkg->setOptions(array(
 									'generate_package*',
 									),
 			));
-    
+
 if (PEAR::isError($e)) {
 	echo $e->getMessage();
 	exit;
 }
 
-$e = $pkg->addMaintainer('bate', 'lead', 'Marco Kaiser', 'bate@php.net'); 
-$e = $pkg->addMaintainer('fa', 'developer', 'Florian Anderiasch', 'fa@php.net'); 
-//$e = $pkg->addMaintainer('ekilfoil', 'lead', 'Eric Kilfoil', 'eric@ypass.net', 'no'); 
+$e = $pkg->addMaintainer('bate', 'lead', 'Marco Kaiser', 'bate@php.net');
+$e = $pkg->addMaintainer('fa', 'developer', 'Florian Anderiasch', 'fa@php.net');
+//$e = $pkg->addMaintainer('ekilfoil', 'lead', 'Eric Kilfoil', 'eric@ypass.net', 'no');
 
 if (PEAR::isError($e)) {
 	echo $e->getMessage();
