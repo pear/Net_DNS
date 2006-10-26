@@ -185,7 +185,8 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
                 $sigdata .= pack('nN', 0, $this->other_data);
             }
 
-            $this->mac = mhash(MHASH_MD5, $sigdata, $key);
+            //$this->mac = mhash(MHASH_MD5, $sigdata, $key);
+            $this->mac = $this->hmac($sigdata, $key, 'md5');
             $this->mac_size = strlen($this->mac);
 
             /*
@@ -218,7 +219,21 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
         }
         return $rcode;
     }
-
+    /* }}} */
+    
+    /* Net_DNS_RR_TSIG::hmac() {{{ */
+    // Calculate HMAC according to RFC2104
+    // http://www.ietf.org/rfc/rfc2104.txt
+    // posted by mina86 at tlen dot pl on http://php.net/manual/en/function.md5.php
+    function hmac($data, $key, $hash = 'md5', $blocksize = 64) {
+        if (strlen($key)>$blocksize) {
+            $key = pack('H*', $hash($key));
+        }
+        $key  = str_pad($key, $blocksize, chr(0));
+        $ipad = str_repeat(chr(0x36), $blocksize);
+        $opad = str_repeat(chr(0x5c), $blocksize);
+        return $hash(($key^$opad) . pack('H*', $hash(($key^$ipad) . $data)));
+    }
     /* }}} */
 }
 /* }}} */

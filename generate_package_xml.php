@@ -72,7 +72,6 @@ if (PEAR::isError($e)) {
 }
 
 $e = $pkg->addDependency('php', '4.2', 'ge', 'php');
-$e = $pkg->addDependency('mhash', null, 'has', 'ext');
 
 $e = $pkg->addGlobalReplacement('package-info', '@package_version@', 'version');
 $e = $pkg->addGlobalReplacement('pear-config', '@data_dir@', 'data_dir');

@@ -32,7 +32,6 @@ Bugfix #9162
   </notes>
   <deps>
    <dep type="php" rel="ge" version="4.2" optional="no"/>
-   <dep type="ext" rel="has" optional="no">mhash</dep>
   </deps>
   <filelist>
    <dir name="/" baseinstalldir="Net">
