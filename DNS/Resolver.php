@@ -787,7 +787,10 @@ class Net_DNS_Resolver
             if (!$len) {
                 continue;
             }
-            $buf = fread($sock, $len);
+            $buf = ''; 
+            while (!feof($sock) && (strlen($buf) < $len) ) {
+                $buf .= fread($sock, $len-strlen($buf));
+            }
             $actual = strlen($buf);
             $this->answerfrom = $ns;
             $this->answersize = $len;
