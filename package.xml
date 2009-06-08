@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.7.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.6.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
 http://pear.php.net/dtd/tasks-1.0.xsd
 http://pear.php.net/dtd/package-2.0
 http://pear.php.net/dtd/package-2.0.xsd">
@@ -22,22 +22,18 @@ Creates an object hierarchy from a DNS server response, which allows you to view
   <email>fa@php.net</email>
   <active>yes</active>
  </developer>
- <date>2009-03-02</date>
- <time>14:45:44</time>
+ <date>2007-07-03</date>
+ <time>23:09:31</time>
  <version>
-  <release>1.0.0</release>
-  <api>1.0.0</api>
+  <release>1.0.1RC1</release>
+  <api>1.0.1RC1</api>
  </version>
  <stability>
-  <release>stable</release>
-  <api>stable</api>
+  <release>beta</release>
+  <api>beta</api>
  </stability>
  <license>PHP License 3.01</license>
- <notes>some minor bugfixes and a security fix.
-$phpdns_basedir was removed an require_once statements
-related to this variable are now hardcoded.
-Bugfix #9162
-  
+ <notes>bugfixes and transition to package2.xml
  </notes>
  <contents>
   <dir name="/">
@@ -197,6 +193,20 @@ $phpdns_basedir was removed an require_once statements
 related to this variable are now hardcoded.
 Bugfix #9162
     
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.1RC1</release>
+    <api>1.0.1RC1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2007-07-03</date>
+   <license uri="http://www.example.com">PHP License 3.01</license>
+   <notes>bugfixes and transition to package2.xml
    </notes>
   </release>
  </changelog>
