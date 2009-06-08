@@ -32,7 +32,7 @@ class Net_DNS_RR_HINFO extends Net_DNS_RR
     var $ttl;
     var $rdlength;
     var $rdata;
-	var $cpu;
+    var $cpu;
     var $os;
 
     /* }}} */
@@ -66,7 +66,7 @@ class Net_DNS_RR_HINFO extends Net_DNS_RR
             }
 
             $this->cpu = $regs[1];
-			$this->os = $regs[2];
+            $this->os = $regs[2];
         }
     }
 

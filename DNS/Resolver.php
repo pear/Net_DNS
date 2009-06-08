@@ -314,41 +314,41 @@ class Net_DNS_Resolver
      */
     function read_config($file)
     {
-    	if (is_readable($file)) {
-	        if (! ($f = fopen($file, 'r'))) {
-	            $this->error = "can't open $file";
-	        }
-    	}
+        if (is_readable($file)) {
+            if (! ($f = fopen($file, 'r'))) {
+                $this->error = "can't open $file";
+            }
+        }
 
-    	if (!is_resource($f)) {
-    		$this->error = "can't open $file";
-    	} else {
-	        while (! feof($f)) {
-	            $line = chop(fgets($f, 10240));
-	            $line = ereg_replace('(.*)[;#].*', '\\1', $line);
-	            if (ereg("^[ \t]*$", $line, $regs)) {
-	                continue;
-	            }
-	            ereg("^[ \t]*([^ \t]+)[ \t]+([^ \t]+)", $line, $regs);
-	            $option = $regs[1];
-	            $value = $regs[2];
+        if (!is_resource($f)) {
+            $this->error = "can't open $file";
+        } else {
+            while (! feof($f)) {
+                $line = chop(fgets($f, 10240));
+                $line = ereg_replace('(.*)[;#].*', '\\1', $line);
+                if (ereg("^[ \t]*$", $line, $regs)) {
+                    continue;
+                }
+                ereg("^[ \t]*([^ \t]+)[ \t]+([^ \t]+)", $line, $regs);
+                $option = $regs[1];
+                $value = $regs[2];
 
-	            switch ($option) {
-	                case 'domain':
-	                    $this->domain = $regs[2];
-	                    break;
-	                case 'search':
-	                    $this->searchlist[count($this->searchlist)] = $regs[2];
-	                    break;
-	                case 'nameserver':
-	                    foreach (split(' ', $regs[2]) as $ns) {
-	                        $this->nameservers[count($this->nameservers)] = $ns;
-	                    }
-	                    break;
-	            }
-	        }
-	        fclose($f);
-    	}
+                switch ($option) {
+                    case 'domain':
+                        $this->domain = $regs[2];
+                        break;
+                    case 'search':
+                        $this->searchlist[count($this->searchlist)] = $regs[2];
+                        break;
+                    case 'nameserver':
+                        foreach (split(' ', $regs[2]) as $ns) {
+                            $this->nameservers[count($this->nameservers)] = $ns;
+                        }
+                        break;
+                }
+            }
+            fclose($f);
+        }
     }
 
     /* }}} */
@@ -421,7 +421,7 @@ class Net_DNS_Resolver
     function nextid()
     {
         if ($GLOBALS['_Net_DNS_packet_id']++ > 65535) {
-        	$GLOBALS['_Net_DNS_packet_id']= 1;
+            $GLOBALS['_Net_DNS_packet_id']= 1;
         }
         return $GLOBALS['_Net_DNS_packet_id'];
     }
@@ -494,9 +494,9 @@ class Net_DNS_Resolver
                     $addr[] = $rr->address;
                 }
             }
-		}
-		return $addr;
-	}
+        }
+        return $addr;
+    }
 
     /* }}} */
     /* Net_DNS_Resolver::search() {{{ */

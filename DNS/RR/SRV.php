@@ -33,8 +33,8 @@ class Net_DNS_RR_SRV extends Net_DNS_RR
     var $rdlength;
     var $rdata;
     var $preference;
-	var $weight;
-	var $port;
+    var $weight;
+    var $port;
     var $target;
 
     /* }}} */

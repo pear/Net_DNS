@@ -35,31 +35,31 @@ Bugfix #9162
 EOT;
 
 $e = $pkg->setOptions(array(
-			'simpleoutput' 		=> true,
-			'baseinstalldir' 	=> $category,
-			'summary' 			=> $summary,
-			'description' 		=> $description,
-			'version' 			=> $version,
-			'license' 			=> 'PHP License 3.01',
-			'packagedirectory' 	=> $packagedir,
-			'pathtopackagefile' => $packagedir,
-			'state'             => $state,
-			'filelistgenerator' => 'cvs',
-			'notes'             => $notes,
-			'package'           => $package,
-			'dir_roles' 		=> array(
-									'docs' => 'doc'
-									),
-			'ignore' 			=> array(
-									'*.xml',
-									'*.tgz',
-									'generate_package*',
-									),
-			));
+            'simpleoutput'      => true,
+            'baseinstalldir'    => $category,
+            'summary'           => $summary,
+            'description'       => $description,
+            'version'           => $version,
+            'license'           => 'PHP License 3.01',
+            'packagedirectory'  => $packagedir,
+            'pathtopackagefile' => $packagedir,
+            'state'             => $state,
+            'filelistgenerator' => 'cvs',
+            'notes'             => $notes,
+            'package'           => $package,
+            'dir_roles'         => array(
+                                    'docs' => 'doc'
+                                    ),
+            'ignore'            => array(
+                                    '*.xml',
+                                    '*.tgz',
+                                    'generate_package*',
+                                    ),
+            ));
 
 if (PEAR::isError($e)) {
-	echo $e->getMessage();
-	exit;
+    echo $e->getMessage();
+    exit;
 }
 
 $e = $pkg->addMaintainer('bate', 'lead', 'Marco Kaiser', 'bate@php.net');
@@ -67,8 +67,8 @@ $e = $pkg->addMaintainer('fa', 'developer', 'Florian Anderiasch', 'fa@php.net');
 //$e = $pkg->addMaintainer('ekilfoil', 'lead', 'Eric Kilfoil', 'eric@ypass.net', 'no');
 
 if (PEAR::isError($e)) {
-	echo $e->getMessage();
-	exit;
+    echo $e->getMessage();
+    exit;
 }
 
 $e = $pkg->addDependency('php', '4.2', 'ge', 'php');
@@ -77,13 +77,13 @@ $e = $pkg->addGlobalReplacement('package-info', '@package_version@', 'version');
 $e = $pkg->addGlobalReplacement('pear-config', '@data_dir@', 'data_dir');
 
 if (PEAR::isError($e)) {
-	echo $e->getMessage();
-	exit;
+    echo $e->getMessage();
+    exit;
 }
 
 
 if ($build) {
-	$e = $pkg->writePackageFile();
+    $e = $pkg->writePackageFile();
 } else {
-	$e = $pkg->debugPackageFile();
+    $e = $pkg->debugPackageFile();
 }

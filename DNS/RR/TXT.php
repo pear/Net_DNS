@@ -32,7 +32,7 @@ class Net_DNS_RR_TXT extends Net_DNS_RR
     var $ttl;
     var $rdlength;
     var $rdata;
-	var $text;
+    var $text;
 
     /* }}} */
     /* class constructor - RR(&$rro, $data, $offset = '') {{{ */

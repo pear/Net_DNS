@@ -467,7 +467,7 @@ class Net_DNS_Packet
 
         $a = unpack("@$offset/Cchar", $packet);
         $len = $a['char'];
-		$offset++;
+        $offset++;
 
         if ($len + $offset > $packetlen) {
             $name = substr($packet, $offset);

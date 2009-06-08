@@ -32,12 +32,12 @@ class Net_DNS_RR_NAPTR extends Net_DNS_RR
     var $ttl;
     var $rdlength;
     var $rdata;
-	var $order;
-	var $preference;
-	var $flags;
-	var $services;
-	var $regex;
-	var $replacement;
+    var $order;
+    var $preference;
+    var $flags;
+    var $services;
+    var $regex;
+    var $replacement;
 
     /* }}} */
     /* class constructor - RR(&$rro, $data, $offset = '') {{{ */

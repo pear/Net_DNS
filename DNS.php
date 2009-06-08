@@ -87,13 +87,13 @@ class Net_DNS
     /* }}} */
     /* class constructor - Net_DNS() {{{ */
 
-	/**
+    /**
      * Initializes a resolver object
      *
      * @see Net_DNS_Resolver
-	 * @param array $defaults
-	 * @return Net_DNS
-	 */
+     * @param array $defaults
+     * @return Net_DNS
+     */
     function Net_DNS($defaults = array())
     {
         $this->resolver = new Net_DNS_Resolver($defaults);
