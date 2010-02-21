@@ -25,6 +25,11 @@ class Net_DNS_RRTest extends PHPUnit_Framework_TestCase {
         $this->assertSame(print_r($expected, true), print_r($rr, true));
     }
 
+    public function testBug16504() {
+        $rr = Net_DNS_RR::new_from_array(array('type' => 'A', 'name' => 'example.com', 'ttl' => '3600' , 'address' => '192.168.0.15'));
+
+        $this->assertTrue($rr instanceof Net_DNS_RR_A);
+    }
 
 
 }
