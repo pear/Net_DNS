@@ -7,6 +7,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Net_DNS_ResolverTest.php';
+require_once 'Net_DNS_RRTest.php';
 
 class Net_DNS_AllTests
 {
@@ -20,6 +21,7 @@ class Net_DNS_AllTests
         $suite = new PHPUnit_Framework_TestSuite('PEAR - Net_DNS');
 
         $suite->addTestSuite('Net_DNS_ResolverTest');
+        $suite->addTestSuite('Net_DNS_RRTest');
 
         return $suite;
     }
