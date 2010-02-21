@@ -139,14 +139,15 @@ class Net_DNS_Header
      */
     function Net_DNS_Header($data = '')
     {
-        if ($data != '') {
+        if (!empty($data)) {
             /*
              * The header MUST be at least 12 bytes.
              * Passing the full datagram to this constructor
              * will examine only the header section of the DNS packet
              */
-            if (strlen($data) < 12)
+            if (strlen($data) < 12) {
                 return false;
+            }
 
             $a = unpack('nid/C2flags/n4counts', $data);
             $this->id      = $a['id'];
@@ -161,8 +162,7 @@ class Net_DNS_Header
             $this->ancount = $a['counts2'];
             $this->nscount = $a['counts3'];
             $this->arcount = $a['counts4'];
-        }
-        else {
+        } else {
             $this->id      = Net_DNS_Resolver::nextid();
             $this->qr      = 0;
             $this->opcode  = 0;
@@ -177,11 +177,13 @@ class Net_DNS_Header
             $this->arcount = 0;
         }
 
-        if (Net_DNS::opcodesbyval($this->opcode)) {
-            $this->opcode = Net_DNS::opcodesbyval($this->opcode);
+
+        $dns = new Net_DNS();
+        if ($dns->opcodesbyval($this->opcode)) {
+            $this->opcode = $dns->opcodesbyval($this->opcode);
         }
-        if (Net_DNS::rcodesbyval($this->rcode)) {
-            $this->rcode = Net_DNS::rcodesbyval($this->rcode);
+        if ($dns->rcodesbyval($this->rcode)) {
+            $this->rcode = $dns->rcodesbyval($this->rcode);
         }
     }
 
@@ -249,8 +251,9 @@ class Net_DNS_Header
      */
     function data()
     {
-        $opcode = Net_DNS::opcodesbyname($this->opcode);
-        $rcode  = Net_DNS::rcodesbyname($this->rcode);
+        $dns = new Net_DNS();
+        $opcode = $dns->opcodesbyname($this->opcode);
+        $rcode  = $dns->rcodesbyname($this->rcode);
 
         $byte2 = ($this->qr << 7)
             | ($opcode << 3)
