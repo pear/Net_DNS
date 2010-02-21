@@ -51,6 +51,8 @@ class Net_DNS_RR_PTR extends Net_DNS_RR
                 list($ptrdname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
                 $this->ptrdname = $ptrdname;
             }
+        } elseif (is_array($data)) {
+            $this->ptrdname = $data['ptrdname'];
         } else {
             $this->ptrdname = ereg_replace("[ \t]+(.+)[ \t]*$", '\\1', $data);
         }

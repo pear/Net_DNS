@@ -65,6 +65,14 @@ class Net_DNS_RR_SOA extends Net_DNS_RR
                 $this->expire = $a['soavals4'];
                 $this->minimum = $a['soavals5'];
             }
+        } elseif (is_array($data)) {
+            $this->mname = $data['mname'];
+            $this->rname = $data['rname'];
+            $this->serial = $data['serial'];
+            $this->refresh = $data['refresh'];
+            $this->retry = $data['retry'];
+            $this->expire = $data['expire'];
+            $this->minimum = $data['minimum'];
         } else {
             if (ereg("([^ \t]+)[ \t]+([^ \t]+)[ \t]+([0-9]+)[^ \t]+([0-9]+)[^ \t]+([0-9]+)[^ \t]+([0-9]+)[^ \t]*$", $string, $regs))
             {

@@ -51,6 +51,8 @@ class Net_DNS_RR_NS extends Net_DNS_RR
                 list($nsdname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
                 $this->nsdname = $nsdname;
             }
+        } elseif (is_array($data)) {
+            $this->nsdname = $data['nsdname'];
         } else {
             $this->nsdname = ereg_replace("[ \t]+(.+)[ \t]*$", '\\1', $data);
         }

@@ -220,9 +220,9 @@ class Net_DNS_RR
         if (strlen($rr->rdata)) {
             $rr->rdlength = strlen($rr->rdata);
         }
-        if (class_exists('Net_DNS_RR_' . $rr->rrtype)) {
-            $scn = 'Net_DNS_RR_' . $rr->rrtype;
-            return new $scn($rr, $rr->rdata);
+        if (class_exists('Net_DNS_RR_' . $rr->type)) {
+            $scn = 'Net_DNS_RR_' . $rr->type;
+            return new $scn($rr, !empty($rr->rdata) ? $rr->rdata : $rrarray);
         } else {
             return $rr;
         }

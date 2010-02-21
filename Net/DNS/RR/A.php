@@ -56,6 +56,8 @@ class Net_DNS_RR_A extends Net_DNS_RR
                     $aparts['b4'];
                 $this->address = $addr;
             }
+        } elseif (is_array($data)) {
+            $this->address = $data['address'];
         } else {
             if (strlen($data) && ereg("([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)[ \t]*$", $data, $regs)) {
                 if (($regs[1] >= 0 && $regs[1] <= 255) &&

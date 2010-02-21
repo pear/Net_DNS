@@ -84,6 +84,16 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
                     $this->other_data = $d['odata_low'];
                 }
             }
+        } elseif (is_array($data)) {
+            $this->key = $data['key'];
+            $this->algorithm = $data['algorithm'];
+            $this->time_signed = $data['time_signed'];
+            $this->fudge = $data['fudge'];
+            $this->mac = $data['mac'];
+            $this->original_id = $data['original_id'];
+            $this->error = $data['error'];
+            $this->other_len = $data['other_len'];
+            $this->other_data = $data['other_data'];
         } else {
             if (strlen($data) && preg_match('/^(.*)$/', $data, $regs)) {
                 $this->key = $regs[1];

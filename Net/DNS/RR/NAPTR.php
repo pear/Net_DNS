@@ -66,6 +66,13 @@ class Net_DNS_RR_NAPTR extends Net_DNS_RR
                 $this->regex = $regex;
                 $this->replacement = $replacement;
             }
+        } elseif (is_array($data)) {
+            $this->order = $data['order'];
+            $this->preference = $data['preference'];
+            $this->flags = $data['flags'];
+            $this->services = $data['services'];
+            $this->regex = $data['regex'];
+            $this->replacement = $data['replacement'];
         } else {
             $data = str_replace('\\\\', chr(1) . chr(1), $data); /* disguise escaped backslash */
             $data = str_replace('\\"', chr(2) . chr(2), $data); /* disguise \" */

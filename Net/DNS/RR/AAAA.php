@@ -47,6 +47,8 @@ class Net_DNS_RR_AAAA extends Net_DNS_RR
 
         if ($offset) {
             $this->address = Net_DNS_RR_AAAA::ipv6_decompress(substr($this->rdata, 0, $this->rdlength));
+        } elseif (is_array($data)) {
+            $this->address = $data['address'];
         } else {
             if (strlen($data)) {
                 if (count($adata = explode(':', $data, 8)) >= 3) {
