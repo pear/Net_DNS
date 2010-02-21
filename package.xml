@@ -39,7 +39,7 @@ bugfixes and transition to package2.xml
 
  </notes>
  <contents>
-  <dir baseinstalldir="Net" name="/">
+  <dir baseinstalldir="/" name="/">
    <file baseinstalldir="Net" md5sum="34734bdc3799b5513746d55712b96017" name="DNS/Header.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />

@@ -36,7 +36,7 @@ EOT;
 
 $e = $pkg->setOptions(array(
             'simpleoutput'      => true,
-            'baseinstalldir'    => $category,
+            'baseinstalldir'    => "/",
             'summary'           => $summary,
             'description'       => $description,
             'version'           => $version,
