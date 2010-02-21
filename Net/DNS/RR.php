@@ -187,13 +187,16 @@ class Net_DNS_RR
 
             if (class_exists('Net_DNS_RR_' . $rrtype)) {
                 $scn = 'Net_DNS_RR_' . $rrtype;
-                return new $scn($rr, $rdata);
-            } else {
-                return $rr;
+
+                $obj = new $scn($rr, $rdata);
+                return $obj;
             }
-        } else {
-            return null;
+
+            return $rr;
+
         }
+
+        return null;
     }
 
     /* }}} */
