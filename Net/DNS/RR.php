@@ -225,10 +225,12 @@ class Net_DNS_RR
         }
         if (class_exists('Net_DNS_RR_' . $rr->type)) {
             $scn = 'Net_DNS_RR_' . $rr->type;
-            return new $scn($rr, !empty($rr->rdata) ? $rr->rdata : $rrarray);
-        } else {
-            return $rr;
+
+            $obj = new $scn($rr, !empty($rr->rdata) ? $rr->rdata : $rrarray);
+            return $obj;
         }
+
+        return $rr;
     }
 
     /* }}} */
