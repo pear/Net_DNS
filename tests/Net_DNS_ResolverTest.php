@@ -59,7 +59,12 @@ class Net_DNS_ResolverTest extends PHPUnit_Framework_TestCase {
 
     public function testBug16515() {
         $r = new Net_DNS_Resolver();
-        $txt_rr = reset($r->query('example.com.', 'TXT')->answer);
+
+        $data = $r->query('example.com.', 'TXT')->answer;
+
+        $this->assertTrue(is_array($data), "Expected an array, found " . gettype($data) . "\n" . print_r($data, true));
+
+        $txt_rr = reset($data);
 
         $this->assertSame('example.com. 3600 IN TXT "x" "y" "z"', $txt_rr->string());
         $this->assertSame('xyz', $txt_rr->rr_rdata(0, 0));
