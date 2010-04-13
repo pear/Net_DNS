@@ -8,6 +8,7 @@ require_once 'PHPUnit/TextUI/TestRunner.php';
 
 require_once 'Net_DNS_ResolverTest.php';
 require_once 'Net_DNS_RRTest.php';
+require_once 'Net_DNS_RR_LOCTest.php';
 
 class Net_DNS_AllTests
 {
@@ -22,6 +23,7 @@ class Net_DNS_AllTests
 
         $suite->addTestSuite('Net_DNS_ResolverTest');
         $suite->addTestSuite('Net_DNS_RRTest');
+        $suite->addTestSuite('Net_DNS_RR_LOCTest');
 
         return $suite;
     }
