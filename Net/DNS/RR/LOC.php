@@ -1,31 +1,31 @@
 <?php
 /**
-*  License Information:
-*
-*  Net_DNS:  A resolver library for PHP
-*  Copyright (c) 2002-2003 Eric Kilfoil eric@ypass.net
-*  Maintainers:
-*  Marco Kaiser <bate@php.net>
-*  Florian Anderiasch <fa@php.net>
-*  Ian Pye <ianbara@imap.cc>
-*
-* PHP versions 4 and 5
-*
-* LICENSE: This source file is subject to version 3.01 of the PHP license
-* that is available through the world-wide-web at the following URI:
-* http://www.php.net/license/3_01.txt.  If you did not receive a copy of
-* the PHP License and are unable to obtain it through the web, please
-* send a note to license@php.net so we can mail you a copy immediately.
-*
-* A representation of a resource record of type <b>LOC</b>
-*
-* @category Networking
-* @package  Net_DNS 
-* @author   Ian Pye <ianbara@imap.cc>
-* @license  3.01 PHP license
-* @link     http://pear.php.net/package/Net_DNS
-*/
-
+ * License Information:
+ *
+ * Net_DNS:  A resolver library for PHP
+ * Copyright (c) 2002-2003 Eric Kilfoil eric@ypass.net
+ * Maintainers:
+ * Marco Kaiser <bate@php.net>
+ * Florian Anderiasch <fa@php.net>
+ * Ian Pye <ianbara@imap.cc>
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.01 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * A representation of a resource record of type <b>LOC</b>
+ *
+ * @category Networking
+ * @package  Net_DNS 
+ * @author   Ian Pye <ianbara@imap.cc>
+ * @license  3.01 PHP license
+ * @link     http://pear.php.net/package/Net_DNS
+ * @see      http://en.wikipedia.org/wiki/LOC_record
+ */
 class Net_DNS_RR_LOC extends Net_DNS_RR
 {
     /* class variable definitions {{{ */
@@ -86,7 +86,10 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
      * Usage:
      * $rr = new Net_DNS_RR_LOC($rro, $data, $offset);
      * $rr->parse();
-     * {{{ 
+     *
+     * @param        $rro
+     * @param string $data   String to parse
+     * @param int    $offset
      */
     function Net_DNS_RR_LOC($rro, $data, $offset = 0)
     {      
@@ -104,8 +107,8 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
     }
 
     /** 
-     *  Net_DNS_RR_LOC::parse()
-     *  Parses the $data field. 
+     * Net_DNS_RR_LOC::parse()
+     * Parses the $data field set in the constructor. 
      */
     function parse() {
         if (isset($this->offset) && isset($this->data) && !($this->parsed)) {
@@ -153,8 +156,9 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
         }
     }
     
-    /* }}} */
-    /* Net_DNS_RR_LOC::rdatastr() {{{ */
+    /**
+     * @return string
+     */
     function rdatastr()
     {
         if (!$this->parsed) {
@@ -168,8 +172,12 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
         return '; no data';
     }
 
-    /* }}} */
-    /* Net_DNS_RR_LOC::rr_rdata($packet, $offset) {{{ */
+    /**
+     * @param $packet
+     * @param $offset
+     *
+     * @return string
+     */
     function rr_rdata($packet, $offset)
     {    
         if (!$this->parsed) {
@@ -198,8 +206,11 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
         return $rdata;
     }
 
-    /* }}} */
-    /* Net_DNS_RR_LOC::precsize_ntoval($prec) {{{ */
+    
+    /**
+     * @param $prec
+     * @return int
+     */
     function precsize_ntoval($prec) 
     {
         $mantissa = (($prec >> 4) & 0x0f) % 10;
@@ -207,8 +218,10 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
         return $mantissa * $poweroften[$exponent];
     }
 
-    /* }}} */
-    /* Net_DNS_RR_LOC::precsize_valton($val) {{{ */
+    /**
+     * @param int $val
+     * @return int
+     */
     function precsize_valton($val) 
     {
         $exponent = 0;
@@ -219,10 +232,16 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
         return (intval($val) << 4) | ($exponent & 0x0f);
     }
     
-    /* }}}
+    /**
      * Now with added side effects, setting values for the class,
      * while returning a formatted string.
      * Net_DNS_RR_LOC::latlon2dms($rawmsec, $hems, $is_lat) {{{ 
+     *
+     * @todo This should not change class state
+     *
+     * @param      $rawmsec
+     * @param      $hems
+     * @param bool $is_lat
      */
     function latlon2dms($rawmsec, $hems, $is_lat = false) 
     {   
@@ -263,17 +282,5 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
         return sprintf("%d %02d %02d.%03d %s", $deg, $min, $sec, $msec, $hem);
     }
 
-    /* }}} */
 }
-/* }}} */
-/* VIM settings {{{
- * Local variables:
- * tab-width: 4
- * c-basic-offset: 4
- * soft-stop-width: 4
- * c indent on
- * End:
- * vim600: sw=4 ts=4 sts=4 cindent fdm=marker et
- * vim<600: sw=4 ts=4
- * }}} */
-?>
+
