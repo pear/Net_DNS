@@ -80,9 +80,15 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
     var $version;
 
     /* }}} */
-    /* class constructor - RR(&$rro, $data, $offset = '') {{{ 
+    /**
+     * class constructor - RR(&$rro, $data, $offset = '')
+     *
+     * Usage:
+     * $rr = new Net_DNS_RR_LOC($rro, $data, $offset);
+     * $rr->parse();
+     * {{{ 
      */
-    function Net_DNS_RR_LOC(&$rro, $data, $offset = 0)
+    function Net_DNS_RR_LOC($rro, $data, $offset = 0)
     {      
         // Keep all of the common fields.
         $this->name = $rro->name;
@@ -95,16 +101,13 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
         // And keep the actual data.
         $this->data = $data;
         $this->offset = $offset;
-
-        // Finally parse the actual data.
-        $this->parse_data();
     }
 
     /** 
-     *  Net_DNS_RR_LOC::parse_data()
+     *  Net_DNS_RR_LOC::parse()
      *  Parses the $data field. 
      */
-    function parse_data(){
+    function parse() {
         if (isset($this->offset) && isset($this->data) && !($this->parsed)) {
             if ($this->rdlength > 0) {
                 $off = $this->offset;
@@ -145,7 +148,7 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
                     $this->hp . 'm ' .
                     $this->vp . 'm';
                 
-                $this->parsed = TRUE;
+                $this->parsed = true;
             }
         }
     }
