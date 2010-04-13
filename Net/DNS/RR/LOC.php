@@ -32,21 +32,21 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
 
     // Static constants
     // Reference altitude in centimeters (see RFC 1876).
-    public static $reference_alt     = 10000000;
+    var $reference_alt     = 10000000;
     // Reference lat/lon (see RFC 1876).
-    public static $reference_latlon  = 2147483648; // pow(2, 31);
+    var $reference_latlon  = 2147483648; // pow(2, 31);
     
     // Conversions to/from thousandths of a degree.
-    public static $conv_sec          = 1000; // 1000 milisecs.
-    public static $conv_min          = 60000; // sec * 60 
-    public static $conv_deg          = 3600000; // min * 60
+    var $conv_sec          = 1000; // 1000 milisecs.
+    var $conv_min          = 60000; // sec * 60 
+    var $conv_deg          = 3600000; // min * 60
 
     // Defaults (from RFC 1876, Section 3).
-    public static $default_min       = 0;
-    public static $default_sec       = 0;
-    public static $default_size      = 1;
-    public static $default_horiz_pre = 10000;
-    public static $default_vert_pre  = 10;
+    var $default_min       = 0;
+    var $default_sec       = 0;
+    var $default_size      = 1;
+    var $default_horiz_pre = 10000;
+    var $default_vert_pre  = 10;
 
     var $data; // Contains packed binary data in the LOC format. 
     var $offset; // Offset to start reading the data.
@@ -124,21 +124,21 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
 
                 // If these are all 0, use the defaults.
                 if (!$this->size) {
-                    $this->size = static::$default_size;
+                    $this->size = $this->default_size;
                 }
                     
                 if (!$this->hp) {
-                    $this->hp = static::$default_horiz_pre;
+                    $this->hp = $this->default_horiz_pre;
                 }
                  
                 if (!$this->vp) {
-                    $this->vp = static::$default_vert_pre;
+                    $this->vp = $this->default_vert_pre;
                 }
 
                 $this->raw_latitude = $a['lat'];
                 $this->raw_longitude = $a['long'];
                 $this->raw_alt = $a['alt'];
-                $this->altitude = ($this->raw_alt - static::$reference_alt) / 100;
+                $this->altitude = ($this->raw_alt - $this->reference_alt) / 100;
                 
                 $this->pretty_print_string = 
                     $this->latlon2dms($this->raw_latitude, "NS", true) . ' ' .
@@ -234,17 +234,17 @@ class Net_DNS_RR_LOC extends Net_DNS_RR
             $flipped = true;
         }
      
-        $abs = abs($rawmsec - static::$reference_latlon);
-        $deg = intval($abs / static::$conv_deg);
-        $abs  -= $deg * static::$conv_deg;
-        $min  = intval($abs / static::$conv_min); 
-        $abs -= $min * static::$conv_min;
-        $sec  = intval($abs / static::$conv_sec);
-        $abs -= $sec * static::$conv_sec;
+        $abs = abs($rawmsec - $this->reference_latlon);
+        $deg = intval($abs / $this->conv_deg);
+        $abs  -= $deg * $this->conv_deg;
+        $min  = intval($abs / $this->conv_min); 
+        $abs -= $min * $this->conv_min;
+        $sec  = intval($abs / $this->conv_sec);
+        $abs -= $sec * $this->conv_sec;
         $msec = $abs;
-        $hem = substr($hems, (($rawmsec >= static::$reference_latlon) ? 0 : 1), 1);
+        $hem = substr($hems, (($rawmsec >= $this->reference_latlon) ? 0 : 1), 1);
         if ($flipped) {
-            $hem = substr($hems, (($rawmsec >= static::$reference_latlon) ? 1 : 0), 1);
+            $hem = substr($hems, (($rawmsec >= $this->reference_latlon) ? 1 : 0), 1);
         }
 
         // Save the results.
