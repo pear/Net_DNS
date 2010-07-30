@@ -341,7 +341,7 @@ class Net_DNS_Resolver
                         $this->searchlist[count($this->searchlist)] = $regs[2];
                         break;
                     case 'nameserver':
-                        foreach (split(' ', $regs[2]) as $ns) {
+                        foreach (explode(' ', $regs[2]) as $ns) {
                             $this->nameservers[count($this->nameservers)] = $ns;
                         }
                         break;
@@ -359,11 +359,11 @@ class Net_DNS_Resolver
     function read_env()
     {
         if (getenv('RES_NAMESERVERS')) {
-            $this->nameservers = split(' ', getenv('RES_NAMESERVERS'));
+            $this->nameservers = explode(' ', getenv('RES_NAMESERVERS'));
         }
 
         if (getenv('RES_SEARCHLIST')) {
-            $this->searchlist = split(' ', getenv('RES_SEARCHLIST'));
+            $this->searchlist = explode(' ', getenv('RES_SEARCHLIST'));
         }
 
         if (getenv('LOCALDOMAIN')) {
@@ -371,7 +371,7 @@ class Net_DNS_Resolver
         }
 
         if (getenv('RES_OPTIONS')) {
-            $env = split(' ', getenv('RES_OPTIONS'));
+            $env = explode(' ', getenv('RES_OPTIONS'));
             foreach ($env as $opt) {
                 list($name, $val) = split(':', $opt);
                 if ($val == '') {
