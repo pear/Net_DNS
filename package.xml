@@ -55,7 +55,7 @@ some more fixes included
 				<tasks:replace from="@package_version@" to="version" type="package-info"/>
 				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
 			</file>
-			<file baseinstalldir="Net" md5sum="4f15597bbadf38914fd3dafa0f90dc86" name="Net/DNS/RR.php" role="php">
+			<file baseinstalldir="Net" md5sum="e693095f96156e10587f7eff0e5fd88f" name="Net/DNS/RR.php" role="php">
 				<tasks:replace from="@package_version@" to="version" type="package-info"/>
 				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
 			</file>
