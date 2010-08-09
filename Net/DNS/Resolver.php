@@ -665,12 +665,12 @@ class Net_DNS_Resolver
         $packet = $this->make_query_packet($packetORname, $qtype, $qclass);
         $packet_data = $packet->data();
 
-        if ($this->usevc != 0 || strlen($packet_data > 512)) {
+        if (($this->usevc != 0) || (strlen($packet_data) > 512)) {
             $ans = $this->send_tcp($packet, $packet_data);
         } else {
             $ans = $this->send_udp($packet, $packet_data);
 
-            if ($ans && $ans->header->tc && $this->igntc != 0) {
+            if (($ans) && ($ans->header->tc) && ($this->igntc == 0)) {
                 if ($this->debug) {
                     echo ";;\n;; packet truncated: retrying using TCP\n";
                 }
