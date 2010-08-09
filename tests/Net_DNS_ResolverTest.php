@@ -124,4 +124,4 @@ class Net_DNS_ResolverTest extends PHPUnit_Framework_TestCase {
         $txt  = Net_DNS_RR::factory('example.com. 1800 IN TXT "text message"');
         $this->assertSame('"text message"', $txt->text);
     }
- }}
+ }
