@@ -30,6 +30,7 @@ require_once("Net/DNS/RR/TXT.php");
 require_once("Net/DNS/RR/HINFO.php");
 require_once("Net/DNS/RR/SRV.php");
 require_once("Net/DNS/RR/NAPTR.php");
+require_once("Net/DNS/RR/RR.php");
 /* }}} */
 /* Net_DNS_RR object definition {{{ */
 /**
