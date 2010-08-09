@@ -71,4 +71,57 @@ class Net_DNS_ResolverTest extends PHPUnit_Framework_TestCase {
         $this->assertSame('example.com. 3600 IN TXT "x" "y" "z"', $txt_rr->string());
         $this->assertSame('xyz', $txt_rr->rr_rdata(0, 0));
     }
-}
+
+
+    public function testPregChange() {
+
+        $r = new Net_DNS_Resolver();
+
+        // A
+        $a = Net_DNS_RR::factory('example.com. 1800 IN A 10.10.10.10');
+        $this->assertSame('10.10.10.10', $a->address);
+
+        // CNAME
+        $cname = Net_DNS_RR::factory('example.com. 1800 IN CNAME www.example.com');
+        $this->assertSame('www.example.com', $cname->cname);
+
+        // HINFO
+        $hinfo = Net_DNS_RR::factory('example.com. 1800 IN HINFO PC-Intel-700mhz "Redhat Linux 7.1"');
+        $this->assertSame('PC-Intel-700mhz', $hinfo->cpu);
+        $this->assertSame('"Redhat Linux 7.1"', $hinfo->os);
+
+        // MX
+        $mx = Net_DNS_RR::factory('example.com. 1800 IN MX 10 mail.example.com');
+        $this->assertSame('10', $mx->preference);
+        $this->assertSame('mail.example.com', $mx->exchange);
+
+        // NAPTR
+        $naptr = Net_DNS_RR::factory('example.com. 1800 IN NAPTR 100 10 "S" "SIPD2U" "!^.*$!sip:customer-service@example.com!" _sip._udp.example.com');
+        $this->assertSame('"S"', $naptr->flags);
+        $this->assertSame('"SIPD2U"', $naptr->services);
+        $this->assertSame('_sip._udp.example.com', $naptr->replacement);
+
+        // NS
+        $ns = Net_DNS_RR::factory('example.com. 1800 IN NS dns1.example.com');
+        $this->assertSame('dns1.example.com', $ns->nsdname);
+
+        // PTR
+        $ptr = Net_DNS_RR::factory('192.168.0.100 1800 IN PTR mail.example.com');
+        $this->assertSame('mail.example.com', $ptr->ptrdname);
+
+        // SOA
+        $soa = Net_DNS_RR::factory('example.com. 3600 IN SOA ns.example.com. support.example.com. 8 3600 600 1209600 3600');
+        $this->assertSame('ns.example.com', $soa->mname);
+        $this->assertSame('support.example.com', $soa->rname);
+
+        // SRV
+        $srv = Net_DNS_RR::factory('_xmpp-server._tcp.gmail.com. IN SRV 5 0 5269 xmpp-server.l.google.com.');
+        $this->assertSame('_xmpp-server._tcp.gmail.com', $srv->name);
+        $this->assertSame('5269', $srv->port);
+        $this->assertSame('xmpp-server.l.google.com', $srv->target);
+
+        // TXT
+        $txt  = Net_DNS_RR::factory('example.com. 1800 IN TXT "text message"');
+        $this->assertSame('"text message"', $txt->text);
+    }
+ }}

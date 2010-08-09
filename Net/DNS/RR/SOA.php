@@ -76,8 +76,8 @@ class Net_DNS_RR_SOA extends Net_DNS_RR
         } else {
             if (ereg("([^ \t]+)[ \t]+([^ \t]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]+([0-9]+)[ \t]*$", $data, $regs))
             {
-                $this->mname = ereg_replace('(.*)\.$', '\\1', $regs[1]);
-                $this->rname = ereg_replace('(.*)\.$', '\\1', $regs[2]);
+                $this->mname = preg_replace('/(.*)\.$/', '\\1', $regs[1]);
+                $this->rname = preg_replace('/(.*)\.$/', '\\1', $regs[2]);
                 $this->serial = $regs[3];
                 $this->refresh = $regs[4];
                 $this->retry = $regs[5];
