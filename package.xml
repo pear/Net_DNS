@@ -21,7 +21,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
 	<date>2010-08-09</date>
 	<time>09:00:00</time>
 	<version>
-		<release>1.0.2</release>
+		<release>1.0.3</release>
 		<api>1.0.0</api>
 	</version>
 	<stability>
@@ -31,11 +31,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
 	<license>LGPL</license>
 	<notes>
 QA release
-Bug #16312 fixed issue with NAPTR record
-Bug #17672 replaced ereg_* with preg_*
-Bug #17673 added support for SPF records
-Bug #17674 added support for RP records
-some more fixes included
+Bug #17678 added more performance tweaks
  </notes>
 	<contents>
 		<dir baseinstalldir="/" name="/">
@@ -257,6 +253,23 @@ Bug #17672 replaced ereg_* with preg_*
 Bug #17673 added support for SPF records
 Bug #17674 added support for RP records
 some more fixes included  
+ </notes>
+		</release>
+		<release>
+			<version>
+				<release>1.0.3</release>
+				<api>1.0.0</api>
+			</version>
+			<stability>
+				<release>stable</release>
+				<api>stable</api>
+			</stability>
+			<date>2010-08-09</date>
+			<license>LGPL</license>
+			<notes>
+QA release
+Bug #QA release
+Bug #17678 added more performance tweaks 
  </notes>
 		</release>
 	</changelog>

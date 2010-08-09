@@ -230,6 +230,24 @@ class Net_DNS_Resolver
      * @access private
      */
     var $_axfr_soa_count;
+     /**
+     * An array of config files that have been read/parsed already and is used
+     * to ensure the usable config files are searched for only once.
+     *
+     * @var array
+     * @access public
+     * @see Net_DNS_Resolver::read_config()
+     */
+    static $parsedfiles = array();
+    /**
+     * sleep
+     *
+     * Length of time to wait between reading for respose from server.
+     *
+     * @var int
+     * @access private
+     */
+    var $sleep;
 
 
     /* }}} */
@@ -258,6 +276,7 @@ class Net_DNS_Resolver
                 'errorstring' => 'unknown error or no error',
                 'answerfrom'  => '',
                 'answersize'  => 0,
+				'sleep'       => 1000,
                 'tcp_timeout' => 120
                 );
         foreach ($mydefaults as $k => $v) {
@@ -284,13 +303,21 @@ class Net_DNS_Resolver
     function res_init()
     {
         $err = error_reporting(0);
-        if (file_exists($this->resolv_conf) && is_readable($this->resolv_conf)) {
-            $this->read_config($this->resolv_conf);
-        }
-
-        foreach ($this->confpath as $dir) {
-            $file = $dir.DIRECTORY_SEPARATOR.$this->dotfile;
-            if (file_exists($file) && is_readable($file)) {
+		if ($this->parsedfiles == array()) {
+			if (file_exists($this->resolv_conf) && is_readable($this->resolv_conf)) {
+                $this->read_config($this->resolv_conf);
+                array_push($this->parsedfiles, $this->resolv_conf);
+            }
+		
+			foreach ($this->confpath as $dir) {
+                $file = $dir.DIRECTORY_SEPARATOR.$this->dotfile;
+                if (file_exists($file) && is_readable($file)) {
+                    $this->read_config($file);
+                    array_push($this->parsedfiles, $file);
+                }
+            }
+        } else {
+            foreach($this->parsedfiles as $file) {
                 $this->read_config($file);
             }
         }
@@ -329,26 +356,32 @@ class Net_DNS_Resolver
                 if (ereg("^[ \t]*$", $line, $regs)) {
                     continue;
                 }
-                ereg("^[ \t]*([^ \t]+)[ \t]+([^ \t]+)", $line, $regs);
+                preg_match("/^[ \t]*([^ \t]+)[ \t]+([^ \t]+)/", $line, $regs);
                 $option = $regs[1];
                 $value = $regs[2];
 
                 switch ($option) {
+                    case 'nameserver':
+                        $nameservers = explode(' ', $regs[2]);
+                        foreach ($nameservers as $ns) {
+                            $this->nameservers[count($this->nameservers)] = $ns;
+                        }
+                        break;
                     case 'domain':
                         $this->domain = $regs[2];
                         break;
                     case 'search':
                         $this->searchlist[count($this->searchlist)] = $regs[2];
                         break;
-                    case 'nameserver':
-                        foreach (explode(' ', $regs[2]) as $ns) {
-                            $this->nameservers[count($this->nameservers)] = $ns;
-                        }
-                        break;
                 }
             }
             fclose($f);
         }
+    }
+
+    function set_nameservers($nameservers) {
+        if ($nameservers == '') return;
+        $this->nameservers = explode(' ', $nameservers);
     }
 
     /* }}} */
@@ -359,7 +392,7 @@ class Net_DNS_Resolver
     function read_env()
     {
         if (getenv('RES_NAMESERVERS')) {
-            $this->nameservers = explode(' ', getenv('RES_NAMESERVERS'));
+            $this->set_nameservers(getenv('RES_NAMESERVERS'));
         }
 
         if (getenv('RES_SEARCHLIST')) {
@@ -858,7 +891,8 @@ class Net_DNS_Resolver
             return null;
         }
 
-        for ($i = 0; $i < $this->retry; $i++, $retrans *= 2,
+		$retry = $this->retry;
+        for ($i = 0; $i < $retry; $i++, $retrans *= 2,
                 $timeout = (int) ($retrans / $ctr)) {
             if ($timeout < 1) {
                 $timeout = 1;
@@ -886,7 +920,11 @@ class Net_DNS_Resolver
                  * let's sleep for a few hundred microseconds to let the
                  * data come in from the network...
                  */
-                usleep(500);
+                $sleep = $this->sleep;
+				if ($sleep) {
+                    usleep($sleep / 2);
+                }
+
                 $buf = '';
                 while (! strlen($buf) && $timetoTO > (time() +
                             (double)microtime())) {
@@ -965,7 +1003,7 @@ class Net_DNS_Resolver
         }
         // Try each nameserver up to $this->retry times
         for ($i = 0; $i < $this->retry; $i++) {
-            if ($i != 0) {
+            if ($i !== 0) {
                 // Set the timeout for each retry based on the number of
                 // nameservers there is a connected socket for.
                 $retrans *= 2;

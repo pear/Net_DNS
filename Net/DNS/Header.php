@@ -139,7 +139,20 @@ class Net_DNS_Header
      */
     function Net_DNS_Header($data = '')
     {
-        if (!empty($data)) {
+        if (empty($data)) {
+            $this->id      = Net_DNS_Resolver::nextid();
+            $this->qr      = 0;
+            $this->opcode  = 0;
+            $this->aa      = 0;
+            $this->tc      = 0;
+            $this->rd      = 1;
+            $this->ra      = 0;
+            $this->rcode   = 0;
+            $this->qdcount = 1;
+            $this->ancount = 0;
+            $this->nscount = 0;
+            $this->arcount = 0;
+        } else {
             /*
              * The header MUST be at least 12 bytes.
              * Passing the full datagram to this constructor
@@ -162,19 +175,6 @@ class Net_DNS_Header
             $this->ancount = $a['counts2'];
             $this->nscount = $a['counts3'];
             $this->arcount = $a['counts4'];
-        } else {
-            $this->id      = Net_DNS_Resolver::nextid();
-            $this->qr      = 0;
-            $this->opcode  = 0;
-            $this->aa      = 0;
-            $this->tc      = 0;
-            $this->rd      = 1;
-            $this->ra      = 0;
-            $this->rcode   = 0;
-            $this->qdcount = 1;
-            $this->ancount = 0;
-            $this->nscount = 0;
-            $this->arcount = 0;
         }
 
 
