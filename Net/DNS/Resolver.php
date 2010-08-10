@@ -249,7 +249,7 @@ class Net_DNS_Resolver
      */
     var $sleep;
 
-
+    /**
     /* }}} */
     /* class constructor - Net_DNS_Resolver() {{{ */
     /**
@@ -276,7 +276,7 @@ class Net_DNS_Resolver
                 'errorstring' => 'unknown error or no error',
                 'answerfrom'  => '',
                 'answersize'  => 0,
-				'sleep'       => 1000,
+                'sleep'       => 1000,
                 'tcp_timeout' => 120
                 );
         foreach ($mydefaults as $k => $v) {
@@ -303,13 +303,13 @@ class Net_DNS_Resolver
     function res_init()
     {
         $err = error_reporting(0);
-		if ($this->parsedfiles == array()) {
-			if (file_exists($this->resolv_conf) && is_readable($this->resolv_conf)) {
+        if ($this->parsedfiles == array()) {
+            if (file_exists($this->resolv_conf) && is_readable($this->resolv_conf)) {
                 $this->read_config($this->resolv_conf);
                 array_push($this->parsedfiles, $this->resolv_conf);
             }
-		
-			foreach ($this->confpath as $dir) {
+
+            foreach ($this->confpath as $dir) {
                 $file = $dir.DIRECTORY_SEPARATOR.$this->dotfile;
                 if (file_exists($file) && is_readable($file)) {
                     $this->read_config($file);
@@ -891,7 +891,7 @@ class Net_DNS_Resolver
             return null;
         }
 
-		$retry = $this->retry;
+        $retry = $this->retry;
         for ($i = 0; $i < $retry; $i++, $retrans *= 2,
                 $timeout = (int) ($retrans / $ctr)) {
             if ($timeout < 1) {
@@ -921,7 +921,7 @@ class Net_DNS_Resolver
                  * data come in from the network...
                  */
                 $sleep = $this->sleep;
-				if ($sleep) {
+                if ($sleep) {
                     usleep($sleep / 2);
                 }
 
@@ -951,7 +951,9 @@ class Net_DNS_Resolver
                         }
                     }
                     // Sleep another 1/100th of a second... this sucks...
-                    usleep(1000);
+                    if ($sleep) {
+                        usleep($sleep / 2);
+                    }
                 }
 
             }

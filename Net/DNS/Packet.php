@@ -121,10 +121,9 @@ class Net_DNS_Packet
      * @access  public
      */
     var $additional;
-	
+
     var $INT32SZ = 4;
     var $INT16SZ = 2;
-
     /* }}} */
     /* class constructor - Net_DNS_Packet($debug = false) {{{ */
     /*
@@ -196,10 +195,10 @@ class Net_DNS_Packet
         }
 
         $this->header = new Net_DNS_Header($data);
-		$header = $this->header;
+        $header = $this->header;
 
         if ($this->debug) {
-			$header->display();
+            $header->display();
         }
 
         /*
@@ -207,9 +206,9 @@ class Net_DNS_Packet
          */
         if ($this->debug) {
             echo "\n";
-			$section = ($header->opcode  == 'UPDATE') ? 'ZONE' : 'QUESTION';
-			echo ";; $section SECTION (" . $header->qdcount . ' record' .
-				($header->qdcount == 1 ? '' : 's') . ")\n";
+            $section = ($header->opcode  == 'UPDATE') ? 'ZONE' : 'QUESTION';
+            echo ";; $section SECTION (" . $header->qdcount . ' record' .
+                ($header->qdcount == 1 ? '' : 's') . ")\n";
         }
 
         $offset = 12;
@@ -236,7 +235,7 @@ class Net_DNS_Packet
             $section = ($header->opcode == 'UPDATE') ? 'PREREQUISITE' :'ANSWER';
             echo ";; $section SECTION (" .
                 $header->ancount . ' record' .
-				(($header->ancount == 1) ? '' : 's') .
+                (($header->ancount == 1) ? '' : 's') .
                 ")\n";
         }
 
@@ -270,6 +269,7 @@ class Net_DNS_Packet
             list($rrobj, $offset) = $this->parse_rr($data, $offset);
 
             if (is_null($rrobj)) {
+                $this->header = $header;
                 return null;
             }
             array_push($this->authority, $rrobj);
@@ -294,6 +294,7 @@ class Net_DNS_Packet
             list($rrobj, $offset) = $this->parse_rr($data, $offset);
 
             if (is_null($rrobj)) {
+                $this->header = $header;
                 return null;
             }
             array_push($this->additional, $rrobj);
@@ -302,6 +303,7 @@ class Net_DNS_Packet
             }
         }
 
+        $this->header = $header;
         return true;
     }
 
