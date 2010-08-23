@@ -353,7 +353,7 @@ class Net_DNS_Resolver
             while (! feof($f)) {
                 $line = chop(fgets($f, 10240));
                 $line = preg_replace('/(.*)[;#].*/', '\\1', $line);
-                if (ereg("^[ \t]*$", $line, $regs)) {
+                if (preg_match("/^[ \t]*$/", $line, $regs)) {
                     continue;
                 }
                 preg_match("/^[ \t]*([^ \t]+)[ \t]+([^ \t]+)/", $line, $regs);
