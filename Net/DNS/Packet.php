@@ -424,7 +424,7 @@ class Net_DNS_Packet
                 $ptr = unpack("@$offset/ni", $packet);
                 $ptr = $ptr['i'];
                 $ptr = $ptr & 0x3fff;
-                $name2 = Net_DNS_Packet::dn_expand($packet, $ptr);
+                $name2 = $this->dn_expand($packet, $ptr);
 
                 if (is_null($name2[0])) {
                     return array(null, null);
