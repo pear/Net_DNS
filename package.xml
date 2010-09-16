@@ -21,7 +21,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
 	<date>2010-08-10</date>
 	<time>12:30:00</time>
 	<version>
-		<release>1.0.5</release>
+		<release>1.0.6</release>
 		<api>1.0.0</api>
 	</version>
 	<stability>
@@ -31,7 +31,8 @@ Creates an object hierarchy from a DNS server response, which allows you to view
 	<license>LGPL</license>
 	<notes>
 QA release
-Bug #17678 added more performance tweaks and fixes
+Bug #17743 fixed issue with non static calls
+Bug #17867 fixed Net_DNS_Resolver:nextid() overflow
  </notes>
 	<contents>
 		<dir baseinstalldir="/" name="/">

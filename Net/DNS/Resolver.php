@@ -453,7 +453,7 @@ class Net_DNS_Resolver
      */
     function nextid()
     {
-        if ($GLOBALS['_Net_DNS_packet_id']++ > 65535) {
+		if (++$GLOBALS['_Net_DNS_packet_id'] > 65535) {
             $GLOBALS['_Net_DNS_packet_id']= 1;
         }
         return $GLOBALS['_Net_DNS_packet_id'];
