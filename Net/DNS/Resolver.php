@@ -238,7 +238,7 @@ class Net_DNS_Resolver
      * @access public
      * @see Net_DNS_Resolver::read_config()
      */
-    static $parsedfiles = array();
+    var $parsedfiles = array();
     /**
      * sleep
      *
