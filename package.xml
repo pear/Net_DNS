@@ -1,309 +1,331 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Mit XMLSpy v2009 sp1 (http://www.altova.com) von Marco Kaiser (cdmm marketing & consulting) bearbeitet -->
-<package packagerversion="1.8.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
-	<name>Net_DNS</name>
-	<channel>pear.php.net</channel>
-	<summary>Resolver library used to communicate with a DNS server.</summary>
-	<description>A resolver library used to communicate with a name server to perform DNS queries, zone transfers, dynamic DNS updates, etc.
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Net_DNS</name>
+ <channel>pear.php.net</channel>
+ <summary>Resolver library used to communicate with a DNS server.</summary>
+ <description>A resolver library used to communicate with a name server to perform DNS queries, zone transfers, dynamic DNS updates, etc.
 Creates an object hierarchy from a DNS server response, which allows you to view all of the information given by the DNS server. It bypasses the system resolver library and communicates directly with the server.</description>
-	<lead>
-		<name>Marco Kaiser</name>
-		<user>bate</user>
-		<email>bate@php.net</email>
-		<active>yes</active>
-	</lead>
-	<developer>
-		<name>Florian Anderiasch</name>
-		<user>fa</user>
-		<email>fa@php.net</email>
-		<active>no</active>
-	</developer>
-	<date>2010-08-10</date>
-	<time>12:30:00</time>
-	<version>
-		<release>1.0.6</release>
-		<api>1.0.0</api>
-	</version>
-	<stability>
-		<release>stable</release>
-		<api>stable</api>
-	</stability>
-	<license>LGPL</license>
-	<notes>
+ <lead>
+  <name>Marco Kaiser</name>
+  <user>bate</user>
+  <email>bate@php.net</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Florian Anderiasch</name>
+  <user>fa</user>
+  <email>fa@php.net</email>
+  <active>no</active>
+ </developer>
+ <date>2010-10-25</date>
+ <time>00:37:33</time>
+ <version>
+  <release>1.0.6</release>
+  <api>1.0.0</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license>LGPL</license>
+ <notes>
 QA release
-Bug #17743 fixed issue with non static calls
+Bug #17743 	$this used in statically called Net_DNS_Packet::dn_expand()
 Bug #17867 fixed Net_DNS_Resolver:nextid() overflow
+Bug #17988 	Parse error: syntax error, unexpected T_STATIC
+Bug #17767 	Patch: Avoid deprecated socket_set_blocking
  </notes>
-	<contents>
-		<dir baseinstalldir="/" name="/">
-			<file baseinstalldir="/" md5sum="34734bdc3799b5513746d55712b96017" name="Net/DNS/Header.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="bb0f841bb01d25b6fb6a587b81db6aef" name="Net/DNS/Packet.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="d9ae677a5b04e11184a4bd0d2138c796" name="Net/DNS/Question.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="fe9d513e6ef52eab9d02baf6bb983995" name="Net/DNS/Resolver.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="e693095f96156e10587f7eff0e5fd88f" name="Net/DNS/RR.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="46922695deff7fb8e106918998c45f94" name="Net/DNS/RR/A.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="311d9afded154e001d428121db153938" name="Net/DNS/RR/AAAA.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="6ea2bb08073075732143eda1d346b693" name="Net/DNS/RR/CNAME.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="5cd490989c536c8f12c03beee31c5490" name="Net/DNS/RR/HINFO.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="a5f7a2ef80d16c8381a840255112229f" name="Net/DNS/RR/MX.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="c90cb97e8f700c75b945adad1c5bdbcf" name="Net/DNS/RR/NAPTR.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="d0f303d4d61db50e35f94b2c63cff955" name="Net/DNS/RR/NS.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="c8fee6c6390d66c6faf41ca1d4d4c860" name="Net/DNS/RR/PTR.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="32c33ef5112e049bca571f34ca75cf21" name="Net/DNS/RR/SOA.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="9c191a0fb463b4e937a38708b1f45bd5" name="Net/DNS/RR/SRV.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="0747e8f7985ce881af325ba46b6cd236" name="Net/DNS/RR/TSIG.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="d3236b5580733f4f5c559f596c2190eb" name="Net/DNS/RR/TXT.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="a0e5f9c2cb15597fced669a840b58e1d" name="Net/DNS/RR/SPF.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="4502fb2bd2c9ca658b61ae73c6761e38" name="Net/DNS/RR/RP.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="3bcdc3dfceaa61c578b86b608a166c2b" name="Net/DNS.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="81f96cb5127da73357f647e43780b25c" name="tests/AllTests.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="0cca9757a8f01fa548140afbe3133b97" name="tests/Net_DNS_ResolverTest.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="11be86275e43dc0bab9cb2a7fd34d47f" name="tests/Net_DNS_RR_LOCTest.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-			<file baseinstalldir="/" md5sum="99d7534133c778fbb594efb1268ad910" name="tests/Net_DNS_RRTest.php" role="php">
-				<tasks:replace from="@package_version@" to="version" type="package-info"/>
-				<tasks:replace from="@data_dir@" to="data_dir" type="pear-config"/>
-			</file>
-		</dir>
-	</contents>
-	<dependencies>
-		<required>
-			<php>
-				<min>4.2</min>
-			</php>
-			<pearinstaller>
-				<min>1.4.0b1</min>
-			</pearinstaller>
-		</required>
-	</dependencies>
-	<phprelease/>
-	<changelog>
-		<release>
-			<version>
-				<release>1.0.0rc2</release>
-				<api>1.0.0rc2</api>
-			</version>
-			<stability>
-				<release>beta</release>
-				<api>beta</api>
-			</stability>
-			<date>2005-11-30</date>
-			<license uri="http://www.example.com">PHP License 3.01</license>
-			<notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="5a2fd9b12cb8d875d489ba982e282371" name="Net/DNS.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="37dbbc7b9313ba5863e7688d2fba59f0" name="Net/DNS/Header.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="7f3ff73d33f6f6e9815790c6b8c6598e" name="Net/DNS/Packet.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="d7184d9ec7cc404745605a7ffde5bd25" name="Net/DNS/Question.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="53ee1dd3501d9cab5e2113a657b953bd" name="Net/DNS/Resolver.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="e693095f96156e10587f7eff0e5fd88f" name="Net/DNS/RR.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="c644170d4c4b25168814d183ef2c2f10" name="Net/DNS/RR/A.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="a70b09efe8cc890187250f53869bca61" name="Net/DNS/RR/AAAA.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="934e67a01d0152c9e5e46bad3cacb84f" name="Net/DNS/RR/CNAME.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="cba9b04600622c8ada1c1d9a187e4e25" name="Net/DNS/RR/HINFO.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="1506147d4054f7d4da8d3c5a245f914a" name="Net/DNS/RR/LOC.php" role="php" />
+   <file baseinstalldir="/" md5sum="9c94e0598f4aca5b6f47b565ce6b6164" name="Net/DNS/RR/MX.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="70ecc1b7a4757cbde50459168b64ae24" name="Net/DNS/RR/NAPTR.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="0baab6d6a208df5eb516df64109b73ea" name="Net/DNS/RR/NS.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="5105f88ed47e013839a4628af7452bc4" name="Net/DNS/RR/PTR.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="4502fb2bd2c9ca658b61ae73c6761e38" name="Net/DNS/RR/RP.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="688f70b5a7a9622b1e6108a69fb4a78c" name="Net/DNS/RR/SOA.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="a0e5f9c2cb15597fced669a840b58e1d" name="Net/DNS/RR/SPF.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="47cdb36c9b9c8c33bc0ccd6e867e1bd2" name="Net/DNS/RR/SRV.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="e923e4955e8b212cd6e4d031f81294de" name="Net/DNS/RR/TSIG.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="f0c56d110802ddc062d9d980c5d8de99" name="Net/DNS/RR/TXT.php" role="php">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="aee5a2a1b64b64356b85d5ad67d682a1" name="tests/AllTests.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="ef10cf7a232192d346d4ca4a2da3c965" name="tests/Net_DNS_PacketTest.php" role="test" />
+   <file baseinstalldir="/" md5sum="abe4e6e7363f16dc6fd942bba0492d04" name="tests/Net_DNS_ResolverTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="99d7534133c778fbb594efb1268ad910" name="tests/Net_DNS_RRTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="b05be930b8bffdfdf63239642661f960" name="tests/Net_DNS_RR_LOCTest.php" role="test">
+    <tasks:replace from="@package_version@" to="version" type="package-info" />
+    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
+   </file>
+   <file baseinstalldir="/" md5sum="fba23173fbf09a6332b0213279bad899" name="tests/TestBug17743Test.php" role="test" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.2</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>1.0.0rc2</release>
+    <api>1.0.0rc2</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2005-11-30</date>
+   <license uri="http://www.example.com">PHP License 3.01</license>
+   <notes>
 * Fixed all pending bugs
 * Fixed coding styles
 * Added class documentation
    </notes>
-		</release>
-		<release>
-			<version>
-				<release>1.0.0rc3</release>
-				<api>1.0.0rc3</api>
-			</version>
-			<stability>
-				<release>beta</release>
-				<api>beta</api>
-			</stability>
-			<date>2005-12-01</date>
-			<license uri="http://www.example.com">PHP License 3.01</license>
-			<notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0rc3</release>
+    <api>1.0.0rc3</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2005-12-01</date>
+   <license uri="http://www.example.com">PHP License 3.01</license>
+   <notes>
 * Added new parameter for class constructor
   array with configuration values for the
   Net_DNS_Resolver() class
    </notes>
-		</release>
-		<release>
-			<version>
-				<release>1.0.0RC4</release>
-				<api>1.0.0RC4</api>
-			</version>
-			<stability>
-				<release>beta</release>
-				<api>beta</api>
-			</stability>
-			<date>2006-02-01</date>
-			<license uri="http://www.example.com">PHP License 3.01</license>
-			<notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0RC4</release>
+    <api>1.0.0RC4</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2006-02-01</date>
+   <license uri="http://www.example.com">PHP License 3.01</license>
+   <notes>
 * BUGFIX #5339
 * BUGFIX #6107
    </notes>
-		</release>
-		<release>
-			<version>
-				<release>1.0.0</release>
-				<api>1.0.0</api>
-			</version>
-			<stability>
-				<release>stable</release>
-				<api>stable</api>
-			</stability>
-			<date>2006-10-25</date>
-			<license uri="http://www.example.com">PHP License 3.01</license>
-			<notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2006-10-25</date>
+   <license uri="http://www.example.com">PHP License 3.01</license>
+   <notes>
 some minor bugfixes and a security fix.
 $phpdns_basedir was removed an require_once statements
 related to this variable are now hardcoded.
 Bugfix #9162
    </notes>
-		</release>
-		<release>
-			<version>
-				<release>1.0.1</release>
-				<api>1.0.0</api>
-			</version>
-			<stability>
-				<release>stable</release>
-				<api>stable</api>
-			</stability>
-			<date>2009-06-08</date>
-			<license>LGPL</license>
-			<notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-06-08</date>
+   <license>LGPL</license>
+   <notes>
 bugfixes and transition to package2.xml
 QA release
 Bug #9168  Make mhash dependency optional
-Bug #9268  send_tcp method doesn't receive all packets 
+Bug #9268  send_tcp method doesn&apos;t receive all packets 
 Bug #10805 Invalid num values on x86_64 AMD 	 
-Bug #12487 Spurious "Fatal error: Class 'Net_DNS_RR' not found"
+Bug #12487 Spurious &quot;Fatal error: Class &apos;Net_DNS_RR&apos; not found&quot;
 Bug #12573 incorrect license in package.xml
-
    </notes>
-		</release>
-		<release>
-			<version>
-				<release>1.0.2</release>
-				<api>1.0.0</api>
-			</version>
-			<stability>
-				<release>stable</release>
-				<api>stable</api>
-			</stability>
-			<date>2010-08-09</date>
-			<license>LGPL</license>
-			<notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-08-09</date>
+   <license>LGPL</license>
+   <notes>
 QA release
 Bug #16312 fixed issue with NAPTR record
 Bug #17672 replaced ereg_* with preg_*
 Bug #17673 added support for SPF records
 Bug #17674 added support for RP records
-some more fixes included  
- </notes>
-		</release>
-		<release>
-			<version>
-				<release>1.0.3</release>
-				<api>1.0.0</api>
-			</version>
-			<stability>
-				<release>stable</release>
-				<api>stable</api>
-			</stability>
-			<date>2010-08-09</date>
-			<license>LGPL</license>
-			<notes>
+some more fixes included
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.3</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-08-09</date>
+   <license>LGPL</license>
+   <notes>
 QA release
 Bug #QA release
-Bug #17678 added more performance tweaks 
- </notes>
-		</release>
-		<release>
-			<version>
-				<release>1.0.4</release>
-				<api>1.0.0</api>
-			</version>
-			<stability>
-				<release>stable</release>
-				<api>stable</api>
-			</stability>
-			<date>2010-08-09</date>
-			<license>LGPL</license>
-			<notes>
+Bug #17678 added more performance tweaks
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.4</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-08-09</date>
+   <license>LGPL</license>
+   <notes>
 QA release
 Bug #17684 fixed wrong install directory in package.xml
- </notes>
-		</release>		
-		<release>
-			<version>
-				<release>1.0.5</release>
-				<api>1.0.0</api>
-			</version>
-			<stability>
-				<release>stable</release>
-				<api>stable</api>
-			</stability>
-			<date>2010-08-09</date>
-			<license>LGPL</license>
-			<notes>
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.5</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-08-09</date>
+   <license>LGPL</license>
+   <notes>
 QA release
 Bug #17678 added missing patched files
- </notes>
-		</release>
-	</changelog>
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.6</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-10-25</date>
+   <license>LGPL</license>
+   <notes>
+QA release
+Bug #17743 	$this used in statically called Net_DNS_Packet::dn_expand()
+Bug #17867 fixed Net_DNS_Resolver:nextid() overflow
+Bug #17988 	Parse error: syntax error, unexpected T_STATIC
+Bug #17767 	Patch: Avoid deprecated socket_set_blocking
+   </notes>
+  </release>
+ </changelog>
 </package>
