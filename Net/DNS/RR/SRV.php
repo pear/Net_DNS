@@ -52,7 +52,9 @@ class Net_DNS_RR_SRV extends Net_DNS_RR
             if ($this->rdlength > 0) {
                 $a = unpack("@$offset/npreference/nweight/nport", $data);
                 $offset += 6;
-                list($target, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
+                $packet = new Net_DNS_Packet();
+
+                list($target, $offset) = $packet->dn_expand($data, $offset);
                 $this->preference = $a['preference'];
                 $this->weight = $a['weight'];
                 $this->port = $a['port'];

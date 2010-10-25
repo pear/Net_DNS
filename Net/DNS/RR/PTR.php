@@ -48,7 +48,9 @@ class Net_DNS_RR_PTR extends Net_DNS_RR
 
         if ($offset) {
             if ($this->rdlength > 0) {
-                list($ptrdname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
+                $packet = new Net_DNS_Packet();
+
+                list($ptrdname, $offset) = $packet->dn_expand($data, $offset);
                 $this->ptrdname = $ptrdname;
             }
         } elseif (is_array($data)) {

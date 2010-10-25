@@ -58,7 +58,9 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
 
         if ($offset) {
             if ($this->rdlength > 0) {
-                list($alg, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
+                $packet = new Net_DNS_Packet();
+
+                list($alg, $offset) = $packet->dn_expand($data, $offset);
                 $this->algorithm = $alg;
 
                 $d = unpack("@$offset/nth/Ntl/nfudge/nmac_size", $data);

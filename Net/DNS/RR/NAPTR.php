@@ -54,10 +54,12 @@ class Net_DNS_RR_NAPTR extends Net_DNS_RR
             if ($this->rdlength > 0) {
                 $a = unpack("@$offset/norder/npreference", $data);
                 $offset += 4;
+                $packet = new Net_DNS_Packet();
+
                 list($flags, $offset) = Net_DNS_Packet::label_extract($data, $offset);
                 list($services, $offset) = Net_DNS_Packet::label_extract($data, $offset);
                 list($regex, $offset) = Net_DNS_Packet::label_extract($data, $offset);
-                list($replacement, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
+                list($replacement, $offset) = $packet->dn_expand($data, $offset);
 
                 $this->order = $a['order'];
                 $this->preference = $a['preference'];

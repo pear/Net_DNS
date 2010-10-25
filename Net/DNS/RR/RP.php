@@ -49,9 +49,10 @@ class Net_DNS_RR_RP extends Net_DNS_RR
 
         if ($offset) {
             if ($this->rdlength > 0) {
+                $packet = new Net_DNS_Packet();
 
-                list($this->mboxdname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
-                list($this->txtdname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
+                list($this->mboxdname, $offset) = $packet->dn_expand($data, $offset);
+                list($this->txtdname, $offset) = $packet->dn_expand($data, $offset);
             }
         } elseif (is_array($data)) {
 

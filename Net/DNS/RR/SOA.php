@@ -53,8 +53,10 @@ class Net_DNS_RR_SOA extends Net_DNS_RR
 
         if ($offset) {
             if ($this->rdlength > 0) {
-                list($mname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
-                list($rname, $offset) = Net_DNS_Packet::dn_expand($data, $offset);
+                $packet = new Net_DNS_Packet();
+
+                list($mname, $offset) = $packet->dn_expand($data, $offset);
+                list($rname, $offset) = $packet->dn_expand($data, $offset);
 
                 $a = unpack("@$offset/N5soavals", $data);
                 $this->mname = $mname;
