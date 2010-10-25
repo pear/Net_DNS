@@ -3,8 +3,12 @@ require_once 'Net/DNS.php';
 
 class Net_DNS_ResolverTest extends PHPUnit_Framework_TestCase {
 
+    public function setUp() {
+        $this->resolver = new Net_DNS_Resolver(array(/*'debug' => 1*/));
+    }
+
     public function testBug16501() {
-        $resolver = new Net_DNS_Resolver(array('nameservers' => array('192.168.0.1')));
+        $resolver = $this->resolver;
 
         $packet = new Net_DNS_Packet();
 
@@ -33,7 +37,7 @@ class Net_DNS_ResolverTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testBug16502() {
-        $resolver = new Net_DNS_Resolver(array('nameservers' => array('192.168.0.1')));
+        $resolver = $this->resolver;
 
         $packet = new Net_DNS_Packet();
 
@@ -54,11 +58,12 @@ class Net_DNS_ResolverTest extends PHPUnit_Framework_TestCase {
         $packet->header->arcount = count($packet->additional);
         $response = $resolver->send_tcp($packet, $packet->data());
 
+        $this->assertTrue($response instanceof Net_DNS_Packet);
         $this->assertSame("NOERROR", $response->header->rcode);
     }
 
     public function testBug16515() {
-        $r = new Net_DNS_Resolver();
+        $r = $this->resolver;
 
         $data = $r->query('example.com.', 'TXT');
         $this->assertNotSame(false, $data);
@@ -74,8 +79,7 @@ class Net_DNS_ResolverTest extends PHPUnit_Framework_TestCase {
 
 
     public function testPregChange() {
-
-        $r = new Net_DNS_Resolver();
+        $r = $this->resolver;
 
         // A
         $a = Net_DNS_RR::factory('example.com. 1800 IN A 10.10.10.10');
