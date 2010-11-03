@@ -122,8 +122,9 @@ class Net_DNS_Packet
      */
     var $additional;
 
-    var $INT32SZ = 4;
-    var $INT16SZ = 2;
+    const INT32SZ = 4;
+    const INT16SZ = 2;
+	
     /* }}} */
     /* class constructor - Net_DNS_Packet($debug = false) {{{ */
     /*
@@ -418,19 +419,19 @@ class Net_DNS_Packet
                 $offset++;
                 break;
             } else if (($len & 0xc0) == 0xc0) {
-                if ($packetlen < ($offset + $this->INT16SZ)) {
+                if ($packetlen < ($offset + Net_DNS_Packet::INT16SZ)) {
                     return array(null, null);
                 }
                 $ptr = unpack("@$offset/ni", $packet);
                 $ptr = $ptr['i'];
                 $ptr = $ptr & 0x3fff;
-                $name2 = $this->dn_expand($packet, $ptr);
+                $name2 = Net_DNS_Packet::dn_expand($packet, $ptr);
 
                 if (is_null($name2[0])) {
                     return array(null, null);
                 }
                 $name .= $name2[0];
-                $offset += $this->INT16SZ;
+                $offset += Net_DNS_Packet::INT16SZ;
                 break;
             } else {
                 $offset++;

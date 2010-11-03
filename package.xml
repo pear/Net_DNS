@@ -17,10 +17,10 @@ Creates an object hierarchy from a DNS server response, which allows you to view
   <email>fa@php.net</email>
   <active>no</active>
  </developer>
- <date>2010-10-25</date>
- <time>00:37:33</time>
+ <date>2010-11-03</date>
+ <time>10:49:33</time>
  <version>
-  <release>1.0.6</release>
+  <release>1.0.7</release>
   <api>1.0.0</api>
  </version>
  <stability>
@@ -34,6 +34,8 @@ Bug #17743 	$this used in statically called Net_DNS_Packet::dn_expand()
 Bug #17867 fixed Net_DNS_Resolver:nextid() overflow
 Bug #17988 	Parse error: syntax error, unexpected T_STATIC
 Bug #17767 	Patch: Avoid deprecated socket_set_blocking
+Bug #17995 fixed issue with serial
+Bug #17893 fixed issue with wrong serial (negative)
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
