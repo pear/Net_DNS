@@ -987,7 +987,7 @@ class Net_DNS_Resolver
         $ctr = 0;
         // Create a socket handle for each nameserver
         foreach ($this->nameservers as $nameserver) {
-            if ((($sock[$ctr++] = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP))) &&
+            if ((($sock[$ctr++] = socket_create((strpos($nameserver,':') === FALSE) ? AF_INET : AF_INET6, SOCK_DGRAM, SOL_UDP))) &&
                   socket_connect($sock[$ctr-1], $nameserver, $this->port))
             {
                 $peerhost[$ctr-1] = $nameserver;

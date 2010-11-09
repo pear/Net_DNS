@@ -20,7 +20,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
  <date>2010-11-03</date>
  <time>10:49:33</time>
  <version>
-  <release>1.0.7</release>
+  <release>1.0.8</release>
   <api>1.0.0</api>
  </version>
  <stability>
@@ -30,12 +30,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
  <license>LGPL</license>
  <notes>
 QA release
-Bug #17743 	$this used in statically called Net_DNS_Packet::dn_expand()
-Bug #17867 fixed Net_DNS_Resolver:nextid() overflow
-Bug #17988 	Parse error: syntax error, unexpected T_STATIC
-Bug #17767 	Patch: Avoid deprecated socket_set_blocking
-Bug #17995 fixed issue with serial
-Bug #17893 fixed issue with wrong serial (negative)
+added bugfix for ipv6 addresses
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -327,6 +322,26 @@ Bug #17743 	$this used in statically called Net_DNS_Packet::dn_expand()
 Bug #17867 fixed Net_DNS_Resolver:nextid() overflow
 Bug #17988 	Parse error: syntax error, unexpected T_STATIC
 Bug #17767 	Patch: Avoid deprecated socket_set_blocking
+   </notes>
+  </release>  <release>
+   <version>
+    <release>1.0.7</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-11-03</date>
+   <license>LGPL</license>
+   <notes>
+QA release
+Bug #17743 	$this used in statically called Net_DNS_Packet::dn_expand()
+Bug #17867 fixed Net_DNS_Resolver:nextid() overflow
+Bug #17988 	Parse error: syntax error, unexpected T_STATIC
+Bug #17767 	Patch: Avoid deprecated socket_set_blocking
+Bug #17995 fixed issue with serial
+Bug #17893 fixed issue with wrong serial (negative)
    </notes>
   </release>
  </changelog>
