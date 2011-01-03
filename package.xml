@@ -31,7 +31,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
  <notes>
 QA release
 added bugfix for ipv6 addresses
-changed package config to php5 required
+Bug #18172 fixed issue with class constants
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -139,7 +139,7 @@ changed package config to php5 required
  <dependencies>
   <required>
    <php>
-    <min>5.0</min>
+    <min>4.2</min>
    </php>
    <pearinstaller>
     <min>1.4.0b1</min>

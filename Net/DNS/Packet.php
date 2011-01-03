@@ -17,6 +17,12 @@
 * send a note to license@php.net so we can mail you a copy immediately.
 */
 
+/**
+ * Package constants
+ */
+define('NET_DNS_PACKET_INT32SZ', 4);
+define('NET_DNS_PACKET_INT16SZ', 2);
+
 /* Net_DNS_Packet object definition {{{ */
 /**
  * A object represation of a DNS packet (RFC1035)
@@ -122,9 +128,6 @@ class Net_DNS_Packet
      */
     var $additional;
 
-    const INT32SZ = 4;
-    const INT16SZ = 2;
-	
     /* }}} */
     /* class constructor - Net_DNS_Packet($debug = false) {{{ */
     /*
@@ -419,7 +422,7 @@ class Net_DNS_Packet
                 $offset++;
                 break;
             } else if (($len & 0xc0) == 0xc0) {
-                if ($packetlen < ($offset + Net_DNS_Packet::INT16SZ)) {
+                if ($packetlen < ($offset + NET_DNS_PACKET_INT16SZ)) {
                     return array(null, null);
                 }
                 $ptr = unpack("@$offset/ni", $packet);
@@ -431,7 +434,7 @@ class Net_DNS_Packet
                     return array(null, null);
                 }
                 $name .= $name2[0];
-                $offset += Net_DNS_Packet::INT16SZ;
+                $offset += NET_DNS_PACKET_INT16SZ;
                 break;
             } else {
                 $offset++;
