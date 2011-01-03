@@ -31,6 +31,7 @@ Creates an object hierarchy from a DNS server response, which allows you to view
  <notes>
 QA release
 added bugfix for ipv6 addresses
+changed package config to php5 required
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -138,7 +139,7 @@ added bugfix for ipv6 addresses
  <dependencies>
   <required>
    <php>
-    <min>4.2</min>
+    <min>5.0</min>
    </php>
    <pearinstaller>
     <min>1.4.0b1</min>
