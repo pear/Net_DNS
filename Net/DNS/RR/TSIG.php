@@ -225,7 +225,7 @@ class Net_DNS_RR_TSIG extends Net_DNS_RR
     function error()
     {
         if ($this->error != 0) {
-            $rcode = Net_DNS::rcodesbyval($error);
+            $rcode = Net_DNS::rcodesbyval($this->error);
         }
         return $rcode;
     }
