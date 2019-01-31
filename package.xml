@@ -108,11 +108,11 @@ Bug #18172 fixed issue with class constants
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="e923e4955e8b212cd6e4d031f81294de" name="Net/DNS/RR/TSIG.php" role="php">
+   <file baseinstalldir="/" md5sum="f6a6d0d8e31f1c445a474d818eb65d7c" name="Net/DNS/RR/TSIG.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="f0c56d110802ddc062d9d980c5d8de99" name="Net/DNS/RR/TXT.php" role="php">
+   <file baseinstalldir="/" md5sum="d4ea9591f5782c37c7ba8f25b25e9169" name="Net/DNS/RR/TXT.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
