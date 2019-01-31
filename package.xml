@@ -35,68 +35,68 @@ Bug #18172 fixed issue with class constants
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
-   <file baseinstalldir="/" md5sum="5a2fd9b12cb8d875d489ba982e282371" name="Net/DNS.php" role="php">
+   <file baseinstalldir="/" md5sum="6ace88245c49733ad7e0150c3531806b" name="Net/DNS.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="37dbbc7b9313ba5863e7688d2fba59f0" name="Net/DNS/Header.php" role="php">
+   <file baseinstalldir="/" md5sum="077ef84448f65bf27f0c979e5c6b5459" name="Net/DNS/Header.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="7f3ff73d33f6f6e9815790c6b8c6598e" name="Net/DNS/Packet.php" role="php">
+   <file baseinstalldir="/" md5sum="5120d6caf37bea981c90b41bfa3f58b6" name="Net/DNS/Packet.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="d7184d9ec7cc404745605a7ffde5bd25" name="Net/DNS/Question.php" role="php">
+   <file baseinstalldir="/" md5sum="d9ae677a5b04e11184a4bd0d2138c796" name="Net/DNS/Question.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="53ee1dd3501d9cab5e2113a657b953bd" name="Net/DNS/Resolver.php" role="php">
+   <file baseinstalldir="/" md5sum="93e18bf25576de0ee234712b6656a471" name="Net/DNS/Resolver.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="e693095f96156e10587f7eff0e5fd88f" name="Net/DNS/RR.php" role="php">
+   <file baseinstalldir="/" md5sum="f7ab4a35e2559aa62ada14cf50b70c6d" name="Net/DNS/RR.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="c644170d4c4b25168814d183ef2c2f10" name="Net/DNS/RR/A.php" role="php">
+   <file baseinstalldir="/" md5sum="c00ffab147e41e1cb71db78b490c22ae" name="Net/DNS/RR/A.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="a70b09efe8cc890187250f53869bca61" name="Net/DNS/RR/AAAA.php" role="php">
+   <file baseinstalldir="/" md5sum="0b8d7abbfbcc14acd7562731778a6476" name="Net/DNS/RR/AAAA.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="934e67a01d0152c9e5e46bad3cacb84f" name="Net/DNS/RR/CNAME.php" role="php">
+   <file baseinstalldir="/" md5sum="c25a972ee195a265e8e7d76e1c035aae" name="Net/DNS/RR/CNAME.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="cba9b04600622c8ada1c1d9a187e4e25" name="Net/DNS/RR/HINFO.php" role="php">
+   <file baseinstalldir="/" md5sum="24699fe824bec5c66ed0a777dd242d51" name="Net/DNS/RR/HINFO.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
    <file baseinstalldir="/" md5sum="1506147d4054f7d4da8d3c5a245f914a" name="Net/DNS/RR/LOC.php" role="php" />
-   <file baseinstalldir="/" md5sum="9c94e0598f4aca5b6f47b565ce6b6164" name="Net/DNS/RR/MX.php" role="php">
+   <file baseinstalldir="/" md5sum="845b153cd0c363673a2b61c6cc8bc85f" name="Net/DNS/RR/MX.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="70ecc1b7a4757cbde50459168b64ae24" name="Net/DNS/RR/NAPTR.php" role="php">
+   <file baseinstalldir="/" md5sum="4a0009841e86305c87fe352c7925bd7f" name="Net/DNS/RR/NAPTR.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="0baab6d6a208df5eb516df64109b73ea" name="Net/DNS/RR/NS.php" role="php">
+   <file baseinstalldir="/" md5sum="a244cc02849097faa2e6360bc51d3e7a" name="Net/DNS/RR/NS.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="5105f88ed47e013839a4628af7452bc4" name="Net/DNS/RR/PTR.php" role="php">
+   <file baseinstalldir="/" md5sum="3a993b7f73d0449245587ed7d9cfdac8" name="Net/DNS/RR/PTR.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="4502fb2bd2c9ca658b61ae73c6761e38" name="Net/DNS/RR/RP.php" role="php">
+   <file baseinstalldir="/" md5sum="f529fa8eb7a9d0ce19e9c026a153e1a7" name="Net/DNS/RR/RP.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="688f70b5a7a9622b1e6108a69fb4a78c" name="Net/DNS/RR/SOA.php" role="php">
+   <file baseinstalldir="/" md5sum="0806d54a67d6f09860e22d71c0837d94" name="Net/DNS/RR/SOA.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
@@ -104,7 +104,7 @@ Bug #18172 fixed issue with class constants
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="47cdb36c9b9c8c33bc0ccd6e867e1bd2" name="Net/DNS/RR/SRV.php" role="php">
+   <file baseinstalldir="/" md5sum="7011a09dc148b36e10800c709c9dea7d" name="Net/DNS/RR/SRV.php" role="php">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
