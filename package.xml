@@ -116,12 +116,8 @@ Bug #18172 fixed issue with class constants
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
-   <file baseinstalldir="/" md5sum="aee5a2a1b64b64356b85d5ad67d682a1" name="tests/AllTests.php" role="test">
-    <tasks:replace from="@package_version@" to="version" type="package-info" />
-    <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
-   </file>
    <file baseinstalldir="/" md5sum="ef10cf7a232192d346d4ca4a2da3c965" name="tests/Net_DNS_PacketTest.php" role="test" />
-   <file baseinstalldir="/" md5sum="abe4e6e7363f16dc6fd942bba0492d04" name="tests/Net_DNS_ResolverTest.php" role="test">
+   <file baseinstalldir="/" md5sum="5a4c468556936c2a884801a532f34740" name="tests/Net_DNS_ResolverTest.php" role="test">
     <tasks:replace from="@package_version@" to="version" type="package-info" />
     <tasks:replace from="@data_dir@" to="data_dir" type="pear-config" />
    </file>
